@@ -2,4 +2,4 @@
 
 ### Exam for Webdevelopment at EK
 
-*** Made by Kamilla & Madeleine ***
+Made by Kamilla & Madeleine
