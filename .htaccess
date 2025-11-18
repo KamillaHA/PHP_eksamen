@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Hvis filen findes som .php, omskriv URL uden filendelse til .php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+
+

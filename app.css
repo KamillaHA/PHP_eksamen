@@ -1,0 +1,14 @@
+.follow-btn {
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.4rem 0.8rem;
+}
+.unfollow-btn {
+    background: red;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    padding: 0.4rem 0.8rem;
+}
