@@ -1,5 +1,5 @@
-# PHP_eksamen
+# PHP exam
 
-### Exam for Webdevelopment at EK
+### Exam for Webdevelopment at Erhvervsakademi København
 
 Made by Kamilla & Madeleine
