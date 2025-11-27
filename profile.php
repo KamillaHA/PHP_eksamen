@@ -1,3 +1,9 @@
+<?php
+session_start();
+require_once __DIR__."/_/_header.php";
+$user = $_SESSION["user"];
+?>
+
 My profile here
 
 <form action="api/api-update-profile" method="POST">

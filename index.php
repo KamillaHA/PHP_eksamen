@@ -4,7 +4,7 @@ require_once __DIR__."/_/_header.php";
 ?>
 
 
-<main class="x-landing">
+<div class="x-landing">
   <div class="x-landing__left">
       <div class="x-landing__logo" aria-hidden="true">
         <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="xLogoTitle">
@@ -35,6 +35,6 @@ require_once __DIR__."/private/db.php";
 
 ?>
 
-</main>
+</div>
 
 <?php require_once __DIR__."/_/_footer.php"; ?>
