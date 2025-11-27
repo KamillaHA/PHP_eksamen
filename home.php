@@ -1,9 +1,11 @@
 <?php
 session_start();
-require_once __DIR__ . '/_/_header.php';
-require_once __DIR__ . '/private/x.php';
-$user = $_SESSION["user"];
+require_once __DIR__."/_/_header.php";
+require_once __DIR__."/private/x.php";
+require_once __DIR__ . "/private/db.php";
 
+$user = $_SESSION["user"];
+$current_user_id = $_SESSION['user']['user_pk'] ?? null;
 $message = $_GET['message'] ?? '';
 
 if (!$user) {
@@ -11,48 +13,40 @@ if (!$user) {
     exit;
 }
 
+try {
+    $sql = "SELECT posts.*, users.user_username FROM posts INNER JOIN users ON posts.post_user_fk = users.user_pk";
+    $stmt = $_db->prepare($sql);
+    $stmt->execute();
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} 
+
+catch (Exception $e) {
+    echo "<div>Error: Could not fetch posts.</div>";
+    $posts = [];
+}
 ?>
 
-<?php if($message): ?>
-    <h1><?php echo htmlspecialchars($message) ?></h1>
-<?php endif; ?>
+<main>
+    <!-- Post Button -->
+    <div class="post-button-container">
+        <button type="button" class="create-post-btn" id="createPostBtn" data-open="createPostModal">
+            <i class="fa-solid fa-feather-pointed"></i>
+            Create Post
+        </button>
+    </div>
 
-<h1>
-    Welcome back <?php echo " - " . $user["user_username"] ?>
-</h1>
+    <h1>All Posts</h1>
+    <div id="toast"></div>
+    
+    <?php
+    // Inkluder posts komponentet
+    require_once __DIR__."/_/_post.php";
+    ?>
+</main>
 
-<section>
-    <h2>
-        Your profile details:
-    </h2>
-    <p>
-        Email: <?php _($user['user_email']) ?>
-    </p>
-    <p>
-        Username: <?php _($user['user_username']) ?>
-    </p>
-    <p>
-        Full Name: <?php _($user['user_full_name']) ?>
-    </p>
-</section>
+<?php
+// Inkluder post modal komponent
+require_once __DIR__."/_/_popup-create-post.php";
+require_once __DIR__."/_/_footer.php";
+?>
 
-
-
-
-<form action="api/api-update-profile.php" method="POST">
-    <h3>
-        Update Profile
-    </h3>
-    <input type="email" name="user_email" value="<?php _($user['user_email']) ?>" required>
-    <input type="text" name="user_username" value="<?php _($user['user_username']) ?>" required>
-    <input type="text" name="user_full_name" value="<?php _($user['user_full_name']) ?>" required>
-    <button type="submit">
-        Update Profile
-    </button>
-</form>
-
-<a href="/logout">
-    logout
-</a>
-
-<?php require_once __DIR__ . '/_/_footer.php'; ?>

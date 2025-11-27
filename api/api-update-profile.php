@@ -17,7 +17,7 @@ try {
 
     require_once __DIR__ . '/../private/db.php';
     $sql = "UPDATE users SET user_email = :email, user_username = :username, user_full_name = :full_name WHERE user_pk = :pk";
-    $stmt = $db->prepare($sql);
+    $stmt = $_db->prepare($sql);
     $stmt->bindParam(':email', $newEmail);
     $stmt->bindParam(':username', $newUsername);
     $stmt->bindParam(':full_name', $newFullName);
@@ -29,7 +29,7 @@ try {
     $user['user_full_name'] = $newFullName;
     $_SESSION["user"] = $user;
 
-    header("Location: /home");
+    header("Location: /profile");
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
