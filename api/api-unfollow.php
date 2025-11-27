@@ -1,12 +1,20 @@
 <?php
 session_start();
+require_once __DIR__ . '/../private/db.php';
+
 $follower_pk = $_SESSION['user']['user_pk'] ?? null; 
-$followee_pk = $_GET['followee_pk'] ?? '';
+$user_pk = $_GET['user_pk'] ?? '';
 
-if (!$follower_pk || !$followee_pk) exit('Invalid request');
+if (!$follower_pk || !$user_pk) exit('Invalid request');
 
-// Normally: remove follow logic here (DB delete)
+try {
+    $stmt = $_db->prepare("DELETE FROM follows WHERE follower_fk = ? AND following_fk = ?");
+    $stmt->execute([$follower_pk, $user_pk]);
+} catch (PDOException $e) {
+    exit('Error: ' . $e->getMessage());
+}
 
-echo "<mix-html mix-replace='.button-$followee_pk'>";
-require_once __DIR__ . '/../___/___button-follow.php'; // micro-component
+echo "<mix-html mix-replace='.button-$user_pk'>";
+require_once __DIR__ . '/../___/___button-follow.php';
 echo "</mix-html>";
+?>

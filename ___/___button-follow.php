@@ -1,7 +1,5 @@
-<div class="button-<?php echo $followee_pk; ?>">
-    <button 
-        class="follow-btn" 
-        mix-get="/../api/api-follow?followee_pk=<?php echo $followee_pk; ?>">
-        Follow
-    </button>
-</div>
+<button 
+    class="follow-btn button-<?php echo $user_pk; ?>" 
+    mix-get="/api/api-follow?user_pk=<?php echo $user_pk; ?>">
+    Follow
+</button>

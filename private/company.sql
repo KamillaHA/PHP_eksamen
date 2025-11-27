@@ -22,6 +22,8 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
+-- Tables
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `comments`
@@ -33,13 +35,6 @@ CREATE TABLE `comments` (
   `post_fk` char(50) NOT NULL,
   `comment_text` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`comment_pk`, `user_fk`, `post_fk`, `comment_text`) VALUES
-('c326f340c10b5b0e19aacec7814e3563a4b3d994044acd93cf', '1', '1', 'test comment');
 
 -- --------------------------------------------------------
 
@@ -64,14 +59,6 @@ CREATE TABLE `person` (
   `person_first_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `person`
---
-
-INSERT INTO `person` (`person_pk`, `person_username`, `person_first_name`) VALUES
-(1, 'andreahauberg', 'Andrea'),
-(5, '', '');
-
 -- --------------------------------------------------------
 
 --
@@ -84,14 +71,6 @@ CREATE TABLE `posts` (
   `post_image_path` varchar(100) NOT NULL,
   `post_user_fk` char(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `posts`
---
-
-INSERT INTO `posts` (`post_pk`, `post_message`, `post_image_path`, `post_user_fk`) VALUES
-('1', 'Post one', 'https://picsum.photos/400/250', '1'),
-('2', '<script>alert()</stript>', 'https://picsum.photos/400/250', '1');
 
 -- --------------------------------------------------------
 
@@ -107,19 +86,27 @@ CREATE TABLE `users` (
   `user_full_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`user_pk`, `user_username`, `user_email`, `user_password`, `user_full_name`) VALUES
-('1', 'andreahauberggg', 'a@a.com', '$2y$10$FFupw1g6iLrsAG1rraCqjeS38je8PgdOxml9YVQdV8ln/hSgkm.4.', 'Andrea Hauberg'),
-('1a3add65aab9406698beb1de16227e12', 'user2', 'c@c.com', '$2y$10$5Rt6kJtegTIh3mAfJk059OgsLIdLES8n/ldWgvRegunURAUCK.T0m', 'Clem Clemsen'),
-('4feb86ecb46c473e0f6c01e97bc26086e7953b5f621c08b5a1', 'user4', 'j@j.com', '$2y$10$YRUnPlxARN5G7em/xySvRuJV/hhjpATtSGMFbQ.zUsdeWJhmKaPrm', 'Jean Jean'),
-('5afc9c4fe287446fa12cad78655727d2', 'user1', 'b@b.com', '$2y$10$GheYC/X6jez8yeWkVpqgKuJ5q/miOZcAdWBB858OFojdL0JLZzyba', 'Bobo Bob');
+-- --------------------------------------------------------
 
 --
--- Indexes for dumped tables
+-- Table structure for table `follows`
 --
+
+CREATE TABLE `follows` (
+  `follower_fk` char(50) NOT NULL,
+  `following_fk` char(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+-- Indexes
+-- --------------------------------------------------------
+
+--
+-- Indexes for table `follows`
+--
+ALTER TABLE `follows`
+  ADD PRIMARY KEY (`follower_fk`, `following_fk`),
+  ADD KEY `following_fk` (`following_fk`);
 
 --
 -- Indexes for table `comments`
@@ -158,9 +145,9 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `user_email` (`user_email`),
   ADD UNIQUE KEY `user_pk` (`user_pk`);
 
---
--- AUTO_INCREMENT for dumped tables
---
+-- --------------------------------------------------------
+-- Auto increment
+-- --------------------------------------------------------
 
 --
 -- AUTO_INCREMENT for table `person`
@@ -168,9 +155,16 @@ ALTER TABLE `users`
 ALTER TABLE `person`
   MODIFY `person_pk` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
+-- --------------------------------------------------------
+-- Constraints
+-- --------------------------------------------------------
+
 --
--- Constraints for dumped tables
+-- Constraints for table `follows`
 --
+ALTER TABLE `follows`
+  ADD CONSTRAINT `follows_ibfk_1` FOREIGN KEY (`follower_fk`) REFERENCES `users` (`user_pk`) ON DELETE CASCADE,
+  ADD CONSTRAINT `follows_ibfk_2` FOREIGN KEY (`following_fk`) REFERENCES `users` (`user_pk`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `comments`

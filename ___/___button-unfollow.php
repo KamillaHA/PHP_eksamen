@@ -1,7 +1,5 @@
-<div class="button-<?php echo $followee_pk; ?>">
-    <button 
-        class="unfollow-btn" 
-        mix-get="/../api/api-unfollow?followee_pk=<?php echo $followee_pk; ?>">
-        Unfollow
-    </button>
-</div>
+<button 
+    class="unfollow-btn button-<?php echo $user_pk; ?>" 
+    mix-get="/api/api-unfollow?user_pk=<?php echo $user_pk; ?>">
+    Unfollow
+</button>
