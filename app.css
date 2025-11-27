@@ -12,3 +12,42 @@
     border-radius: 2rem;
     padding: 0.4rem 0.8rem;
 }
+
+.x-landing {
+    display: flex;
+    align-items: center;      /* Centrerer vertikalt */
+    justify-content: center;  /* Valgfrit – kan også være space-between */
+    min-height: 100vh;        /* Fuld højde */
+}
+
+.x-landing__left {
+    flex: 1;                  /* Fylder halvdelen af pladsen */
+    display: flex;
+    justify-content: center;  /* Centrerer logoet horisontalt */
+    align-items: center;      /* Centrerer logoet vertikalt */
+}
+
+.x-landing__right {
+    flex: 1;                  /* Fylder halvdelen af pladsen */
+    display: flex;
+    flex-direction: column;   /* Alt i højre side bliver under hinanden */
+    justify-content: center;
+    gap: 10px;                /* Luft mellem titel, tekst og knapper */
+}
+
+.x-landing__logo svg {
+    width: 400px;
+    height: auto;
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 4px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}

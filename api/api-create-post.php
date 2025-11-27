@@ -28,19 +28,34 @@ try {
 
     $stmt->execute();
 
-
     $message = "Post created!";
-    $toast_ok = require_once __DIR__ . "/../___/___toast_ok.php";
-    echo "<browser mix-update='#toast'>$toast_ok</browser>";
-
+    $toast_ok = "<div class='toast-ok' mix-ttl='3000'>$message</div>";
     
-    $freshForm = "<form action='api/api-create-post.php' mix-post>".
+    $freshForm = "<form action='/api-create-post.php' method='POST' mix-post>".
                  "<textarea type='text' maxlength='300' name='post_message' placeholder='Your post message here'></textarea>".
                  "<button>POST</button>".
                  "</form>";
-    echo "<browser mix-update='#create-post-form'>$freshForm</browser>";
+    
+    echo "<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Post Created</title>
+    </head>
+    <body>
+        $toast_ok
+        $freshForm
+    </body>
+    </html>";
 }
 catch(Exception $e){
-    http_response_code($e->getCode());
-    echo "<browser mix-update='#toast'>".$e->getMessage()."</browser>";
+    http_response_code($e->getCode() ?: 400);
+    echo "<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Error</title>
+    </head>
+    <body>
+        <div id='toast'>".$e->getMessage()."</div>
+    </body>
+    </html>";
 }

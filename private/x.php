@@ -18,7 +18,7 @@ function validateCommentText() {
     $len = strlen($commentText);
 
     if ($len < commentMinLength || $len > commentMaxLength) {
-        throw new Exception("Comment must be between " . commentMinLength . " and " . commentMaxLength . " characters");
+        throw new Exception("Comment must be between " . commentMinLength . " and " . commentMaxLength . " characters", 400);
     }
     return $commentText;
 }
@@ -26,11 +26,13 @@ function validateCommentText() {
 define("postMinLength", 1);
 define("postMaxLength", 300);
 function _validatePost() {
-    $postMessage = trim($_POST['post_message']);
+    $postMessage = $_GET['post_message'] ?? $_POST['post_message'] ?? '';
+    $postMessage = trim($postMessage);
+
     $len = strlen($postMessage);
 
     if ($len < postMinLength || $len > postMaxLength) {
-        throw new Exception("Message must be between " . postMinLength . " and " . postMaxLength . " characters");
+        throw new Exception("Message must be between " . postMinLength . " and " . postMaxLength . " characters", 400);
     }
     return $postMessage;
 }

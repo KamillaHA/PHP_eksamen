@@ -23,7 +23,8 @@ try {
 
 <main>
     <h1>All Posts</h1>
-
+<!-- Toast container -->
+<div id="toast"></div>
     
     <div class="posts-container">
         
@@ -35,7 +36,7 @@ try {
         else:
             foreach ($posts as $post):
             ?>
-            <article class="post">
+            <article class="post" id="post-<?php echo $post['post_pk']; ?>">
                 
                 <div>
                 <?php 
@@ -52,14 +53,20 @@ try {
                 </div>
                 <p><?php echo _($post['post_message']); ?></p>
 
-                <?php if ($current_user_id == $post['post_user_fk']): ?>
+<?php if ($current_user_id == $post['post_user_fk']): ?>
+    <!-- Delete form -->
+    <form action="/api/api-delete-post.php" method="POST">
+        <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
+        <button type="submit">Delete</button>
+    </form>
 
-                    <form action="/api/api-delete-post.php" method="POST">
-                        <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
-                        <button type="submit">Delete</button>
-                    </form>
-
-                <?php endif; ?>
+    <!-- Update form -->
+    <form action="/api/api-update-post.php" method="POST">
+        <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
+        <textarea name="post_message"><?php echo _($post['post_message']); ?></textarea>
+        <button type="submit">Update</button>
+    </form>
+<?php endif; ?>
                 <hr> 
                 
             </article>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../js/mixhtml.css">
-    <!-- <link rel="stylesheet" href="app.css"> -->
+    <link rel="stylesheet" href="/mixhtml.css">
+    <link rel="stylesheet" href="/app.css">
     <title>Document</title>
 </head>
 <body>

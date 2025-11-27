@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mariadb
--- Generation Time: Nov 11, 2025 at 01:26 PM
+-- Generation Time: Nov 11, 2025 at 02:45 PM
 -- Server version: 10.6.20-MariaDB-ubu2004
 -- PHP Version: 8.3.26
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `company`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `comment_pk` char(50) NOT NULL,
+  `user_fk` char(50) NOT NULL,
+  `post_fk` char(50) NOT NULL,
+  `comment_text` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`comment_pk`, `user_fk`, `post_fk`, `comment_text`) VALUES
+('c326f340c10b5b0e19aacec7814e3563a4b3d994044acd93cf', '1', '1', 'test comment');
 
 -- --------------------------------------------------------
 
@@ -93,13 +113,21 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_pk`, `user_username`, `user_email`, `user_password`, `user_full_name`) VALUES
 ('1', 'andreahauberggg', 'a@a.com', '$2y$10$FFupw1g6iLrsAG1rraCqjeS38je8PgdOxml9YVQdV8ln/hSgkm.4.', 'Andrea Hauberg'),
-('5afc9c4fe287446fa12cad78655727d2', 'user1', 'b@b.com', '$2y$10$GheYC/X6jez8yeWkVpqgKuJ5q/miOZcAdWBB858OFojdL0JLZzyba', 'Bobo Bob'),
 ('1a3add65aab9406698beb1de16227e12', 'user2', 'c@c.com', '$2y$10$5Rt6kJtegTIh3mAfJk059OgsLIdLES8n/ldWgvRegunURAUCK.T0m', 'Clem Clemsen'),
-('4feb86ecb46c473e0f6c01e97bc26086e7953b5f621c08b5a1', 'user4', 'j@j.com', '$2y$10$YRUnPlxARN5G7em/xySvRuJV/hhjpATtSGMFbQ.zUsdeWJhmKaPrm', 'Jean Jean');
+('4feb86ecb46c473e0f6c01e97bc26086e7953b5f621c08b5a1', 'user4', 'j@j.com', '$2y$10$YRUnPlxARN5G7em/xySvRuJV/hhjpATtSGMFbQ.zUsdeWJhmKaPrm', 'Jean Jean'),
+('5afc9c4fe287446fa12cad78655727d2', 'user1', 'b@b.com', '$2y$10$GheYC/X6jez8yeWkVpqgKuJ5q/miOZcAdWBB858OFojdL0JLZzyba', 'Bobo Bob');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`comment_pk`),
+  ADD KEY `post_fk` (`post_fk`),
+  ADD KEY `user_fk` (`user_fk`);
 
 --
 -- Indexes for table `likes`
@@ -126,6 +154,7 @@ ALTER TABLE `posts`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_pk`),
   ADD UNIQUE KEY `user_email` (`user_email`),
   ADD UNIQUE KEY `user_pk` (`user_pk`);
 
@@ -142,6 +171,13 @@ ALTER TABLE `person`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_fk`) REFERENCES `posts` (`post_pk`) ON DELETE CASCADE,
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_fk`) REFERENCES `users` (`user_pk`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `likes`
