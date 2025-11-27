@@ -30,10 +30,10 @@ try {
 
     if ($stmt->rowCount() == 0) {
         http_response_code(200);
-        header("Location: /posts?message=Delete failed");
+        header("Location: /home?message=Delete failed");
     } else {
         http_response_code(403);
-        header("Location: /posts?message=post_deleted");
+        header("Location: /home?message=post_deleted");
     }
     exit;
 
