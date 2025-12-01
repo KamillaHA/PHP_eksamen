@@ -27,13 +27,6 @@ catch (Exception $e) {
 ?>
 
 <main>
-    <!-- Post Button -->
-    <div class="post-button-container">
-        <button type="button" class="create-post-btn" id="createPostBtn" data-open="createPostModal">
-            <i class="fa-solid fa-feather-pointed"></i>
-            Create Post
-        </button>
-    </div>
 
     <h1>All Posts</h1>
     <div id="toast"></div>

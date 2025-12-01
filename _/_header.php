@@ -32,7 +32,7 @@
                 <li><a href="#"><i class="fa-solid fa-ellipsis"></i><span>More</span></a></li>
                 <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
             </ul>
-    <button class="post-btn">Post</button>
+    <button type="button" class="create-post-btn" id="createPostBtn" data-open="createPostModal">Post</button>
 
                 <div id="profile_tag">
                     <img src="https://picsum.photos/400/250" alt="Profile">

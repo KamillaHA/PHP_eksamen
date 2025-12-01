@@ -17,6 +17,7 @@ if (!$user) {
     <h1><?php echo htmlspecialchars($message) ?></h1>
 <?php endif; ?>
 
+<main>
 <section>
     <h2>
         Your profile details:
@@ -47,5 +48,10 @@ if (!$user) {
 <a href="/logout">
     logout
 </a>
+</main>
 
-<?php require_once __DIR__ . '/_/_footer.php'; ?>
+
+<?php 
+require_once __DIR__."/_/_popup-create-post.php";
+require_once __DIR__ . '/_/_footer.php'; 
+?>

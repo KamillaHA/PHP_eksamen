@@ -10,7 +10,7 @@ if (!$user) {
     exit;
 }
 ?>
-
+<main>
 <h1>Users</h1>
 
 <?php
@@ -39,6 +39,7 @@ try {
                     <?php endif; ?>
                 </div>
             </div>
+            </main>
             <?php
         }
     }
@@ -47,4 +48,7 @@ try {
 }
 ?>
 
-<?php require_once __DIR__ . '/_/_footer.php'; ?>
+<?php 
+require_once __DIR__."/_/_popup-create-post.php";
+require_once __DIR__ . '/_/_footer.php'; 
+?>
