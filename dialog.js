@@ -33,4 +33,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize button state
     postSubmitBtn.disabled = true;
   }
+
+  // Luk popup når formen submitter
+  const postForm = document.querySelector('#createPostModal .post-form');
+  if (postForm) {
+    postForm.addEventListener('submit', () => {
+      document.getElementById('createPostModal')?.classList.remove('active');
+    });
+  }
 });

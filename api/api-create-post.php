@@ -28,13 +28,8 @@ try {
 
     $stmt->execute();
 
-    $message = "Post created!";
-    $toast_ok = "<div class='toast-ok' mix-ttl='3000'>$message</div>";
-    
-    $freshForm = "<form action='/api-create-post.php' method='POST' mix-post>".
-                 "<textarea type='text' maxlength='300' name='post_message' placeholder='Your post message here'></textarea>".
-                 "<button>POST</button>".
-                 "</form>";
+    echo '<mixhtml mix-redirect="/home"></mixhtml>';
+    exit;
     
     echo "<!DOCTYPE html>
     <html>
