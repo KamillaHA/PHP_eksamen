@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/_/_header.php';
+require_once __DIR__ . '/components/_header.php';
 require_once __DIR__ . '/private/x.php';
 require_once __DIR__ . '/private/check-follow.php';
 $user = $_SESSION["user"];
@@ -50,5 +50,5 @@ try {
 
 <?php 
 require_once __DIR__."/popup/_popup-create-post.php";
-require_once __DIR__ . '/_/_footer.php'; 
+require_once __DIR__ . '/components/_footer.php'; 
 ?>
