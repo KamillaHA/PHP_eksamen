@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/_/_header.php';
+require_once __DIR__ . '/components/_header.php';
 require_once __DIR__ . '/private/x.php';
 require_once __DIR__ . '/private/db.php';
 
@@ -114,7 +114,7 @@ try {
         </section>
     </div>
     <?php
-    require_once __DIR__ . '/_/_sidebar.php';
+    require_once __DIR__ . '/components/_sidebar.php';
     ?>
 
 </main>
@@ -123,5 +123,5 @@ try {
 // Tilføj profil-popup (vi skal oprette denne fil)
 require_once __DIR__."/popup/_popup-update-profile.php";
 require_once __DIR__."/popup/_popup-create-post.php";
-require_once __DIR__ . '/_/_footer.php'; 
+require_once __DIR__ . '/components/_footer.php'; 
 ?>

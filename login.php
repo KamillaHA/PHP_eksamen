@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__."/_/_header.php";
+require_once __DIR__."/components/_header.php";
 
 $message = $_GET['message'] ?? '';
 ?>
@@ -22,5 +22,5 @@ $message = $_GET['message'] ?? '';
 </form>
 
 <?php
-require_once __DIR__."/_/_footer.php";
+require_once __DIR__."/components/_footer.php";
 ?>

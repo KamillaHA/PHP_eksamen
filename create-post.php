@@ -1,17 +1,17 @@
-<?php
-session_start();
-require_once __DIR__ . '/private/x.php';
+<!-- <?php
+// session_start();
+// require_once __DIR__ . '/private/x.php';
 
 
-if (!isset($_SESSION["user"])) {
-    header("Location: /login?message=not logged in, please login first");
-    exit;
-}
-$user = $_SESSION["user"];
+// if (!isset($_SESSION["user"])) {
+//     header("Location: /login?message=not logged in, please login first");
+//     exit;
+// }
+// $user = $_SESSION["user"];
 
 
-require_once __DIR__ . '/_/_header.php';
-?>
+// require_once __DIR__ . '/_/_header.php';
+// ?>
 
 <h1>
     Please enter your post <?php echo " - " . $user["user_username"] ?>
@@ -27,4 +27,4 @@ require_once __DIR__ . '/_/_header.php';
     <div id="message"></div>
     
     <script src="js/mixhtml.js"></script>
-</div>
+</div> -->

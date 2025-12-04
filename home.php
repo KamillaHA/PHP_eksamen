@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once __DIR__."/_/_header.php";
-require_once __DIR__."/private/x.php";
-require_once __DIR__ . "/private/db.php";
+require_once __DIR__."/./components/_header.php";
+require_once __DIR__."/./private/x.php";
+require_once __DIR__ . "/./private/db.php";
 
 $user = $_SESSION["user"];
 $current_user_id = $_SESSION['user']['user_pk'] ?? null;
@@ -33,8 +33,8 @@ catch (Exception $e) {
     
     <?php
     // Inkluder posts komponentet
-    require_once __DIR__."/___/___post.php";
-    require_once __DIR__."/_/_sidebar.php";
+    require_once __DIR__."/micro_components/___post.php";
+    require_once __DIR__."/components/_sidebar.php";
     ?>
 </main>
 
@@ -44,6 +44,6 @@ require_once __DIR__."/popup/_popup-create-post.php";
 require_once __DIR__."/popup/_popup-update-post.php";
 require_once __DIR__."/popup/_popup-create-comment.php";
 require_once __DIR__."/popup/_popup-update-comment.php";
-require_once __DIR__."/_/_footer.php";
+require_once __DIR__."/components/_footer.php";
 ?>
 

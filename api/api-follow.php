@@ -15,6 +15,6 @@ try {
 }
 
 echo "<mix-html mix-replace='.button-$user_pk'>";
-require_once __DIR__ . '/../___/___button-unfollow.php';
+require_once __DIR__ . '/../micro_components/___button-unfollow.php';
 echo "</mix-html>";
 ?>
