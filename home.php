@@ -26,21 +26,23 @@ catch (Exception $e) {
 }
 ?>
 
-<main>
+<main id="main">
 
     <h1>All Posts</h1>
     <div id="toast"></div>
     
     <?php
     // Inkluder posts komponentet
-    require_once __DIR__."/_/_post.php";
-    require_once __DIR__ . '/_/_sidebar.php';
+    require_once __DIR__."/___/___post.php";
     ?>
 </main>
 
 <?php
 // Inkluder post modal komponent
-require_once __DIR__."/_/_popup-create-post.php";
+require_once __DIR__."/popup/_popup-create-post.php";
+require_once __DIR__."/popup/_popup-update-post.php";
+require_once __DIR__."/popup/_popup-create-comment.php";
+require_once __DIR__."/popup/_popup-update-comment.php";
 require_once __DIR__."/_/_footer.php";
 ?>
 

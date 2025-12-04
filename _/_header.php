@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="/mixhtml.css">
-    <script defer src="dialog.js"></script>
+    <link rel="stylesheet" href="/app.css">
+    <link rel="stylesheet" href="popup.css">
+    <script defer src="popup.js"></script>
     <title>Document</title>
 </head>
 <body>

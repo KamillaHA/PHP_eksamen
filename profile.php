@@ -119,8 +119,9 @@ try {
 
 </main>
 
-
 <?php 
-require_once __DIR__."/_/_popup-create-post.php";
+// Tilføj profil-popup (vi skal oprette denne fil)
+require_once __DIR__."/popup/_popup-update-profile.php";
+require_once __DIR__."/popup/_popup-create-post.php";
 require_once __DIR__ . '/_/_footer.php'; 
 ?>
