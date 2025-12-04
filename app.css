@@ -1,3 +1,11 @@
+/* 
+linjefarve - 5e5e5e 
+tekstfarve - f6f6f6
+baggrundsfarve - 0b0b0b
+*/
+
+
+
 /* ----------------------------- */
 /* Overall css */
 * {
@@ -16,7 +24,7 @@ body {
 }
 
 main {
-    margin-left: 220px; /* Samme bredde som din nav */
+    margin: 0 320px 0 220px; /* Samme bredde som din nav */
     padding: 1rem;
     min-height: 100vh;
     background: #0b0b0b
@@ -46,9 +54,58 @@ main {
     gap: 10px;               
 }
 
+.x-landing__subtitle {
+    margin-bottom: 2rem;
+}
+
 .x-landing__logo svg {
     width: 400px;
     height: auto;
+}
+
+/* ----------------------------- */
+/* Login/Signup knapper på index siden */
+.x-landing__btn {
+    padding: 0.7rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 2rem;
+    background-color: #f6f6f6;
+    color: #0b0b0b;
+    border: 1px solid #0b0b0b;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 8rem;
+}
+
+/* Specifik styling for hver knap */
+.x-landing__btn--signup {
+    background-color: #f6f6f6;
+}
+
+.x-landing__btn--login {
+    background-color: #0b0b0b;
+    color: #f6f6f6;
+}
+
+.x-landing__btn--login:hover {
+    background-color: #f6f6f6;
+    color: #0b0b0b;
+    border: 1px solid #0b0b0b;
+}
+
+.x-landing__btn--signup:hover {
+    background-color: #0b0b0b;
+    color: #f6f6f6;
+    border: 1px solid #f6f6f6;
+
+}
+
+a.x-landing__btn {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* ----------------------------- */
@@ -100,6 +157,8 @@ nav {
     z-index: 1000;
     transform: translateX(0);
     transition: transform 0.3s ease-in-out;
+    border-right: 0.5px solid #5e5e5e;
+
 }
 
 /* Navigation links */
@@ -164,7 +223,7 @@ nav ul li a:hover {
     background-color: rgb(240, 240, 240);
 }
 
-#profile_tag img {
+.follow-img img, #profile_tag img {
     border-radius: 50%;
     width: 36px;
     height: 36px;
@@ -224,15 +283,16 @@ nav ul li a:hover {
     background: #333;
     color: white;
     text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
+    transition: opacity 0.3s;
+    text-align: center;
+    line-height: 42px; 
+    font-size: 24px;
+    font-weight: bold;
 }
+
 
 .scroll-top.show {
     opacity: 1;
@@ -459,4 +519,242 @@ nav ul li a:hover {
  
 .post-submit-btn:hover:not(:disabled) {
     background-color: #0d8bd9;
+}
+
+
+/* -------------------------- */
+/* Profile */
+/* .profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+} */
+
+.profile-info, .update-profile, .user-posts {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.profile-details p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.profile-form .form-group {
+    margin-bottom: 1rem;
+}
+
+.profile-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.profile-form input {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.update-btn {
+    background: #1da1f2;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.update-btn:hover {
+    background: #0d8bd9;
+}
+
+/* Posts styling */
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.post-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 1rem;
+    background: #f9f9f9;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.post-user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.post-time {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.post-content {
+    margin: 1rem 0;
+    line-height: 1.5;
+}
+
+.post-image img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+.post-stats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    color: #666;
+}
+
+.no-posts {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.btn-back, .btn-logout {
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-back {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.btn-logout {
+    background: #ff4444;
+    color: white;
+}
+
+
+
+/* ----------------------------- */
+/* Sidebar */
+/* ----------------------------- */
+
+.sidebar {
+    position: fixed;
+    align-content: center;
+    right: 0;
+    top: 0;
+    width: 320px;
+    height: 100vh;
+    background: #0b0b0b; /* Sort baggrund */
+    border-left: 0.5px solid #5e5e5e; /* Hvid skillelinje - samme som knapper */
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.sidebar-placeholder {
+    color: #f6f6f6;
+    text-align: center;
+    padding: 2rem;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        display: none; /* Skjul på mobil/tablet */
+    }
+}
+
+
+/* ----------------------------- */
+/* Sidebar Trends */
+/* ----------------------------- */
+
+
+
+.follow-section, .trends-section {
+    background: #0b0b0b;
+    border: 0.5px solid #5e5e5e; /* Samme border som knapper */
+    border-radius: 16px; /* Lidt afrundede hjørner */
+    padding: 1rem 1rem 0 1rem;
+    margin-top: 1rem;
+}
+
+.follow-title, .trends-title {
+    color: #f6f6f6;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.follow-list, .trends-list {
+    margin-bottom: 1rem;
+}
+
+.follow-item, .trend-item {
+    padding: 0.8rem 0 0.4rem 0;
+    border-bottom: 0.5px solid #5e5e5e; 
+    cursor: pointer;
+    border-radius: 4px;
+    padding-left: 0.5rem;
+}
+
+.follow-item {
+    display: flex;
+    align-items: center;
+}
+
+.follow-item:last-child, .trend-item:last-child {
+    border-bottom: none; /* Fjern border fra sidste item */
+}
+
+.trend-category {
+    color: #5e5e5e;
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+}
+
+.follow-name, .trend-name {
+    color: #f6f6f6; /* Hvid */
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0.2rem 0;
+}
+
+.follow-handle, .trend-stats {
+    color: #5e5e5e; /* Lys grå */
+    font-size: 0.85rem;
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .sidebar {
+        display: none;
+    }
 }

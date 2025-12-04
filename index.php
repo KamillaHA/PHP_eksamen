@@ -1,5 +1,13 @@
 <?php 
+session_start();
 $title = "Welcome";
+
+// Hvis bruger allerede er logget ind, redirect til home
+if (isset($_SESSION['user_id'])) {
+  header('Location: /home');
+  exit();
+}
+
 require_once __DIR__."/_/_header.php";
 ?>
 
@@ -21,20 +29,16 @@ require_once __DIR__."/_/_header.php";
     <h1 class="x-landing__title">Happening now</h1>
     <h2 class="x-landing__subtitle">Join today.</h2>
 
-<form method="GET">
-    <button class="x-landing__btn x-landing__btn--signup" formaction="signup">Sign up</button>
-    <button class="x-landing__btn x-landing__btn--login" formaction="login">Log in</button>
-</form>
+    <a href="signup" class="x-landing__btn x-landing__btn--signup">Sign up</a>
+    <a href="login" class="x-landing__btn x-landing__btn--login">Log in</a>
   </div>
 
 
 <?php 
 require_once __DIR__."/private/db.php";
-// require_once __DIR__."/login.php"; 
-// require_once __DIR__."/signup.php"; 
-
 ?>
-
 </div>
 
-<?php require_once __DIR__."/_/_footer.php"; ?>
+<?php 
+require_once __DIR__."/_/_footer.php"; 
+?>

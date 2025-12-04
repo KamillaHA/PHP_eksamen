@@ -34,6 +34,7 @@ catch (Exception $e) {
     <?php
     // Inkluder posts komponentet
     require_once __DIR__."/_/_post.php";
+    require_once __DIR__ . '/_/_sidebar.php';
     ?>
 </main>
 
