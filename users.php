@@ -49,6 +49,6 @@ try {
 ?>
 
 <?php 
-require_once __DIR__."/_/_popup-create-post.php";
+require_once __DIR__."/popup/_popup-create-post.php";
 require_once __DIR__ . '/_/_footer.php'; 
 ?>

@@ -6,7 +6,7 @@ require_once __DIR__."/../private/x.php";
 $user = $_SESSION["user"];
 
 if (!$user) {
-    header("Location: /login?message=not logged in, please login first");
+    echo '<mixhtml mix-redirect="/login?message=not logged in, please login first"></mixhtml>';
     exit;
 }
 
@@ -38,16 +38,12 @@ try {
     $stmt->bindValue(":post_message", $postMessage);
     $stmt->execute();
 
-    // Brug toast component
-    $message = "Post updated!";
-    $toast_update = require_once __DIR__ . "/../___/___toast_update.php";
+    echo '<mixhtml mix-redirect="/home"></mixhtml>';
+    exit();
     
-    // Send tilbage til toast container
-    echo $toast_update;
-
 }
 catch(Exception $e){
     http_response_code($e->getCode() ?: 400);
-    echo "<div id='toast'>".$e->getMessage()."</div>";
+    echo $e->getMessage();
 }
 ?>
