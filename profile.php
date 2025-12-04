@@ -65,7 +65,7 @@ try {
                     <input type="text" id="user_full_name" name="user_full_name" value="<?php _($user['user_full_name']) ?>" required>
                 </div>
                 
-                <button type="submit" class="update-btn">Update Profile</button>
+                <button type="button" class="edit-profile-btn" data-open="editProfileModal">Update Profile</button>
             </form>
         </section>
 
