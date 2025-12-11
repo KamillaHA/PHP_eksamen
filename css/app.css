@@ -407,7 +407,7 @@ nav ul li a:hover {
 }
  
 .x-dialog.active .x-dialog__content {
-    transform: scale(1);
+    /* transform: scale(1); */
     opacity: 1;
 }
  

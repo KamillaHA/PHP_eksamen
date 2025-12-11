@@ -1,0 +1,51 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (isset($_SESSION["user"])) {
+    return;
+}
+?>
+
+<div id="loginModal" class="x-dialog login-popup">
+    <div class="x-dialog__overlay"></div>
+    <div class="x-dialog__content">
+        <div class="modal-header">
+            <button class="modal-close x-dialog__close">&times;</button>
+        </div>
+        
+        <div class="modal-content">
+            <div class="popup-logo">
+                <svg viewBox="0 0 24 24" width="40" height="40" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </div>
+            
+            <h2>Log ind på X</h2>
+            
+            <form class="login-form" action="api/api-login.php" method="POST" mix-post mix-after="main">
+                <?php if(isset($_GET['message'])): ?>
+                    <div class="error-message">
+                        <?php echo htmlspecialchars($_GET['message']); ?>
+                    </div>
+                <?php endif; ?>
+                
+                <input name="user_email" type="email" placeholder="Email" required>
+                <input name="user_password" type="password" placeholder="Password" required>
+                
+                <button type="submit" class="login-submit-btn" 
+                        mix-await="Logger ind..." 
+                        mix-default="Log ind">
+                    Log ind
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Har du ikke en konto? 
+                    <a href="/signup">Tilmeld dig</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

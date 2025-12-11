@@ -297,3 +297,278 @@
     background-color: #94c9f0;
     cursor: not-allowed;
 }
+
+/* Login popup styling */
+.x-dialog.login-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.x-dialog.login-popup.active {
+    display: block;
+}
+
+.login-popup .x-dialog__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.login-popup .x-dialog__content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.login-popup .modal-header {
+    padding: 16px;
+    border-bottom: 1px solid #eff3f4;
+    display: flex;
+    align-items: center;
+}
+
+.login-popup .modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #536471;
+    padding: 4px 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.login-popup .modal-close:hover {
+    background-color: #f7f9f9;
+}
+
+.login-popup .modal-content {
+    padding: 32px;
+}
+
+.login-popup .popup-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-popup .popup-logo svg {
+    color: #0f1419;
+}
+
+.login-popup h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 23px;
+    font-weight: 700;
+    color: #0f1419;
+}
+
+/* Login form styling */
+.login-form input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 1px solid #cfd9de;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.login-form input:focus {
+    outline: none;
+    border-color: #1DA1F2;
+    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.login-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #0f1419;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.login-submit-btn:hover:not(:disabled) {
+    background-color: #272c30;
+}
+
+.login-submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #536471;
+    font-size: 14px;
+}
+
+.login-footer a {
+    color: #1DA1F2;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .login-popup .x-dialog__content {
+        width: 95%;
+        max-width: none;
+        border-radius: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        transform: none;
+        max-height: 100vh;
+    }
+    
+    .login-popup .modal-content {
+        padding: 20px;
+    }
+}
+
+/* Tilføj til din eksisterende style.css */
+.x-landing__btn--login.login-popup-btn {
+    cursor: pointer;
+    font: inherit;
+    text-align: center;
+    display: inline-block;
+    width: 300px;
+    max-width: 100%;
+    /* Resten af din eksisterende styling */
+}
+
+.x-landing__btn--login.login-popup-btn:hover {
+    background-color: #e8f5fe;
+    /* Resten af din hover styling */
+}
+
+/* Sikr at login-knappen på forsiden ser ens ud med og uden popup */
+.x-landing__btn--login {
+    /* Eksisterende styling */
+    cursor: pointer;
+}
+
+.x-landing__btn--login[data-open] {
+    cursor: pointer;
+}
+
+
+/* Signup popup styling (kan tilføjes til login-popup.css) */
+.signup-popup .x-dialog__content {
+    max-width: 450px;
+}
+
+.signup-form input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+    border: 1px solid #cfd9de;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.signup-form input:focus {
+    outline: none;
+    border-color: #1DA1F2;
+    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.2);
+}
+
+.signup-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #0f1419;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.signup-submit-btn:hover:not(:disabled) {
+    background-color: #272c30;
+}
+
+.signup-submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.terms-notice {
+    font-size: 13px;
+    color: #536471;
+    margin: 15px 0;
+    line-height: 1.4;
+}
+
+.terms-notice a {
+    color: #1DA1F2;
+    text-decoration: none;
+}
+
+.terms-notice a:hover {
+    text-decoration: underline;
+}
+
+.signup-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #536471;
+    font-size: 14px;
+}
+
+.signup-footer a {
+    color: #1DA1F2;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-footer a:hover {
+    text-decoration: underline;
+}
+
+.switch-to-login-btn {
+    cursor: pointer;
+}
