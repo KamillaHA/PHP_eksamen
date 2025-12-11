@@ -17,14 +17,18 @@ try {
 
     require_once __DIR__ . "/../private/db.php";
     
-    // Tjek at kommentaren eksisterer og at brugeren ejer den
-    $checkSql = "SELECT * FROM comments WHERE comment_pk = :commentPk AND user_fk = :userFk";
+    // Tjek at kommentaren eksisterer og at brugeren ejer den - OG HENT post_fk
+    $checkSql = "SELECT post_fk FROM comments WHERE comment_pk = :commentPk AND user_fk = :userFk";
     $checkStmt = $_db->prepare($checkSql);
     $checkStmt->execute([':commentPk' => $commentPk, ':userFk' => $userFk]);
+    $commentData = $checkStmt->fetch(PDO::FETCH_ASSOC);
     
-    if (!$checkStmt->fetch()) {
+    if (!$commentData) {
         throw new Exception("Comment not found or you don't have permission to update it", 403);
     }
+    
+    // Hent post_pk fra resultatet
+    $postPk = $commentData['post_fk'];
     
     // Opdater kommentaren
     $sql = "UPDATE comments SET comment_text = :commentText WHERE comment_pk = :commentPk";
@@ -36,7 +40,7 @@ try {
     $stmt->execute();
 
     // Brug mix.js redirect til homepage
-    echo '<mixhtml mix-redirect="/home"></mixhtml>';
+    echo '<mixhtml mix-redirect="/home?post=' . htmlspecialchars($postPk) . '"></mixhtml>';
     exit();
     
 } catch (Exception $e) {
