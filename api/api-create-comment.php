@@ -38,7 +38,8 @@ try {
 
     $stmt->execute();
 
-    echo '<mixhtml mix-redirect="/home"></mixhtml>';
+    // Redirect tilbage til SAMME POST (single view)
+    echo '<mixhtml mix-redirect="/home?post=' . htmlspecialchars($postPk) . '"></mixhtml>';
     exit;
     
 } catch (Exception $e) {

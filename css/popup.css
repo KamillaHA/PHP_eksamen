@@ -99,9 +99,8 @@
 /* ========== COMMENT STYLING ========== */
 .comment {
     padding: 12px;
-    background: white;
-    border-radius: 6px;
-    border: 1px solid #e5e7eb;
+    background: #0b0b0b;
+    border-top: 0.5px solid #5e5e5e;
     position: relative; /* Important for dropdown positioning */
     margin-bottom: 8px;
 }
@@ -121,12 +120,12 @@
     flex: 1;
 }
 
-.comment-author {
+/* .comment-author {
     display: block;
     color: #111827;
     font-weight: 600;
     margin-bottom: 2px;
-}
+} */
 
 .comment-time {
     color: #6b7280;
@@ -135,20 +134,21 @@
 
 .comment-text {
     margin: 0;
-    color: #374151;
+    color: #f6f6f6;
     line-height: 1.5;
 }
 
+
 /* Comment section */
-.comments-section {
+/* .comments-section {
     margin: 15px 0;
     padding: 15px;
-    background-color: #f8fafc;
+    background-color: #0b0b0b;
     border-radius: 8px;
     border-left: 3px solid #3b82f6;
-}
+} */
 
-.comments-title {
+/* .comments-title {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -156,7 +156,7 @@
     margin-bottom: 15px;
     color: #374151;
     font-size: 16px;
-}
+} */
 
 .comments-list {
     display: flex;

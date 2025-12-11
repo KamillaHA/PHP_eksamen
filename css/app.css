@@ -18,16 +18,20 @@ baggrundsfarve - 0b0b0b
 
 body {
     width: 100vw;
-    height: 100%;
+    height: 100vh;
     margin: 0;
     padding: 0;
 }
 
 main {
-    margin: 0 320px 0 220px; /* Samme bredde som din nav */
+    margin: 0 320px 0 220px; 
     padding: 1rem;
     min-height: 100vh;
-    /* background: #0b0b0b */
+    background: #0b0b0b
+}
+
+.h1 {
+    color: #f6f6f6;
 }
 
 /* ----------------------------- */
@@ -108,40 +112,6 @@ a.x-landing__btn {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ----------------------------- */
-/* Header */
-
-/* Burger menu */
-/* .burger {
-  display: none;
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  z-index: 1100;
-  cursor: pointer;
-}
-
-.burger i.fa-xmark {
-  display: none;
-  pointer-events: none;
-}
-
-.burger.open i.fa-bars {
-  display: none;
-  pointer-events: none;
-}
-
-.burger.open i.fa-xmark {
-  display: block;
-  margin-left: 13rem;
-  width: 32px;
-  transform: translateX(0);
-  transition: transform 0.3s ease-in-out;
-} */
-
 /* Navigation */
 nav {
     position: fixed;
@@ -189,7 +159,7 @@ nav ul li a:hover {
 }
 
 /* Post button */
-.create-post-btn {
+.create-post-btn, .comment-submit-btn {
     margin: 0.5rem 0;
     padding: 0.7rem;
     font-size: 1rem;
@@ -293,7 +263,6 @@ nav ul li a:hover {
     font-weight: bold;
 }
 
-
 .scroll-top.show {
     opacity: 1;
     visibility: visible;
@@ -304,65 +273,12 @@ nav ul li a:hover {
 }
 
 
-/* ----------------------------- */
-/* Mobile styles */
-/* ----------------------------- */
-/* Header */
-
-/* @media (max-width: 1024px) {
-
-    main {
-        margin-left: 0;
-        padding: 1rem;
-    }
-  .burger {
-    display: block;
-  }
-
-  nav {
-    width: 70%;
-    max-width: 260px;
-    height: 100vh;
-    background: #fff;
-    transform: translateX(-100%);
-  }
-  
-  nav.active {
-    transform: translateX(0);
-  }
-}
-
-@media (max-width: 600px) {
-  nav {
-    width: 80%;
-  }
-} */
-
 /* Post Button Styles */
 .post-button-container {
     margin-bottom: 2rem;
     text-align: center;
 }
- 
-/* .create-post-btn {
-    background: linear-gradient(135deg, #1da1f2, #0d8bd9);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
-} */
- 
-/* .create-post-btn:hover {
-    background: linear-gradient(135deg, #0d8bd9, #1da1f2);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(29, 161, 242, 0.4);
-} */
- 
+
 /* Modal active state */
 .x-dialog {
     display: none;
@@ -524,14 +440,6 @@ nav ul li a:hover {
 
 /* -------------------------- */
 /* Profile */
-/* .profile-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-} */
 
 .profile-info, .update-profile, .user-posts {
     margin-bottom: 2rem;
@@ -617,7 +525,6 @@ nav ul li a:hover {
 .post-image img {
     max-width: 100%;
     border-radius: 10px;
-    margin-top: 1rem;
 }
 
 .post-stats {
@@ -700,7 +607,7 @@ nav ul li a:hover {
 .follow-section, .trends-section {
     background: #0b0b0b;
     border: 0.5px solid #5e5e5e; /* Samme border som knapper */
-    border-radius: 16px; /* Lidt afrundede hjørner */
+    border-radius: 16px; 
     padding: 1rem 1rem 0 1rem;
     margin-top: 1rem;
 }
@@ -757,4 +664,291 @@ nav ul li a:hover {
     .sidebar {
         display: none;
     }
+}
+
+/* ----------------------------- */
+/* Twitter/X Style Posts */
+/* ----------------------------- */
+
+.post-container {
+    background: #0b0b0b;
+    border: 0.5px solid #5e5e5e;
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.post-profile-section {
+    display: flex;
+    gap: 0.8rem;
+}
+
+/* Profilbillede cirkel */
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #1da1f2;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+/* Hovedindhold sektion */
+.post-content-section {
+    flex: 1;
+}
+
+/* Brugerinfo header */
+.post-user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.post-user-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.post-username, .comment-author {
+    color: #f6f6f6;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.post-user-handle {
+    color: #5e5e5e;
+    font-size: 0.9rem;
+}
+
+/* Post indhold */
+.post-content {
+    color: #f6f6f6;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 0.8rem 0;
+}
+
+/* Billede */
+.post-image {
+    margin: 1rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 0.5px solid #5e5e5e;
+}
+
+.post-image img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Kommentar knap */
+.post-actions {
+    padding-top: 0.8rem;
+    border-top: 0.5px solid #5e5e5e;
+    margin-top: 1rem;
+}
+
+.comment-btn {
+    background: none;
+    border: none;
+    color: #5e5e5e;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.comment-btn:hover {
+    color: #1da1f2;
+    background: rgba(29, 161, 242, 0.1);
+}
+
+.comment-count {
+    color: #5e5e5e;
+    font-size: 0.85rem;
+}
+
+/* Eksisterende kommentar styling forbliver som den er */
+.comments-section {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #0b0b0b;
+    /* border-radius: 12px; */
+    /* border-top: 0.5px solid #5e5e5e; */
+}
+
+.comments-section .comments-title {
+    color: #f6f6f6;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#write_comment {
+    background-color: #0b0b0b;
+    border: none;
+    border-top: 0.5px solid #5e5e5e;
+    color: #f6f6f6;
+    padding: 0.5rem 0 0 0.5rem;
+}
+
+.comment-input-group {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 2rem;
+    padding-top: 2rem;
+
+}
+
+/* Tre-prikker menu (beholder din eksisterende styling) */
+.post-menu {
+    position: relative;
+}
+
+.post-menu-btn {
+    background: none;
+    border: none;
+    color: #5e5e5e;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    width: 32px;
+    height: 32px;
+}
+
+.post-menu-btn:hover {
+    background-color: rgba(29, 161, 242, 0.1);
+    color: rgb(29, 161, 242);
+}
+
+/* Post dropdown (beholder din eksisterende styling) */
+.post-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    min-width: 150px;
+    overflow: hidden;
+    display: none;
+    margin-top: 5px;
+}
+
+.post-dropdown.visible {
+    display: block;
+}
+
+/* ----------------------------- */
+/* Single Post View Styling */
+/* ----------------------------- */
+
+.single-view-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 0.5px solid #5e5e5e;
+}
+
+.back-to-feed-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #1da1f2;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.back-to-feed-btn:hover {
+    background-color: rgba(29, 161, 242, 0.1);
+    text-decoration: none;
+}
+
+.back-to-feed-btn svg {
+    color: #1da1f2;
+}
+
+/* Single post view styling */
+.single-post-view {
+    border: 1px solid #5e5e5e;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Feed post view (normal) */
+.feed-post-view {
+    border: 0.5px solid #5e5e5e;
+    border-radius: 16px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Comments only in single view */
+.single-view-comments {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 0.5px solid #5e5e5e;
+}
+
+/* Post user info layout fix */
+.post-user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.post-user-text {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Comment link styling */
+.comment-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #5e5e5e;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.comment-btn:hover {
+    color: #1da1f2;
+    background: rgba(29, 161, 242, 0.1);
+    text-decoration: none;
 }

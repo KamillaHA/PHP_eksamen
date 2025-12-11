@@ -13,6 +13,9 @@ if (!$user) {
     exit;
 }
 
+// Hent post_id fra URL
+$single_post_id = $_GET['post'] ?? null;
+
 try {
     $sql = "SELECT posts.*, users.user_username FROM posts INNER JOIN users ON posts.post_user_fk = users.user_pk";
     $stmt = $_db->prepare($sql);
@@ -28,7 +31,8 @@ catch (Exception $e) {
 
 <main id="main">
 
-    <h1>All Posts</h1>
+    <!-- <h1 class="h1">All Posts</h1> -->
+
     <div id="toast"></div>
     
     <?php
