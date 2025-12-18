@@ -51,7 +51,7 @@
 <?php endif; ?>
 
 <?php if (isset($_SESSION['user'])): ?>
-    <?php require_once __DIR__."/../popup/_popup-create-post.php"; ?>
+    <?php require_once __DIR__."/../popups/_popup-create-post.php"; ?>
 <?php endif; ?>
 
 <div id="toast"></div>
