@@ -1,5 +1,6 @@
-<button 
-    class="follow-btn button-<?php echo $user_pk; ?>" 
-    mix-get="/api/api-follow?user_pk=<?php echo $user_pk; ?>">
-    Follow
-</button>
+<div class="button-<?= $user['user_pk'] ?>">
+    <form action="/api/api-follow.php" method="POST" mix-post>
+        <input type="hidden" name="following_pk" value="<?= $user['user_pk'] ?>">
+        <button type="submit" class="follow-btn">Follow</button>
+    </form>
+</div>

@@ -4,7 +4,7 @@ require_once __DIR__. "/components/_header.php"
 
 
 
-<form action="api/api-create-profile" method="POST">
+<form action="/api/api-create-profile" method="POST">
 
     <h1>Signup</h1>
 

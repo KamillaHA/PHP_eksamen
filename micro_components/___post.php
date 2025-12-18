@@ -73,7 +73,7 @@ if ($view_mode === 'single') {
         ?>
         
         <article class="post-container <?php echo $view_mode === 'single' ? 'single-post-view' : 'feed-post-view'; ?>" 
-                 id="post-<?php echo $post['post_pk']; ?>">
+                id="post-<?php echo $post['post_pk']; ?>">
             <!-- Container til profilbillede og brugerinfo -->
             <div class="post-profile-section">
                 

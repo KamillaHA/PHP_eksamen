@@ -49,7 +49,7 @@ try {
         <!-- Update Profile Form -->
         <section class="update-profile">
             <h3>Update Profile</h3>
-            <form action="api/api-update-profile.php" method="POST" class="profile-form">
+            <form action="/api/api-update-profile.php" method="POST" class="profile-form">
                 <div class="form-group">
                     <label for="user_email">Email:</label>
                     <input type="email" id="user_email" name="user_email" value="<?php _($user['user_email']) ?>" required>

@@ -1,5 +1,6 @@
-<button 
-    class="unfollow-btn button-<?php echo $user_pk; ?>" 
-    mix-get="/api/api-unfollow?user_pk=<?php echo $user_pk; ?>">
-    Unfollow
-</button>
+<div class="button-<?= $user['user_pk'] ?>">
+    <form action="/api/api-unfollow.php" method="POST" mix-post>
+        <input type="hidden" name="following_pk" value="<?= $user['user_pk'] ?>">
+        <button type="submit" class="unfollow-btn">Unfollow</button>
+    </form>
+</div>

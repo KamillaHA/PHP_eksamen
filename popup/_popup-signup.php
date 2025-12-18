@@ -25,7 +25,7 @@ if (isset($_SESSION["user"])) {
             
             <h2>Opret konto på X</h2>
             
-            <form class="signup-form" action="api/api-create-profile" method="POST" mix-post mix-after="main">
+            <form class="signup-form" action="/api/api-create-profile" method="POST" mix-post mix-after="main">
                 <?php if(isset($_GET['message'])): ?>
                     <div class="error-message">
                         <?php echo htmlspecialchars($_GET['message']); ?>

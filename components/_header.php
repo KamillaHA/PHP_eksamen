@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="app.css">
-    <link rel="stylesheet" href="/mixhtml.css">
+    <link rel="stylesheet" href="/css/mixhtml.css">
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/popup.css">
     <script defer src="/js/popup.js"></script>
@@ -49,6 +48,10 @@
                     <i class="fa-solid fa-ellipsis option"></i>
                 </div>
         </nav>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['user'])): ?>
+    <?php require_once __DIR__."/../popup/_popup-create-post.php"; ?>
 <?php endif; ?>
 
 <div id="toast"></div>

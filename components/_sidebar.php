@@ -1,4 +1,5 @@
 <?php
+
 $trends = [
     [
         'category' => 'Trending in Technology',
@@ -27,25 +28,33 @@ $trends = [
     ]
 ];
 
-$followSuggestions = [
-    [
-        'img' => 'https://picsum.photos/400/250',
-        'name' => 'Steve',
-        'handle' => '@stevejobs'
-    ],
-    [
-        'img' => 'https://picsum.photos/400/251',
-        'name' => 'Grace', 
-        'handle' => '@gracehopper'
-    ],
-    [
-        'img' => 'https://picsum.photos/400/252',
-        'name' => 'Rasmus',
-        'handle' => '@rasmuslerdorf'
-    ]
-];
-?>
+require_once __DIR__ . '/../private/db.php';
+$current_user_id = $_SESSION['user']['user_pk'] ?? null;
 
+$sql = "
+    SELECT user_pk, user_username
+    FROM users
+    WHERE user_pk != :current_user
+    ORDER BY RAND()
+    LIMIT 3
+";
+
+$stmt = $_db->prepare($sql);
+$stmt->execute([
+    ':current_user' => $current_user_id
+]);
+
+$followSuggestions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$followCheckStmt = $_db->prepare("
+    SELECT 1
+    FROM follows
+    WHERE follower_fk = :current_user
+    AND following_fk = :suggested_user
+    LIMIT 1
+");
+
+?>
 <aside class="sidebar">
     <!-- Trends sektion -->
     <div class="trends-section">
@@ -68,14 +77,41 @@ $followSuggestions = [
         
         <div class="follow-list">
             <?php foreach ($followSuggestions as $user): ?>
+
+                <?php
+                    $followCheckStmt->execute([
+                        ':current_user' => $current_user_id,
+                        ':suggested_user' => $user['user_pk']
+                    ]);
+                    $isFollowing = $followCheckStmt->fetchColumn();
+                ?>
+                
                 <div class="follow-item">
-                    <div class="follow-img">
-                        <img src="<?php echo htmlspecialchars($user['img']); ?>" alt="Profile">
+
+                <!-- Avatar circle -->
+                <div class="follow-avatar">
+                    <div class="avatar-circle">
+                        <?php echo strtoupper(substr($user['user_username'], 0, 1)); ?>
                     </div>
-                    <div>
-                        <div class="follow-name"><?php echo htmlspecialchars($user['name']); ?></div>
-                        <div class="follow-handle"><?php echo htmlspecialchars($user['handle']); ?></div>
+                </div>
+
+                <!-- Bruger info -->
+                <div class="follow-user-info">
+                    <div class="follow-name">
+                        <?php echo htmlspecialchars($user['user_username']); ?>
                     </div>
+                    <div class="follow-handle">
+                        @<?php echo htmlspecialchars($user['user_username']); ?>
+                    </div>
+                </div>
+
+                <!-- Follow-knap -->
+                <?php if ($isFollowing): ?>
+                    <?php require __DIR__ . '/../micro_components/___button-unfollow.php'; ?>
+                <?php else: ?>
+                    <?php require __DIR__ . '/../micro_components/___button-follow.php'; ?>
+                <?php endif; ?>
+                
                 </div>
             <?php endforeach; ?>
         </div>

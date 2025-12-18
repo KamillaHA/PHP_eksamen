@@ -17,7 +17,7 @@ $user = $_SESSION["user"];
             <button class="modal-close x-dialog__close">&times;</button>
         </div>
         <div class="modal-content">
-            <form class="post-form" action="api/api-create-post.php" method="POST" mix-post mix-after="main">
+            <form class="post-form" action="/api/api-create-post.php" method="POST" mix-post>
                 <div class="user-info">
                     <img src="https://avatar.iran.liara.run/public/73" alt="Profile">
                     <div>

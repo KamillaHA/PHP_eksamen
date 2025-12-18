@@ -21,6 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const target = btn.getAttribute("data-open");
       const dialog = document.getElementById(target);
+
+        if (target === "editProfileModal") {
+          setTimeout(initProfileValidation, 100);
+        }
       
       if (target === "createCommentModal") {
         const postId = btn.getAttribute("data-post-id");
@@ -44,8 +48,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
       
-      dialog.classList.add("active");
-    });
+        if (!dialog) {
+          console.warn('Dialog not found:', target);
+          return;
+        }
+        dialog.classList.add("active");
+      });
   });
 
   // Close dialog
@@ -421,9 +429,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   console.log("Popup.js: All handlers initialized successfully!");
-});
 
-// ========== PROFILE POPUP VALIDATION ==========
+  // ========== PROFILE POPUP VALIDATION ==========
 console.log("Setting up profile popup validation...");
 
 // Function to validate profile form
@@ -469,31 +476,14 @@ function initProfileValidation() {
 }
 
 // ========== PROFILE POPUP OPEN HANDLER ==========
-document.addEventListener("DOMContentLoaded", () => {
-    // ... eksisterende kode ...
-    
-    // Tilføj profile validation når popup åbnes
-    openButtons.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-            e.preventDefault();
-            const target = btn.getAttribute("data-open");
-            
-            // ... eksisterende kode for andre popups ...
-            
-            if (target === "editProfileModal") {
-                // Initialize validation for profile popup
-                setTimeout(initProfileValidation, 100);
-            }
-        });
-    });
-    
-    // ... resten af din eksisterende kode ...
-    
+
     // Tilføj: Close profile popup on submit
     const profileForm = document.querySelector('#editProfileModal .edit-profile-form');
     if (profileForm) profileForm.addEventListener('submit', function() {
         setTimeout(() => {
-            document.getElementById('editProfileModal')?.classlist.remove('active');
+            document.getElementById('editProfileModal')?.classList.remove('active');
         }, 100);
     });
+
 });
+

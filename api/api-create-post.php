@@ -6,7 +6,7 @@ require_once __DIR__."/../private/x.php";
 $user = $_SESSION["user"];
 
 if (!$user) {
-    header("Location: /login?message=not logged in, please login first");
+    echo '<mixhtml mix-redirect="/login?message=not logged in"></mixhtml>';
     exit;
 }
 

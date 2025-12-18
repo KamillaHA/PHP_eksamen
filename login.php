@@ -8,7 +8,7 @@ $message = $_GET['message'] ?? '';
     <h1><?php echo htmlspecialchars($message) ?></h1>
 <?php endif; ?>
 
-<form action="api/api-login" method="POST">
+<form action="/api/api-login" method="POST">
 
     <h1>Login</h1>
 

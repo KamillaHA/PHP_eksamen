@@ -19,7 +19,7 @@ $user = $_SESSION["user"];
             <button class="modal-close x-dialog__close">&times;</button>
         </div>
         <div class="modal-content">
-            <form class="edit-profile-form" action="api/api-update-profile.php" method="POST">
+            <form class="edit-profile-form" action="/api/api-update-profile.php" method="POST">
                 <!-- Email Field -->
                 <div class="form-group">
                     <label for="user_email">Email</label>
