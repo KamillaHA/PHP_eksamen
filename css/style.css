@@ -12,3 +12,6 @@
 
 /* Komponenter - Header, footer, sidebar osv...*/
 @import './components.css';
+
+/* MixHTML */
+@import './mixhtml.css';

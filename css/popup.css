@@ -1,8 +1,166 @@
 /* Popup - Profile, post og comment */
 
-/* ========== COMMENT DROPDOWN MENU STYLING ========== */
+/* ----------------------------- */
+/* Modal active state (generic dialog) */
+.x-dialog {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
 
-/* Three dots menu button */
+.x-dialog.active {
+    display: block;
+}
+
+.x-dialog__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.x-dialog.active .x-dialog__overlay {
+    opacity: 1;
+}
+
+.x-dialog__content {
+    position: relative;
+    background: white;
+    margin: 50px auto;
+    padding: 0;
+    max-width: 600px;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.x-dialog.active .x-dialog__content {
+    opacity: 1;
+}
+
+/* Generic modal layout */
+.modal-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px 16px;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #657786;
+    padding: 4px;
+}
+
+.modal-close:hover {
+    color: #14171a;
+}
+
+.modal-content {
+    padding: 0 16px 16px;
+}
+
+/* Post form in modal */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.name {
+    font-weight: 600;
+    color: #14171a;
+}
+
+.handle {
+    color: #657786;
+    font-size: 14px;
+}
+
+.post-form textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    font-size: 20px;
+    min-height: 120px;
+    margin-bottom: 16px;
+    outline: none;
+    font-family: inherit;
+}
+
+.post-form textarea::placeholder {
+    color: #657786;
+}
+
+.post-form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e6ecf0;
+    padding-top: 16px;
+}
+
+.post-form-icons {
+    display: flex;
+    gap: 16px;
+}
+
+.post-form-icon {
+    background: none;
+    border: none;
+    color: #1da1f2;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.post-form-icon:hover {
+    background-color: #e8f5fe;
+}
+
+.post-submit-btn {
+    background-color: #1da1f2;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.post-submit-btn:disabled {
+    background-color: #9bd1f9;
+    cursor: not-allowed;
+}
+
+.post-submit-btn:hover:not(:disabled) {
+    background-color: #0d8bd9;
+}
+
+/* ----------------------------- */
+/* COMMENT DROPDOWN MENU STYLING */
 .comment-menu {
     position: relative;
     display: inline-block;
@@ -33,7 +191,6 @@
     height: 18px;
 }
 
-/* Dropdown menu */
 .comment-dropdown {
     position: absolute;
     top: 100%;
@@ -45,12 +202,12 @@
     z-index: 1000;
     min-width: 140px;
     overflow: hidden;
-    display: none; /* Hidden by default */
+    display: none;
     margin-top: 5px;
 }
 
 .comment-dropdown.visible {
-    display: block; /* Only shown with .visible class */
+    display: block;
 }
 
 .dropdown-item {
@@ -98,12 +255,12 @@
     display: block;
 }
 
-/* ========== COMMENT STYLING ========== */
+/* Comment styling */
 .comment {
     padding: 12px;
     background: #0b0b0b;
     border-top: 0.5px solid #5e5e5e;
-    position: relative; /* Important for dropdown positioning */
+    position: relative;
     margin-bottom: 8px;
 }
 
@@ -122,13 +279,6 @@
     flex: 1;
 }
 
-.comment-author {
-    display: block;
-    color: #111827;
-    font-weight: 600;
-    margin-bottom: 2px;
-}
-
 .comment-time {
     color: #6b7280;
     font-size: 12px;
@@ -140,8 +290,7 @@
     line-height: 1.5;
 }
 
-
-/* Comment section */
+/* Comments section (popup-ish styling) */
 .comments-section {
     margin: 15px 0;
     padding: 15px;
@@ -166,26 +315,8 @@
     gap: 10px;
 }
 
-/* ========== POST HEADER AND MENU ========== */
-.post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 10px;
-}
-
-.post-header-left {
-    flex: 1;
-}
-
-.post-message {
-    margin: 10px 0;
-    color: #374151;
-    line-height: 1.5;
-    font-size: 15px;
-}
-
-/* Post three dots menu */
+/* ----------------------------- */
+/* POST DROPDOWN MENU STYLING */
 .post-menu {
     position: relative;
     display: inline-block;
@@ -216,7 +347,6 @@
     height: 18px;
 }
 
-/* Post dropdown menu */
 .post-dropdown {
     position: absolute;
     top: 100%;
@@ -228,24 +358,12 @@
     z-index: 1000;
     min-width: 150px;
     overflow: hidden;
-    display: none; /* Hidden by default */
+    display: none;
     margin-top: 5px;
 }
 
 .post-dropdown.visible {
-    display: block; /* Only shown with .visible class */
-}
-
-/* Post image styling */
-.post-image {
-    margin-bottom: 10px;
-}
-
-.post-image img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 12px;
+    display: block;
 }
 
 /* Profile Popup Styles */
@@ -300,6 +418,7 @@
     cursor: not-allowed;
 }
 
+/* ----------------------------- */
 /* Login popup styling */
 .x-dialog.login-popup {
     display: none;
@@ -365,15 +484,6 @@
     padding: 32px;
 }
 
-.login-popup .popup-logo {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.login-popup .popup-logo svg {
-    color: #0f1419;
-}
-
 .login-popup h2 {
     text-align: center;
     margin-bottom: 25px;
@@ -382,7 +492,6 @@
     color: #0f1419;
 }
 
-/* Login form styling */
 .login-form input {
     width: 100%;
     padding: 14px;
@@ -448,7 +557,7 @@
     text-decoration: underline;
 }
 
-/* Responsive design */
+/* Responsive for login popup */
 @media (max-width: 480px) {
     .login-popup .x-dialog__content {
         width: 95%;
@@ -461,40 +570,13 @@
         transform: none;
         max-height: 100vh;
     }
-    
+
     .login-popup .modal-content {
         padding: 20px;
     }
 }
 
-/* Tilføj til din eksisterende style.css */
-.x-landing__btn--login.login-popup-btn {
-    cursor: pointer;
-    font: inherit;
-    text-align: center;
-    display: inline-block;
-    width: 300px;
-    max-width: 100%;
-    /* Resten af din eksisterende styling */
-}
-
-.x-landing__btn--login.login-popup-btn:hover {
-    background-color: #e8f5fe;
-    /* Resten af din hover styling */
-}
-
-/* Sikr at login-knappen på forsiden ser ens ud med og uden popup */
-.x-landing__btn--login {
-    /* Eksisterende styling */
-    cursor: pointer;
-}
-
-.x-landing__btn--login[data-open] {
-    cursor: pointer;
-}
-
-
-/* Signup popup styling (kan tilføjes til login-popup.css) */
+/* Signup popup */
 .signup-popup .x-dialog__content {
     max-width: 450px;
 }
@@ -536,41 +618,4 @@
 .signup-submit-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-}
-
-.terms-notice {
-    font-size: 13px;
-    color: #536471;
-    margin: 15px 0;
-    line-height: 1.4;
-}
-
-.terms-notice a {
-    color: #1DA1F2;
-    text-decoration: none;
-}
-
-.terms-notice a:hover {
-    text-decoration: underline;
-}
-
-.signup-footer {
-    text-align: center;
-    margin-top: 20px;
-    color: #536471;
-    font-size: 14px;
-}
-
-.signup-footer a {
-    color: #1DA1F2;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.signup-footer a:hover {
-    text-decoration: underline;
-}
-
-.switch-to-login-btn {
-    cursor: pointer;
 }
