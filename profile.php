@@ -121,7 +121,7 @@ try {
 
 <?php 
 // Tilføj profil-popup (vi skal oprette denne fil)
-require_once __DIR__."/popup/_popup-update-profile.php";
-require_once __DIR__."/popup/_popup-create-post.php";
+require_once __DIR__."/popups/_popup-update-profile.php";
+require_once __DIR__."/popups/_popup-create-post.php";
 require_once __DIR__ . '/components/_footer.php'; 
 ?>

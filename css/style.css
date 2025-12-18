@@ -1,0 +1,14 @@
+/* Variabler */
+@import './variables.css';
+
+/* Global styling */
+@import './app.css';
+
+/* Sider - Index, home og profile */
+@import './pages.css';
+
+/* Popup - Profile, post og comment */
+@import './popup.css';
+
+/* Komponenter - Header, footer, sidebar osv...*/
+@import './components.css';

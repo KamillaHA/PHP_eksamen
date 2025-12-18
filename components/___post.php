@@ -13,6 +13,7 @@ require_once __DIR__ . '/___comment.php';
 
 <div class="posts-container">
     <?php if ($view_mode === 'single'): ?>
+
         <!-- Tilbage knap kun i single view -->
         <div class="single-view-header">
             <a href="/home" class="back-to-feed-btn">
@@ -28,6 +29,7 @@ require_once __DIR__ . '/___comment.php';
         <p>No posts found.</p>
     <?php else: ?>
 <?php 
+
 // I single view: Find det rigtige post baseret på ID
 if ($view_mode === 'single') {
     $found_post = null;
@@ -47,6 +49,7 @@ if ($view_mode === 'single') {
             // Hent kommentar count eller hele kommentarlisten afhængig af view
             try {
                 if ($view_mode === 'single') {
+                    
                     // Single view: Hent hele kommentarlisten
                     $sql = "SELECT comments.*, users.user_username 
                             FROM comments 
@@ -58,6 +61,7 @@ if ($view_mode === 'single') {
                     $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     $commentCount = count($comments);
                 } else {
+
                     // Feed view: Hent kun count for bedre performance
                     $sql = "SELECT COUNT(*) as comment_count FROM comments WHERE post_fk = :post_pk"; 
                     $stmt = $_db->prepare($sql);
@@ -70,18 +74,45 @@ if ($view_mode === 'single') {
                 $comments = [];
                 $commentCount = 0;
             }
+
+            // NY: Hent like data for hvert post (både single OG feed view)
+            try {
+                // Hent total like count for dette post
+                $sqlLikes = "SELECT COUNT(*) as like_count FROM likes WHERE like_post_fk = :post_pk";
+                $stmtLikes = $_db->prepare($sqlLikes);
+                $stmtLikes->execute([':post_pk' => $post['post_pk']]);
+                $resultLikes = $stmtLikes->fetch(PDO::FETCH_ASSOC);
+                $likeCount = $resultLikes['like_count'] ?? 0;
+                
+                // Hent om den aktuelle bruger har liket dette post
+                $userLiked = false;
+                if ($current_user_id) {
+                    $sqlUserLike = "SELECT 1 FROM likes WHERE like_post_fk = :post_pk AND like_user_fk = :user_id";
+                    $stmtUserLike = $_db->prepare($sqlUserLike);
+                    $stmtUserLike->execute([
+                        ':post_pk' => $post['post_pk'],
+                        ':user_id' => $current_user_id
+                    ]);
+                    $userLiked = $stmtUserLike->fetch() ? true : false;
+                }
+            } catch (Exception $e) {
+                $likeCount = 0;
+                $userLiked = false;
+            }
         ?>
         
         <article class="post-container <?php echo $view_mode === 'single' ? 'single-post-view' : 'feed-post-view'; ?>" 
-                id="post-<?php echo $post['post_pk']; ?>">
+            id="post-<?php echo $post['post_pk']; ?>">
             <!-- Container til profilbillede og brugerinfo -->
             <div class="post-profile-section">
                 
                 <!-- Brugerinfo og indhold -->
                 <div class="post-content-section">
+
                     <!-- Brugerinfo og tre-prikker menu -->
                     <div class="post-user-header">
                         <div class="post-user-info">
+
                             <!-- Profilbillede -->
                             <div class="post-user-avatar">
                                 <div class="avatar-circle">
@@ -138,9 +169,33 @@ if ($view_mode === 'single') {
                         </div>
                     <?php endif; ?>
                     
-                    <!-- Kommentar sektion - forskellig i single vs feed view -->
+                    <!-- Post actions med både like og kommentar -->
                     <div class="post-actions">
-                        <?php if ($view_mode === 'single'): ?>
+
+                            <!-- Like knap -->
+                            <span class="action like" 
+                                role="button" 
+                                tabindex="0" 
+                                aria-pressed="<?php echo $userLiked ? 'true' : 'false'; ?>"
+                                aria-label="Like"
+                                data-post-id="<?php echo $post['post_pk']; ?>"
+                                <?php if ($userLiked): ?>class="is-liked"<?php endif; ?>>
+                                
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="heart-icon" width="18" height="18">
+                                    <g>
+                                        <?php if ($userLiked): ?>
+                                            <!-- Filled heart (liked) - DEN UDFYLDTE VERSION DU HAR -->
+                                            <path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91z"></path>
+                                        <?php else: ?>
+                                            <!-- Outline heart (not liked) -->
+                                            <path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path>
+                                        <?php endif; ?>
+                                    </g>
+                                </svg>
+                                <span class="like-count"><?php echo $likeCount; ?></span>
+                            </span>
+
+                            <?php if ($view_mode === 'single'): ?>
                             <!-- Single view: Vis count som tekst -->
                             <span class="comment-count-display">
                                 <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
@@ -153,8 +208,8 @@ if ($view_mode === 'single') {
                         <?php else: ?>
                             <!-- Feed view: Vis som link til single view -->
                             <a href="/home?post=<?php echo $post['post_pk']; ?>" 
-                               class="comment-btn"
-                               title="View post and comments">
+                                class="comment-btn"
+                                title="View post and comments">
                                 <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
                                     <path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"/>
                                 </svg>
@@ -184,7 +239,7 @@ if ($view_mode === 'single') {
             </div>
         <?php endif; ?>
         
-<!-- NY: Add comment form -->
+<!-- Add comment form -->
 <div class="add-comment-form">
     <form action="/api/api-create-comment.php" method="POST" mix-post mix-target>
         <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
@@ -192,10 +247,10 @@ if ($view_mode === 'single') {
         <div class="comment-input-group">
             <textarea name="comment_text"
                     id="write_comment"
-                      placeholder="Write a comment..." 
-                      rows="2"
-                      maxlength="255"
-                      required></textarea>
+                        placeholder="Write a comment..." 
+                        rows="2"
+                        maxlength="255"
+                        required></textarea>
             <button type="submit" class="comment-submit-btn">Post</button>
         </div>
     </form>
