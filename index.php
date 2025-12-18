@@ -48,7 +48,7 @@ require_once __DIR__."/components/_header.php";
 
 <?php 
 // Inkluder begge popups
-require_once __DIR__."/popup/_popup-login.php";
-require_once __DIR__."/popup/_popup-signup.php";
+require_once __DIR__."/popups/_popup-login.php";
+require_once __DIR__."/popups/_popup-signup.php";
 require_once __DIR__."/components/_footer.php"; 
 ?>

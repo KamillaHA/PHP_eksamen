@@ -37,17 +37,17 @@ catch (Exception $e) {
     
     <?php
     // Inkluder posts komponentet
-    require_once __DIR__."/micro_components/___post.php";
+    require_once __DIR__."/components/___post.php";
     require_once __DIR__."/components/_sidebar.php";
     ?>
 </main>
 
 <?php
 // Inkluder post modal komponent
-require_once __DIR__."/popup/_popup-create-post.php";
-require_once __DIR__."/popup/_popup-update-post.php";
-require_once __DIR__."/popup/_popup-create-comment.php";
-require_once __DIR__."/popup/_popup-update-comment.php";
+require_once __DIR__."/popups/_popup-create-post.php";
+require_once __DIR__."/popups/_popup-update-post.php";
+require_once __DIR__."/popups/_popup-create-comment.php";
+require_once __DIR__."/popups/_popup-update-comment.php";
 require_once __DIR__."/components/_footer.php";
 ?>
 
