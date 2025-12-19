@@ -1,14 +1,14 @@
 <?php
-require_once __DIR__."/components/_header.php";
+// require_once __DIR__."/components/_header.php";
 
-$message = $_GET['message'] ?? '';
+// $message = $_GET['message'] ?? '';
 ?>
 
 <?php if($message): ?>
-    <h1><?php echo htmlspecialchars($message) ?></h1>
+    <!-- <h1><?php echo htmlspecialchars($message) ?></h1> -->
 <?php endif; ?>
 
-<form action="/api/api-login" method="POST">
+<!-- <form action="/api/api-login" method="POST">
 
     <h1>Login</h1>
 
@@ -19,8 +19,8 @@ $message = $_GET['message'] ?? '';
         Login
     </button>
 
-</form>
+</form> -->
 
 <?php
-require_once __DIR__."/components/_footer.php";
+// require_once __DIR__."/components/_footer.php";
 ?>

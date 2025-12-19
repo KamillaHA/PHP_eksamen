@@ -28,7 +28,7 @@ $trends = [
     ]
 ];
 
-require_once __DIR__ . '/../private/db.php';
+require_once __DIR__ . '/../../../private/db.php';
 $current_user_id = $_SESSION['user']['user_pk'] ?? null;
 
 $sql = "

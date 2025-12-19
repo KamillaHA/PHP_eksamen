@@ -1,8 +1,8 @@
 <?php
 session_start();
 require_once __DIR__ . '/components/_header.php';
-require_once __DIR__ . '/private/x.php';
-require_once __DIR__ . '/private/db.php';
+require_once __DIR__ . '/../../private/x.php';
+require_once __DIR__ . '/../../private/db.php';
 
 $user = $_SESSION["user"];
 
@@ -69,7 +69,7 @@ try {
             </form>
         </section>
 
-      <!-- User's Posts Section -->
+        <!-- User's Posts Section -->
         <section class="user-posts">
             <h2>Your Posts</h2>
             

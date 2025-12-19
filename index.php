@@ -7,7 +7,7 @@ if (isset($_SESSION['user'])) {
   exit();
 }
 
-require_once __DIR__."/components/_header.php";
+require_once __DIR__."/app/views/components/_header.php"; 
 ?>
 
 <div class="x-landing">
@@ -48,7 +48,7 @@ require_once __DIR__."/components/_header.php";
 
 <?php 
 // Inkluder begge popups
-require_once __DIR__."/popups/_popup-login.php";
-require_once __DIR__."/popups/_popup-signup.php";
-require_once __DIR__."/components/_footer.php"; 
+require_once __DIR__."/app/views/popups/_popup-login.php";
+require_once __DIR__."/app/views/popups/_popup-signup.php";
+require_once __DIR__."/app/views/components/_footer.php"; 
 ?>

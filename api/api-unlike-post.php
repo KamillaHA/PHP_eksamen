@@ -1,27 +1,30 @@
 <?php
 
-session_start();
-$user = $_SESSION["user"];
+require_once __DIR__ . "/../app/controllers/LikeController.php";
+LikeController::unlike();
 
-if (!$user) {
-    header("Location: /login?message=Please login to unlike a post");
-    exit;
-}
+// session_start();
+// $user = $_SESSION["user"];
 
-try {
-    require_once __DIR__ . '/../private/x.php';
+// if (!$user) {
+//     header("Location: /login?message=Please login to unlike a post");
+//     exit;
+// }
 
-    $userPk = $user['user_pk'];
-    $postPk = _validatePk('post_pk');
+// try {
+//     require_once __DIR__ . '/../private/x.php';
 
-    require_once __DIR__ . '/../private/db.php';
-    $sql = "DELETE FROM likes WHERE like_user_fk = :userPk AND like_post_fk = :postPk";
-    $stmt = $_db->prepare($sql);
-    $stmt->bindParam(':userPk', $userPk);
-    $stmt->bindParam(':postPk', $postPk);
-    $stmt->execute();
+//     $userPk = $user['user_pk'];
+//     $postPk = _validatePk('post_pk');
 
-    header("Location: /home");
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
+//     require_once __DIR__ . '/../private/db.php';
+//     $sql = "DELETE FROM likes WHERE like_user_fk = :userPk AND like_post_fk = :postPk";
+//     $stmt = $_db->prepare($sql);
+//     $stmt->bindParam(':userPk', $userPk);
+//     $stmt->bindParam(':postPk', $postPk);
+//     $stmt->execute();
+
+//     header("Location: /home");
+// } catch (Exception $e) {
+//     echo "Error: " . $e->getMessage();
+// }

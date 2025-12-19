@@ -5,5 +5,13 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
+# Tillad adgang til adskillige mapper
+RewriteRule ^views/(.*\.php)$ - [L]
 
-
+# Omdiriger til views for bestemte sider
+RewriteRule ^home$ app/views/home.php [L]
+RewriteRule ^login$ app/views/login.php [L]
+RewriteRule ^logout$ app/views/logout.php [L]
+RewriteRule ^profile$ app/views/profile.php [L]
+RewriteRule ^signup$ app/views/signup.php [L]
+RewriteRule ^users$ app/views/users.php [L]

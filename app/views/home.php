@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once __DIR__."/./components/_header.php";
-require_once __DIR__."/./private/x.php";
-require_once __DIR__ . "/./private/db.php";
+require_once __DIR__."/components/_header.php";
+require_once __DIR__."/../../private/x.php";
+require_once __DIR__ . "/../../private/db.php";
 
 $user = $_SESSION["user"];
 $current_user_id = $_SESSION['user']['user_pk'] ?? null;

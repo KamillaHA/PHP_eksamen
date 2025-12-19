@@ -1,28 +1,31 @@
 <?php
 
-try {
-    
-    require_once __DIR__ . "/../private/db.php";
-    
-    session_start();
-    
-    if (!isset($_SESSION["user"])) {
-        http_response_code(401);
-        header("Location: /login?message=error");
-        exit;
-    }
-    
-    session_destroy();
-    $user_id = $_SESSION["user"]["user_pk"];
+require_once __DIR__ . "/../app/controllers/ProfileController.php";
+ProfileController::delete();
 
-    $sql = "DELETE FROM users WHERE user_pk = :user_pk";
-    $stmt = $_db->prepare($sql);
-    $stmt->bindValue(":user_pk", $user_id);
-    $stmt->execute();
+// try {
+    
+//     require_once __DIR__ . "/../private/db.php";
+    
+//     session_start();
+    
+//     if (!isset($_SESSION["user"])) {
+//         http_response_code(401);
+//         header("Location: /login?message=error");
+//         exit;
+//     }
+    
+//     session_destroy();
+//     $user_id = $_SESSION["user"]["user_pk"];
 
-    header("Location: /login?message=profile deleted");
+//     $sql = "DELETE FROM users WHERE user_pk = :user_pk";
+//     $stmt = $_db->prepare($sql);
+//     $stmt->bindValue(":user_pk", $user_id);
+//     $stmt->execute();
 
-} catch (Exception $e) {
-    http_response_code(500);
-    echo "error";
-}
+//     header("Location: /login?message=profile deleted");
+
+// } catch (Exception $e) {
+//     http_response_code(500);
+//     echo "error";
+// }

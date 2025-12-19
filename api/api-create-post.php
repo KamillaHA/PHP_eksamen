@@ -1,56 +1,60 @@
 <?php 
-session_start();
 
-require_once __DIR__."/../private/x.php";
+require_once __DIR__ . "/../app/controllers/PostController.php";
+PostController::create();
 
-$user = $_SESSION["user"];
+// session_start();
 
-if (!$user) {
-    echo '<mixhtml mix-redirect="/login?message=not logged in"></mixhtml>';
-    exit;
-}
+// require_once __DIR__."/../private/x.php";
 
-try {
-    $postMessage = _validatePost();
-    $postImage = "https://picsum.photos/400/250";
+// $user = $_SESSION["user"];
 
-    $postPk = bin2hex(random_bytes(25));
+// if (!$user) {
+//     echo '<mixhtml mix-redirect="/login?message=not logged in"></mixhtml>';
+//     exit;
+// }
 
-    require_once __DIR__."/../private/db.php";
-    $sql = "INSERT INTO posts (post_pk, post_message, post_image_path, post_user_fk) Values (:post_pk, :post_message, :post_image_path, :post_user_fk)";
+// try {
+//     $postMessage = _validatePost();
+//     $postImage = "https://picsum.photos/400/250";
 
-    $stmt = $_db->prepare( $sql );
+//     $postPk = bin2hex(random_bytes(25));
 
-    $stmt->bindValue(":post_pk", $postPk);
-    $stmt->bindValue(":post_message", $postMessage);
-    $stmt->bindValue(":post_image_path", $postImage);
-    $stmt->bindValue("post_user_fk", $user["user_pk"]);
+//     require_once __DIR__."/../private/db.php";
+//     $sql = "INSERT INTO posts (post_pk, post_message, post_image_path, post_user_fk) Values (:post_pk, :post_message, :post_image_path, :post_user_fk)";
 
-    $stmt->execute();
+//     $stmt = $_db->prepare( $sql );
 
-    echo '<mixhtml mix-redirect="/home"></mixhtml>';
-    exit;
+//     $stmt->bindValue(":post_pk", $postPk);
+//     $stmt->bindValue(":post_message", $postMessage);
+//     $stmt->bindValue(":post_image_path", $postImage);
+//     $stmt->bindValue("post_user_fk", $user["user_pk"]);
+
+//     $stmt->execute();
+
+//     echo '<mixhtml mix-redirect="/home"></mixhtml>';
+//     exit;
     
-    echo "<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Post Created</title>
-    </head>
-    <body>
-        $toast_ok
-        $freshForm
-    </body>
-    </html>";
-}
-catch(Exception $e){
-    http_response_code($e->getCode() ?: 400);
-    echo "<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Error</title>
-    </head>
-    <body>
-        <div id='toast'>".$e->getMessage()."</div>
-    </body>
-    </html>";
-}
+//     echo "<!DOCTYPE html>
+//     <html>
+//     <head>
+//         <title>Post Created</title>
+//     </head>
+//     <body>
+//         $toast_ok
+//         $freshForm
+//     </body>
+//     </html>";
+// }
+// catch(Exception $e){
+//     http_response_code($e->getCode() ?: 400);
+//     echo "<!DOCTYPE html>
+//     <html>
+//     <head>
+//         <title>Error</title>
+//     </head>
+//     <body>
+//         <div id='toast'>".$e->getMessage()."</div>
+//     </body>
+//     </html>";
+// }
