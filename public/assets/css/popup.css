@@ -79,13 +79,6 @@
     margin-bottom: 16px;
 }
 
-.user-info img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 12px;
-}
-
 .name {
     font-weight: 600;
     color: #14171a;
@@ -309,6 +302,39 @@
     font-size: 16px;
 }
 
+/* Anden css til ovenstående klasser - hvilken en skal bruges? */
+/* .comments-section {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #0b0b0b;
+    border-radius: 12px;
+    border-top: 0.5px solid #5e5e5e;
+}
+
+.comments-section .comments-title {
+    color: #f6f6f6;
+    font-size: 1rem;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+} */
+
+#write_comment {
+    background-color: #0b0b0b;
+    border: none;
+    border-top: 0.5px solid #5e5e5e;
+    color: #f6f6f6;
+    padding: 0.5rem 0 0 0.5rem;
+}
+
+.comment-input-group {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    gap: 2rem;
+    padding-top: 2rem;
+}
+
 .comments-list {
     display: flex;
     flex-direction: column;
@@ -340,11 +366,6 @@
 .post-menu-btn:hover {
     background-color: rgba(29, 155, 240, 0.1);
     color: rgb(29, 155, 240);
-}
-
-.post-menu-btn svg {
-    width: 18px;
-    height: 18px;
 }
 
 .post-dropdown {
@@ -654,12 +675,57 @@
 
 
 
-/* Center profile modals exactly in viewport
-.profile-edit-modal .x-dialog__content,
-.danger-modal .x-dialog__content {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0;
-} */
+
+.delete-profile-btn {
+    background: transparent;
+    color: #ef4444;
+    border: 1px solid #ef4444;
+    padding: 0.6rem 1.2rem;
+    border-radius: 9999px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.delete-profile-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.danger-modal .modal-header h3 {
+    color: #ef4444;
+}
+
+.danger-text {
+    color: #0b0b0b;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid #5e5e5e;
+    color: #0b0b0b;
+    padding: 0.6rem 1.2rem;
+    border-radius: 9999px;
+    cursor: pointer;
+}
+
+.confirm-delete-btn {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 9999px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.confirm-delete-btn:hover {
+    background: #dc2626;
+}

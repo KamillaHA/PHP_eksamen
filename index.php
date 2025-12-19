@@ -1,55 +1,60 @@
-<?php 
-session_start();
-$title = "Welcome";
-$body_class = "page-landing";
+<?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-if (isset($_SESSION['user'])) {
-  header('Location: /home');
-  exit();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-require_once __DIR__."/app/views/components/_header.php"; 
-?>
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-<div class="x-landing">
-  <div class="x-landing__left">
-      <div class="x-landing__logo" aria-hidden="true">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="xLogoTitle">
-          <title id="xLogoTitle">X (Twitter) logo</title>
-          <path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-      </div>
-  </div>
+switch ($uri) {
 
-  <div class="x-landing__right">
-    <h1 class="x-landing__title">Happening now</h1>
-    <h2 class="x-landing__subtitle">Join today.</h2>
+    case '/':
+        if (isset($_SESSION['user'])) {
+            header('Location: /home');
+            exit;
+        }
 
-    <div class="x-landing__buttons">
-      <!-- ÆNDRET: Brug button i stedet for link -->
-      <button class="x-landing__btn x-landing__btn--signup" data-open="signupModal">
-          Create an account
-      </button>
-      
-      <p class="x-landing__terms">By signing up, you agree to the 
-          <a href="/terms">Terms of Service</a> and 
-          <a href="/privacy">Privacy Policy</a>, including 
-          <a href="/cookies">Cookie Use</a>.
-      </p>
-      
-      <div class="x-landing__login">
-        <p class="x-landing__login-text">Already have an account?</p>
-        <button class="x-landing__btn x-landing__btn--login" data-open="loginModal">
-            Log in
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+        $title = "Welcome";
+        $body_class = "page-landing";
 
-<?php 
-// Inkluder begge popups
-require_once __DIR__."/app/views/popups/_popup-login.php";
-require_once __DIR__."/app/views/popups/_popup-signup.php";
-require_once __DIR__."/app/views/components/_footer.php"; 
-?>
+        require __DIR__ . '/app/views/components/_header.php';
+        require __DIR__ . '/app/views/landing.php';
+        require __DIR__ . '/app/views/components/_footer.php';
+        exit;
+
+    case '/profile':
+        require_once __DIR__ . '/app/controllers/ProfileController.php';
+        ProfileController::get();
+        break;
+
+    case '/home':
+        require_once __DIR__ . '/app/controllers/PostController.php';
+        PostController::index();
+        break;
+
+    case '/follow':
+        require_once __DIR__ . '/app/controllers/FollowController.php';
+        FollowController::follow();
+        break;
+
+    case '/unfollow':
+        require_once __DIR__ . '/app/controllers/FollowController.php';
+        FollowController::unfollow();
+        break;
+
+    case '/like':
+        require_once __DIR__ . '/app/controllers/LikeController.php';
+        LikeController::like();
+        break;
+
+    case '/unlike':
+        require_once __DIR__ . '/app/controllers/LikeController.php';
+        LikeController::unlike();
+        break;
+
+    default:
+        http_response_code(404);
+        echo '404 - Not Found';
+}

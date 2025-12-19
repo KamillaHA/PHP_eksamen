@@ -5,9 +5,7 @@ ProfileController::delete();
 try {
     
     require_once __DIR__ . "/../private/db.php";
-    
-    session_start();
-    
+        
     if (!isset($_SESSION["user"])) {
         http_response_code(401);
         header("Location: /login?message=error");

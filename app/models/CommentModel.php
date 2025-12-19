@@ -20,7 +20,7 @@ class CommentModel
                 FROM comments
                 JOIN users ON comments.user_fk = users.user_pk
                 WHERE post_fk = :post
-                AND deleted_at IS NULL
+                AND comments.deleted_at IS NULL
                 ORDER BY created_at DESC";
 
         $stmt = $_db->prepare($sql);
@@ -28,6 +28,20 @@ class CommentModel
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function countByPost(string $postPk): int
+    {
+        require __DIR__ . "/../../private/db.php";
+
+        $stmt = $_db->prepare(
+            "SELECT COUNT(*) FROM comments 
+            WHERE post_fk = :post 
+            AND deleted_at IS NULL"
+        );
+        $stmt->execute([":post" => $postPk]);
+
+        return (int) $stmt->fetchColumn();
     }
 
     public static function softDelete(string $commentPk): void

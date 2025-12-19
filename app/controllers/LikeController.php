@@ -5,7 +5,10 @@ class LikeController
 {
     public static function like(): void
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
         $userPk = $_SESSION["user"]["user_pk"];
@@ -15,17 +18,33 @@ class LikeController
             LikeModel::create($userPk, $postPk);
         }
 
-        echo '<mixhtml mix-redirect="/home"></mixhtml>';
+        // Beregn ny state
+        $userLiked = true;
+        $likeCount = LikeModel::countByPost($postPk);
+
+        require __DIR__ . '/../views/micro_components/___like-button.php';
         exit;
     }
 
+
     public static function unlike(): void
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
-        LikeModel::delete($_SESSION["user"]["user_pk"], _validatePk("post_fk"));
-        echo '<mixhtml mix-redirect="/home"></mixhtml>';
+        $userPk = $_SESSION["user"]["user_pk"];
+        $postPk = _validatePk("post_fk");
+
+        LikeModel::delete($userPk, $postPk);
+
+        // Beregn ny state
+        $userLiked = false;
+        $likeCount = LikeModel::countByPost($postPk);
+
+        require __DIR__ . '/../views/micro_components/___like-button.php';
         exit;
     }
 }

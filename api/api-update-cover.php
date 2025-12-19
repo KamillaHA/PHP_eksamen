@@ -1,6 +1,4 @@
 <?php
-session_start();
-require_once __DIR__ . '/../private/db.php';
 
 if (!isset($_SESSION['user'])) {
     exit;

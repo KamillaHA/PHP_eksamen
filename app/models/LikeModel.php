@@ -7,11 +7,17 @@ class LikeModel
         require __DIR__ . "/../../private/db.php";
 
         $stmt = $_db->prepare(
-            "SELECT 1 FROM likes WHERE user_fk = :u AND post_fk = :p"
+            "SELECT 1 
+             FROM likes 
+             WHERE like_user_fk = :u 
+             AND like_post_fk = :p"
         );
-        $stmt->execute([":u" => $userPk, ":p" => $postPk]);
+        $stmt->execute([
+            ":u" => $userPk,
+            ":p" => $postPk
+        ]);
 
-        return (bool) $stmt->fetch();
+        return (bool) $stmt->fetchColumn();
     }
 
     public static function create(string $userPk, string $postPk): void
@@ -19,8 +25,12 @@ class LikeModel
         require __DIR__ . "/../../private/db.php";
 
         $_db->prepare(
-            "INSERT INTO likes (user_fk, post_fk) VALUES (:u, :p)"
-        )->execute([":u" => $userPk, ":p" => $postPk]);
+            "INSERT INTO likes (like_user_fk, like_post_fk)
+             VALUES (:u, :p)"
+        )->execute([
+            ":u" => $userPk,
+            ":p" => $postPk
+        ]);
     }
 
     public static function delete(string $userPk, string $postPk): void
@@ -28,7 +38,27 @@ class LikeModel
         require __DIR__ . "/../../private/db.php";
 
         $_db->prepare(
-            "DELETE FROM likes WHERE user_fk = :u AND post_fk = :p"
-        )->execute([":u" => $userPk, ":p" => $postPk]);
+            "DELETE FROM likes 
+             WHERE like_user_fk = :u 
+             AND like_post_fk = :p"
+        )->execute([
+            ":u" => $userPk,
+            ":p" => $postPk
+        ]);
+    }
+
+    /* Antal likes */
+    public static function countByPost(string $postPk): int
+    {
+        require __DIR__ . "/../../private/db.php";
+
+        $stmt = $_db->prepare(
+            "SELECT COUNT(*) 
+             FROM likes 
+             WHERE like_post_fk = :p"
+        );
+        $stmt->execute([":p" => $postPk]);
+
+        return (int) $stmt->fetchColumn();
     }
 }

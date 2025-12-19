@@ -1,4 +1,10 @@
 <?php
+// Sikkerhed: sidebar kræver login
+if (!isset($_SESSION['user'])) return;
+
+// Data kommer fra controller:
+// - $followSuggestions
+// - $current_user_id
 
 $trends = [
     [
@@ -27,93 +33,70 @@ $trends = [
         'stats' => '4.9 K posts'
     ]
 ];
-
-require_once __DIR__ . '/../../../private/db.php';
-$current_user_id = $_SESSION['user']['user_pk'] ?? null;
-
-$sql = "
-    SELECT user_pk, user_username, user_full_name
-    FROM users
-    WHERE user_pk != :current_user
-    ORDER BY RAND()
-    LIMIT 3
-";
-
-$stmt = $_db->prepare($sql);
-$stmt->execute([
-    ':current_user' => $current_user_id
-]);
-
-$followSuggestions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$followCheckStmt = $_db->prepare("
-    SELECT 1
-    FROM follows
-    WHERE follower_fk = :current_user
-    AND following_fk = :suggested_user
-    LIMIT 1
-");
-
 ?>
-<aside class="sidebar">
-    <!-- Trends sektion -->
+
+<aside class="sidebar" mix-root>
+
+    <!-- Trends -->
     <div class="trends-section">
         <h3 class="trends-title">What's trending</h3>
-        
+
         <div class="trends-list">
             <?php foreach ($trends as $trend): ?>
                 <div class="trend-item">
-                    <div class="trend-category"><?php echo htmlspecialchars($trend['category']); ?></div>
-                    <div class="trend-name"><?php echo htmlspecialchars($trend['name']); ?></div>
-                    <div class="trend-stats"><?php echo htmlspecialchars($trend['stats']); ?></div>
+                    <div class="trend-category">
+                        <?= htmlspecialchars($trend['category']) ?>
+                    </div>
+                    <div class="trend-name">
+                        <?= htmlspecialchars($trend['name']) ?>
+                    </div>
+                    <div class="trend-stats">
+                        <?= htmlspecialchars($trend['stats']) ?>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>
     </div>
 
-    <!-- Follow sektion -->
+    <!-- 👥 Who to follow -->
     <div class="follow-section">
         <h3 class="follow-title">Who to follow</h3>
-        
-        <div class="follow-list">
-            <?php foreach ($followSuggestions as $user): ?>
 
-                <?php
-                    $followCheckStmt->execute([
-                        ':current_user' => $current_user_id,
-                        ':suggested_user' => $user['user_pk']
-                    ]);
-                    $isFollowing = $followCheckStmt->fetchColumn();
-                ?>
-                
-                <div class="follow-item">
+<div class="follow-list">
+    <?php foreach ($followSuggestions as $user): ?>
+        <div class="follow-item">
 
-                <!-- Avatar circle -->
-                <div class="follow-avatar">
-                    <div class="avatar-circle">
-                        <?php echo strtoupper(substr($user['user_username'], 0, 1)); ?>
-                    </div>
+            <!-- Avatar -->
+            <div class="follow-avatar">
+                <div class="avatar-circle">
+                    <?= strtoupper(substr($user['user_username'], 0, 1)) ?>
                 </div>
+            </div>
 
-                <!-- Bruger info -->
-                <div class="follow-user-info">
-                    <div class="follow-name">
-                        <?php echo htmlspecialchars($user['user_full_name']); ?>
-                    </div>
-                    <div class="follow-handle">
-                        @<?php echo htmlspecialchars($user['user_username']); ?>
-                    </div>
+            <!-- User info -->
+            <div class="follow-user-info">
+                <div class="follow-name">
+                    <?= htmlspecialchars($user['user_full_name']) ?>
                 </div>
+                <div class="follow-handle">
+                    @<?= htmlspecialchars($user['user_username']) ?>
+                </div>
+            </div>
 
-                <!-- Follow-knap -->
-                <?php if ($isFollowing): ?>
+            <!-- Button -->
+            <div class="follow-action">
+                <?php if (!empty($user['isFollowing'])): ?>
                     <?php require __DIR__ . '/../micro_components/___button-unfollow.php'; ?>
                 <?php else: ?>
                     <?php require __DIR__ . '/../micro_components/___button-follow.php'; ?>
                 <?php endif; ?>
-                
-                </div>
-            <?php endforeach; ?>
+            </div>
+
+        </div>
+    <?php endforeach; ?>
+</div>
+
         </div>
     </div>
+
 </aside>

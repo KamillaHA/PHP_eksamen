@@ -1,3 +1,12 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once __DIR__ . '/../../../private/x.php';
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,10 +59,6 @@
                     <i class="fa-solid fa-ellipsis option"></i>
                 </div>
         </nav>
-<?php endif; ?>
-
-<?php if (isset($_SESSION['user'])): ?>
-    <?php require_once __DIR__."/../popups/_popup-create-post.php"; ?>
 <?php endif; ?>
 
 <div id="toast"></div>

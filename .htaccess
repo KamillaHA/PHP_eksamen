@@ -1,17 +1,13 @@
 RewriteEngine On
 
-# Hvis filen findes som .php, omskriv URL uden filendelse til .php
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME}\.php -f
+# 1) Servér eksisterende filer og mapper direkte (CSS, JS, billeder)
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# 2) Hvis der findes en tilsvarende .php-fil, så brug den
+RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 
-# Tillad adgang til adskillige mapper
-RewriteRule ^views/(.*\.php)$ - [L]
-
-# Omdiriger til views for bestemte sider
-RewriteRule ^home$ app/views/home.php [L]
-RewriteRule ^login$ app/views/login.php [L]
-RewriteRule ^logout$ app/views/logout.php [L]
-RewriteRule ^profile$ app/views/profile.php [L]
-RewriteRule ^signup$ app/views/signup.php [L]
-RewriteRule ^users$ app/views/users.php [L]
+# 3) Alt andet går til front controller
+RewriteRule ^ index.php [L]

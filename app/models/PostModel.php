@@ -2,48 +2,78 @@
 
 class PostModel
 {
-    public static function create(array $post): void
+    public static function getAllWithUser(string $userPk): array
     {
-        require __DIR__ . "/../../private/db.php";
+        require __DIR__ . '/../../private/db.php';
 
-        $sql = "INSERT INTO posts
-                (post_pk, post_message, post_image_path, post_user_fk)
-                VALUES (:pk, :message, :image, :user)";
-        $_db->prepare($sql)->execute($post);
+        $stmt = $_db->prepare("
+            SELECT posts.*, users.user_username, users.user_full_name
+            FROM posts
+            JOIN users ON posts.post_user_fk = users.user_pk
+            WHERE posts.post_user_fk = ?
+              AND posts.deleted_at IS NULL
+            ORDER BY posts.created_at DESC
+        ");
+
+        $stmt->execute([$userPk]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function findByPk(string $pk): ?array
+    // 🔥 DEN MANGLENDE METODE (til /home)
+    public static function getAll(): array
     {
-        require __DIR__ . "/../../private/db.php";
+        require __DIR__ . '/../../private/db.php';
 
-        $sql = "SELECT posts.*, users.user_username
-                FROM posts
-                JOIN users ON posts.post_user_fk = users.user_pk
-                WHERE post_pk = :pk";
-        $stmt = $_db->prepare($sql);
-        $stmt->bindValue(":pk", $pk);
+        $stmt = $_db->prepare("
+            SELECT posts.*, users.user_username, users.user_full_name
+            FROM posts
+            JOIN users ON posts.post_user_fk = users.user_pk
+            WHERE posts.deleted_at IS NULL
+            ORDER BY posts.created_at DESC
+        ");
+
         $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public static function update(string $pk, string $message): void
+    public static function create(array $data): void
     {
-        require __DIR__ . "/../../private/db.php";
+        require __DIR__ . '/../../private/db.php';
 
-        $_db->prepare(
-            "UPDATE posts SET post_message = :msg WHERE post_pk = :pk"
-        )->execute([
-            ":pk" => $pk,
-            ":msg" => $message
+        $stmt = $_db->prepare("
+            INSERT INTO posts (post_pk, post_message, post_image_path, post_user_fk)
+            VALUES (:pk, :message, :image, :user)
+        ");
+
+        $stmt->execute($data);
+    }
+
+    public static function update(string $postPk, string $message): void
+    {
+        require __DIR__ . '/../../private/db.php';
+
+        $stmt = $_db->prepare("
+            UPDATE posts
+            SET post_message = :message
+            WHERE post_pk = :pk
+        ");
+
+        $stmt->execute([
+            ':message' => $message,
+            ':pk'      => $postPk
         ]);
     }
 
-    public static function delete(string $pk): void
+    public static function delete(string $postPk): void
     {
-        require __DIR__ . "/../../private/db.php";
+        require __DIR__ . '/../../private/db.php';
 
-        $_db->prepare("DELETE FROM posts WHERE post_pk = :pk")
-            ->execute([":pk" => $pk]);
+        $stmt = $_db->prepare("
+            UPDATE posts
+            SET deleted_at = NOW()
+            WHERE post_pk = :pk
+        ");
+
+        $stmt->execute([':pk' => $postPk]);
     }
 }

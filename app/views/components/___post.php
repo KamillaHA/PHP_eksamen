@@ -46,59 +46,10 @@ if ($view_mode === 'single') {
 ?>
 <?php
         foreach ($posts_to_display as $post): 
-            // Hent kommentar count eller hele kommentarlisten afhængig af view
-            try {
-                if ($view_mode === 'single') {
-                    
-                    // Single view: Hent hele kommentarlisten
-                    $sql = "SELECT comments.*, users.user_username 
-                            FROM comments 
-                            INNER JOIN users ON comments.user_fk = users.user_pk 
-                            WHERE comments.post_fk = :post_pk
-                            ORDER BY comments.created_at ASC"; 
-                    $stmt = $_db->prepare($sql);
-                    $stmt->execute([':post_pk' => $post['post_pk']]);
-                    $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    $commentCount = count($comments);
-                } else {
-
-                    // Feed view: Hent kun count for bedre performance
-                    $sql = "SELECT COUNT(*) as comment_count FROM comments WHERE post_fk = :post_pk"; 
-                    $stmt = $_db->prepare($sql);
-                    $stmt->execute([':post_pk' => $post['post_pk']]);
-                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $commentCount = $result['comment_count'] ?? 0;
-                    $comments = []; // Tom array i feed view
-                }
-            } catch (Exception $e) {
-                $comments = [];
-                $commentCount = 0;
-            }
-
-            // NY: Hent like data for hvert post (både single OG feed view)
-            try {
-                // Hent total like count for dette post
-                $sqlLikes = "SELECT COUNT(*) as like_count FROM likes WHERE like_post_fk = :post_pk";
-                $stmtLikes = $_db->prepare($sqlLikes);
-                $stmtLikes->execute([':post_pk' => $post['post_pk']]);
-                $resultLikes = $stmtLikes->fetch(PDO::FETCH_ASSOC);
-                $likeCount = $resultLikes['like_count'] ?? 0;
-                
-                // Hent om den aktuelle bruger har liket dette post
-                $userLiked = false;
-                if ($current_user_id) {
-                    $sqlUserLike = "SELECT 1 FROM likes WHERE like_post_fk = :post_pk AND like_user_fk = :user_id";
-                    $stmtUserLike = $_db->prepare($sqlUserLike);
-                    $stmtUserLike->execute([
-                        ':post_pk' => $post['post_pk'],
-                        ':user_id' => $current_user_id
-                    ]);
-                    $userLiked = $stmtUserLike->fetch() ? true : false;
-                }
-            } catch (Exception $e) {
-                $likeCount = 0;
-                $userLiked = false;
-            }
+            $comments     = $post['comments'] ?? [];
+            $commentCount = $post['commentCount'] ?? 0;
+            $likeCount    = $post['likeCount'] ?? 0;
+            $userLiked    = $post['userLiked'] ?? false;
         ?>
         
         <article class="post-container <?php echo $view_mode === 'single' ? 'single-post-view' : 'feed-post-view'; ?>" 
@@ -182,27 +133,17 @@ if ($view_mode === 'single') {
                     <div class="post-actions">
 
                             <!-- Like knap -->
-                            <span class="action like" 
-                                role="button" 
-                                tabindex="0" 
-                                aria-pressed="<?php echo $userLiked ? 'true' : 'false'; ?>"
-                                aria-label="Like"
-                                data-post-id="<?php echo $post['post_pk']; ?>"
-                                <?php if ($userLiked): ?>class="is-liked"<?php endif; ?>>
-                                
-                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="heart-icon" width="18" height="18">
-                                    <g>
-                                        <?php if ($userLiked): ?>
-                                            <!-- Filled heart (liked) - DEN UDFYLDTE VERSION DU HAR -->
-                                            <path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91z"></path>
-                                        <?php else: ?>
-                                            <!-- Outline heart (not liked) -->
-                                            <path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path>
-                                        <?php endif; ?>
-                                    </g>
-                                </svg>
-                                <span class="like-count"><?php echo $likeCount; ?></span>
-                            </span>
+                        <?php
+                        $postPk    = $post['post_pk'];
+                        $userLiked = $userLiked;
+                        $likeCount = $likeCount;
+
+                        require __DIR__ . '/../micro_components/___button-like.php';
+                        ?>
+
+
+
+
 
                             <?php if ($view_mode === 'single'): ?>
                             <!-- Single view: Vis count som tekst -->

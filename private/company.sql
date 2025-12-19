@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Vært: mariadb
--- Genereringstid: 19. 12 2025 kl. 10:09:06
+-- Genereringstid: 19. 12 2025 kl. 18:07:25
 -- Serverversion: 10.6.20-MariaDB-ubu2004
 -- PHP-version: 8.3.26
 
@@ -156,7 +156,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_pk`, `user_username`, `user_email`, `user_password`, `user_full_name`, `created_at`, `updated_at`, `deleted_at`, `user_cover_image`) VALUES
-('3ece34199faebcdfc254bfb6dadaa7e7f8e58b5b121544ab3f', 'kamillahuhnke', 'k@k.com', '$2y$10$eARR9V0F/.0RmNaotrMg6.mQ5qS.qulp9tNWWsHE6qxvXRwRtt/3C', 'Kamilla H', '2025-12-18 12:19:35', '2025-12-19 09:19:39', NULL, NULL),
+('3ece34199faebcdfc254bfb6dadaa7e7f8e58b5b121544ab3f', 'kamillahuhnke', 'k@k.com', '$2y$10$eARR9V0F/.0RmNaotrMg6.mQ5qS.qulp9tNWWsHE6qxvXRwRtt/3C', 'Kamilla', '2025-12-18 12:19:35', '2025-12-19 10:36:35', NULL, NULL),
 ('4402441d108c745ee9f3c225186c68f7dadf50ea1c28090c6a', 'madeleine', 'm@m.com', '$2y$10$fSOY/OiKuKQ8j4wVmi5SZuFGAXLnZobe3p3afrUej83holHzpyIOe', 'Madeleine', '2025-12-18 12:21:44', '2025-12-18 21:36:46', NULL, NULL),
 ('637666ef529161a67b0fdce85f61722c686dd33fa8580e5f6d', 'gracehopper', 'g@h.com', '$2y$10$LuTgoidyWL2XWUMuI7H7rOk9m6VbIUfqbJmIm9/zttSwP3.CDCImy', 'Grace', '2025-12-18 13:18:16', NULL, NULL, NULL),
 ('a00bfec909a1700dffc0e976b5220e813e3cbf8f0d11d68dc0', 'stevejobs', 's@j.com', '$2y$10$kBm2GXsoOAJ4at0cw48UWOGU1SLT123IcLIjAj1eYVogK4jaaT8ka', 'Steve', '2025-12-18 13:17:51', NULL, NULL, NULL);

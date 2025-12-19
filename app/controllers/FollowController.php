@@ -5,13 +5,16 @@ class FollowController
 {
     public static function follow(): void
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
         $follower  = $_SESSION["user"]["user_pk"];
         $following = _validatePk("following_fk");
 
-        if (!FollowModel::exists($follower, $following)) {
+        if (!FollowModel::isFollowing($follower, $following)) {
             FollowModel::create($follower, $following);
         }
 
@@ -21,10 +24,17 @@ class FollowController
 
     public static function unfollow(): void
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
-        FollowModel::delete($_SESSION["user"]["user_pk"], _validatePk("following_fk"));
+        FollowModel::delete(
+            $_SESSION["user"]["user_pk"],
+            _validatePk("following_fk")
+        );
+
         echo '<mixhtml mix-redirect="/home"></mixhtml>';
         exit;
     }

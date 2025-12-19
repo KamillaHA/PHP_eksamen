@@ -1,0 +1,26 @@
+<div class="like-wrapper button-like-<?= $postPk ?>">
+    <form
+        action="<?= $userLiked ? '/unlike' : '/like' ?>"
+        method="POST"
+        mix-post
+        mix-target=".button-like-<?= $postPk ?>"
+        mix-swap="outerHTML"
+    >
+        <input type="hidden" name="post_fk" value="<?= $postPk ?>">
+
+        <button type="submit"
+                class="action like <?= $userLiked ? 'is-liked' : '' ?>"
+                aria-pressed="<?= $userLiked ? 'true' : 'false' ?>">
+
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+                <?php if ($userLiked): ?>
+                    <path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91z"/>
+                <?php else: ?>
+                    <path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91z"/>
+                <?php endif; ?>
+            </svg>
+
+            <span class="like-count"><?= $likeCount ?></span>
+        </button>
+    </form>
+</div>

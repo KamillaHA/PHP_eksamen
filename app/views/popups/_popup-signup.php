@@ -1,8 +1,4 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 // Hvis bruger allerede er logget ind, vis ikke popup
 if (isset($_SESSION["user"])) {
     return;
