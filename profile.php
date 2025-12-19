@@ -1,127 +1,59 @@
 <?php
 session_start();
-require_once __DIR__ . '/components/_header.php';
-require_once __DIR__ . '/private/x.php';
-require_once __DIR__ . '/private/db.php';
+require_once __DIR__."/./components/_header.php";
+require_once __DIR__."/./private/x.php";
+require_once __DIR__ . "/./private/db.php";
 
 $user = $_SESSION["user"];
+$current_user_id = $_SESSION['user']['user_pk'] ?? null;
 
-$message = $_GET['message'] ?? '';
+// $message = $_GET['message'] ?? '';
 
 if (!$user) {
     header("Location: /login?message=User not found, please login first");
     exit;
 }
 
-// Hent brugerens egne posts fra databasen
-try {
-    $sql = "SELECT * FROM posts WHERE post_user_fk = :user_id ORDER BY post_pk DESC";
-    $stmt = $_db->prepare($sql);
-    $stmt->bindParam(':user_id', $user['user_pk']);
-    $stmt->execute();
-    $userPosts = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    $userPosts = [];
-    $error = "Kunne ikke hente posts: " . $e->getMessage();
-}
+// Hent post_id fra URL
+$single_post_id = $_GET['post'] ?? null;
 
+try {
+    $sql = "SELECT posts.*, users.user_username, users.user_full_name FROM posts INNER JOIN users ON posts.post_user_fk = users.user_pk WHERE posts.post_user_fk = :user_pk ORDER BY posts.created_at DESC";
+    $stmt = $_db->prepare($sql);
+    $stmt->execute([':user_pk' => $current_user_id]);    
+    $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} 
+
+catch (Exception $e) {
+    echo "<div>Error: Could not fetch posts.</div>";
+    $posts = [];
+}
 ?>
 
-<main>
-    <?php if($message): ?>
-        <div class="message">
-            <?php echo htmlspecialchars($message) ?>
-        </div>
+<main id="main">
+
+    <!-- <h1 class="h1">All Posts</h1> -->
+
+    <div id="toast"></div>
+    
+    <?php if (empty($posts)): ?>
     <?php endif; ?>
 
-
- <div class="profile-container">
-        <!-- Profile Information Section -->
-        <section class="profile-info">
-            <h2>Your Profile Details</h2>
-            <div class="profile-details">
-                <p><strong>Email:</strong> <?php _($user['user_email']) ?></p>
-                <p><strong>Username:</strong> <?php _($user['user_username']) ?></p>
-                <p><strong>Full Name:</strong> <?php _($user['user_full_name']) ?></p>
-            </div>
-        </section>
-
-        <!-- Update Profile Form -->
-        <section class="update-profile">
-            <h3>Update Profile</h3>
-            <form action="/api/api-update-profile.php" method="POST" class="profile-form">
-                <div class="form-group">
-                    <label for="user_email">Email:</label>
-                    <input type="email" id="user_email" name="user_email" value="<?php _($user['user_email']) ?>" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="user_username">Username:</label>
-                    <input type="text" id="user_username" name="user_username" value="<?php _($user['user_username']) ?>" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="user_full_name">Full Name:</label>
-                    <input type="text" id="user_full_name" name="user_full_name" value="<?php _($user['user_full_name']) ?>" required>
-                </div>
-                
-                <button type="button" class="edit-profile-btn" data-open="editProfileModal">Update Profile</button>
-            </form>
-        </section>
-
-      <!-- User's Posts Section -->
-        <section class="user-posts">
-            <h2>Your Posts</h2>
-            
-            <?php if (!empty($userPosts)): ?>
-                <div class="posts-list">
-                    <?php foreach ($userPosts as $post): ?>
-                        <div class="post-card">
-                            <div class="post-header">
-                                <div class="post-user">
-                                    <strong><?php echo htmlspecialchars($post['username'] ?? $user['user_username']); ?></strong>
-                                    <span class="post-time">
-                                        <?php 
-                                        $date = new DateTime($post['created_at']);
-                                        echo $date->format('d/m/Y H:i');
-                                        ?>
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div class="post-content">
-                                <p><?php echo htmlspecialchars($post['post_message']); ?></p>
-                            </div>
-                            
-                            <?php if (!empty($post['post_image_path'])): ?>
-                                <div class="post-image">
-                                    <img src="<?php echo htmlspecialchars($post['post_image_path']); ?>" alt="Post image">
-                                </div>
-                            <?php endif; ?>
-                            
-                            <div class="post-stats">
-                                <span class="likes">❤️ <?php echo $post['likes_count'] ?? 0; ?></span>
-                                <span class="comments">💬 <?php echo $post['comments_count'] ?? 0; ?></span>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php else: ?>
-                <div class="no-posts">
-                    <p>You haven't posted anything yet.</p>
-                </div>
-            <?php endif; ?>
-        </section>
-    </div>
     <?php
-    require_once __DIR__ . '/components/_sidebar.php';
+    // Inkluder posts komponentet
+    require_once __DIR__."/components/_profile-header.php";
+    require_once __DIR__."/components/___post.php";
+    require_once __DIR__."/components/_sidebar.php";
     ?>
-
 </main>
 
-<?php 
-// Tilføj profil-popup (vi skal oprette denne fil)
-require_once __DIR__."/popups/_popup-update-profile.php";
+<?php
+// Inkluder post modal komponent
 require_once __DIR__."/popups/_popup-create-post.php";
-require_once __DIR__ . '/components/_footer.php'; 
+require_once __DIR__."/popups/_popup-update-post.php";
+require_once __DIR__."/popups/_popup-create-comment.php";
+require_once __DIR__."/popups/_popup-update-comment.php";
+require_once __DIR__."/popups/_popup-update-profile.php";
+require_once __DIR__."/popups/_popup-confirm-delete-profile.php";
+require_once __DIR__."/components/_footer.php";
 ?>

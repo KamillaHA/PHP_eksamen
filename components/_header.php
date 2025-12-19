@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="/css/mixhtml.css">
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/popup.css">
     <script defer src="/js/popup.js"></script>
     <title>Document</title>
 </head>
-<body>
+<body class="<?= $body_class ?? '' ?>">
+    
     
     <?php if (isset($_SESSION['user'])): ?>
     <button class="burger" aria-label="Menu">
@@ -36,7 +38,9 @@
     <button type="button" class="create-post-btn" id="createPostBtn" data-open="createPostModal">Post</button>
 
                 <div id="profile_tag">
-                    <img src="https://picsum.photos/400/250" alt="Profile">
+                    <div class="avatar-circle">
+                        <?php echo strtoupper(substr($_SESSION['user']['user_username'], 0, 1)); ?>
+                    </div>                    
                     <div>
                         <div class="name">
                             <?php echo $_SESSION["user"]["user_full_name"]; ?>

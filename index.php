@@ -1,6 +1,7 @@
 <?php 
 session_start();
 $title = "Welcome";
+$body_class = "page-landing";
 
 if (isset($_SESSION['user'])) {
   header('Location: /home');

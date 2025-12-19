@@ -1,7 +1,10 @@
 <?php
 
+// function _($text) {
+//     echo htmlspecialchars($text);
+// }
 function _($text) {
-    echo htmlspecialchars($text);
+    echo htmlspecialchars($text ?? '', ENT_QUOTES, 'UTF-8');
 }
 
 function _noCache() {

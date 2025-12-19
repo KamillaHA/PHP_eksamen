@@ -12,7 +12,28 @@ if (!$user) {
 
 try {
     $postMessage = _validatePost();
-    $postImage = "https://picsum.photos/400/250";
+    $postImage = null;
+
+    if (!empty($_FILES['post_image_path']['name'])) {
+
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        $fileType = $_FILES['post_image_path']['type'];
+
+        if (!in_array($fileType, $allowedTypes)) {
+            throw new Exception("Invalid image type");
+        }
+
+        $imageName = bin2hex(random_bytes(16)) . '.jpg';
+        $uploadDir = __DIR__ . '/../uploads/';
+        $imagePath = '/uploads/' . $imageName;
+
+        move_uploaded_file(
+            $_FILES['post_image_path']['tmp_name'],
+            $uploadDir . $imageName
+        );
+
+        $postImage = $imagePath;
+    }
 
     $postPk = bin2hex(random_bytes(25));
 
@@ -28,7 +49,7 @@ try {
 
     $stmt->execute();
 
-    echo '<mixhtml mix-redirect="/home"></mixhtml>';
+    header("Location: /home");
     exit;
     
     echo "<!DOCTYPE html>

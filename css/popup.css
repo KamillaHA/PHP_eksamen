@@ -275,11 +275,6 @@
     box-shadow: 0 0 0 2px rgba(29, 155, 240, 0.1);
 }
 
-.edit-profile-form .form-actions {
-    margin-top: 2rem;
-    text-align: right;
-}
-
 .update-profile-btn {
     background-color: #1d9bf0;
     color: white;
@@ -574,3 +569,15 @@
 .switch-to-login-btn {
     cursor: pointer;
 }
+
+
+
+/* Center profile modals exactly in viewport
+.profile-edit-modal .x-dialog__content,
+.danger-modal .x-dialog__content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+} */

@@ -24,7 +24,9 @@ $user = $_SESSION["user"];
                 
                 <!-- Bruger info -->
                 <div class="user-info">
-                    <img src="https://avatar.iran.liara.run/public/73" alt="Profile">
+                    <div class="avatar-circle">
+                        <?php echo strtoupper(substr($user['user_username'], 0, 1)); ?>
+                    </div>
                     <div>
                         <div class="name"><?php echo $user["user_full_name"]; ?></div>
                         <div class="handle"><?php echo "@".$user["user_username"]; ?></div>

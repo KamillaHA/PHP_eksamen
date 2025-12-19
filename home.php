@@ -17,7 +17,7 @@ if (!$user) {
 $single_post_id = $_GET['post'] ?? null;
 
 try {
-    $sql = "SELECT posts.*, users.user_username FROM posts INNER JOIN users ON posts.post_user_fk = users.user_pk";
+    $sql = "SELECT posts.*, users.user_username, users.user_full_name FROM posts INNER JOIN users ON posts.post_user_fk = users.user_pk ORDER BY posts.created_at DESC";
     $stmt = $_db->prepare($sql);
     $stmt->execute();
     $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);

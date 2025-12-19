@@ -12,8 +12,8 @@ try {
         exit;
     }
     
-    session_destroy();
     $user_id = $_SESSION["user"]["user_pk"];
+    session_destroy();
 
     $sql = "DELETE FROM users WHERE user_pk = :user_pk";
     $stmt = $_db->prepare($sql);

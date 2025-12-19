@@ -55,7 +55,7 @@ if ($view_mode === 'single') {
                             FROM comments 
                             INNER JOIN users ON comments.user_fk = users.user_pk 
                             WHERE comments.post_fk = :post_pk
-                            ORDER BY comments.created_at DESC"; 
+                            ORDER BY comments.created_at ASC"; 
                     $stmt = $_db->prepare($sql);
                     $stmt->execute([':post_pk' => $post['post_pk']]);
                     $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -120,7 +120,7 @@ if ($view_mode === 'single') {
                                 </div>
                             </div>
                             <div class="post-user-text">
-                                <p class="post-username"><?php echo _($post['user_username']); ?></p>
+                                <p class="post-username"><?php echo _($post['user_full_name']); ?></p>
                                 <p class="post-user-handle">@<?php echo _($post['user_username']); ?></p>
                             </div>
                         </div>
@@ -164,8 +164,17 @@ if ($view_mode === 'single') {
                     <!-- Billede -->
                     <?php if (!empty($post['post_image_path'])): ?>
                         <div class="post-image">
+
+                        <?php if ($view_mode === 'feed'): ?>
+                            <a href="/home?post=<?php echo $post['post_pk']; ?>" class="post-image-link">
+                                <img src="<?php echo _($post['post_image_path']); ?>" 
+                                    alt="Image for <?php echo _($post['post_message']); ?>">
+                            </a>
+                        <?php else: ?>
                             <img src="<?php echo _($post['post_image_path']); ?>" 
                                 alt="Image for <?php echo _($post['post_message']); ?>">
+                        <?php endif; ?>
+
                         </div>
                     <?php endif; ?>
                     

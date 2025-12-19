@@ -18,13 +18,23 @@ $user = $_SESSION["user"];
             <button class="modal-close x-dialog__close">&times;</button>
         </div>
         <div class="modal-content">
-            <form class="edit-post-form" action="/api/api-update-post.php" method="POST" mix-post>
+
+            <form class="edit-post-form" action="/api/api-update-post.php" method="POST" enctype="multipart/form-data">
                 <!-- Hidden input til post ID -->
                 <input type="hidden" name="post_pk" id="edit_post_pk">
+            <input 
+                type="file" 
+                name="post_image_path"
+                id="postImageInput"
+                accept="image/*"
+                hidden
+            >
                 
                 <!-- Bruger info -->
                 <div class="user-info">
-                    <img src="https://avatar.iran.liara.run/public/73" alt="Profile">
+                    <div class="avatar-circle">
+                        <?php echo strtoupper(substr($user['user_username'], 0, 1)); ?>
+                    </div>
                     <div>
                         <div class="name"><?php echo $user["user_full_name"]; ?></div>
                         <div class="handle"><?php echo "@".$user["user_username"]; ?></div>
@@ -42,17 +52,8 @@ $user = $_SESSION["user"];
                 
                 <div class="post-form-actions">
                     <div class="post-form-icons">
-                        <button type="button" class="post-form-icon" title="Media">
+                        <button type="button" class="post-form-icon" title="Media" onclick="document.getElementById('postImageInput').click()">
                             <i class="fa-solid fa-image"></i>
-                        </button>
-                        <button type="button" class="post-form-icon" title="GIF">
-                            <i class="fa-solid fa-film"></i>
-                        </button>
-                        <button type="button" class="post-form-icon" title="Poll">
-                            <i class="fa-solid fa-chart-bar"></i>
-                        </button>
-                        <button type="button" class="post-form-icon" title="Emoji">
-                            <i class="fa-regular fa-face-smile"></i>
                         </button>
                     </div>
                     <button 
