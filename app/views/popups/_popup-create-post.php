@@ -17,9 +17,18 @@ $user = $_SESSION["user"];
             <button class="modal-close x-dialog__close">&times;</button>
         </div>
         <div class="modal-content">
-            <form class="post-form" action="/api/api-create-post.php" method="POST" mix-post>
+            <form class="post-form" action="/api/api-create-post.php" method="POST" enctype="multipart/form-data">
+            <input 
+                type="file" 
+                name="post_image_path"
+                id="postImageInput"
+                accept="image/*"
+                hidden
+            >
                 <div class="user-info">
-                    <img src="https://avatar.iran.liara.run/public/73" alt="Profile">
+                    <div class="avatar-circle">
+                        <?php echo strtoupper(substr($user['user_username'], 0, 1)); ?>
+                    </div>
                     <div>
                         <div class="name"><?php echo $user["user_full_name"]; ?></div>
                         <div class="handle"><?php echo "@".$user["user_username"]; ?></div>
@@ -28,18 +37,10 @@ $user = $_SESSION["user"];
                 <textarea name="post_message" placeholder="What's happening?!" maxlength="300" required mix-check="^.{1,300}$"></textarea>
                 <div class="post-form-actions">
                     <div class="post-form-icons">
-                        <button type="button" class="post-form-icon" title="Media">
+                        <button type="button" class="post-form-icon" title="Media" onclick="document.getElementById('postImageInput').click()">
                             <i class="fa-solid fa-image"></i>
                         </button>
-                        <button type="button" class="post-form-icon" title="GIF">
-                            <i class="fa-solid fa-film"></i>
-                        </button>
-                        <button type="button" class="post-form-icon" title="Poll">
-                            <i class="fa-solid fa-chart-bar"></i>
-                        </button>
-                        <button type="button" class="post-form-icon" title="Emoji">
-                            <i class="fa-regular fa-face-smile"></i>
-                        </button>
+
                     </div>
                     <button type="submit" class="post-submit-btn" id="postSubmitBtn" mix-await="Posting..." mix-default="Post">Post</button>
                 </div>

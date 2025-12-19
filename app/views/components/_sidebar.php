@@ -32,7 +32,7 @@ require_once __DIR__ . '/../../../private/db.php';
 $current_user_id = $_SESSION['user']['user_pk'] ?? null;
 
 $sql = "
-    SELECT user_pk, user_username
+    SELECT user_pk, user_username, user_full_name
     FROM users
     WHERE user_pk != :current_user
     ORDER BY RAND()
@@ -98,7 +98,7 @@ $followCheckStmt = $_db->prepare("
                 <!-- Bruger info -->
                 <div class="follow-user-info">
                     <div class="follow-name">
-                        <?php echo htmlspecialchars($user['user_username']); ?>
+                        <?php echo htmlspecialchars($user['user_full_name']); ?>
                     </div>
                     <div class="follow-handle">
                         @<?php echo htmlspecialchars($user['user_username']); ?>

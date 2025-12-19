@@ -11,11 +11,11 @@ $user = $_SESSION["user"];
 ?>
 
 <!-- Update Profile Popup Modal -->
-<div id="editProfileModal" class="x-dialog">
+<div id="editProfileModal" class="x-dialog profile-edit-modal">
     <div class="x-dialog__overlay"></div>
     <div class="x-dialog__content">
         <div class="modal-header">
-            <h3>Update Profile</h3>
+            <h3 class="update-header">Update Profile</h3>
             <button class="modal-close x-dialog__close">&times;</button>
         </div>
         <div class="modal-content">
@@ -62,16 +62,30 @@ $user = $_SESSION["user"];
                     >
                 </div>
                 
+                <div class="profile-btns">
+                <!-- Opdatér profil knap -->
                 <div class="form-actions">
                     <button 
-                        type="submit" 
-                        class="update-profile-btn" 
-                        mix-await="Updating..." 
-                        mix-default="Update Profile"
+                    type="submit" 
+                    class="update-profile-btn" 
+                    mix-await="Updating..." 
+                    mix-default="Update Profile"
                     >
-                        Update Profile
+                    Update Profile
+                </button>
+                </div>
+            
+                <!-- Slet profil knap -->
+                <div class="form-actions danger-zone">
+                    <button 
+                        type="button"
+                        class="delete-profile-btn"
+                    >
+                        Delete profile
                     </button>
                 </div>
+                </div>
+
             </form>
         </div>
     </div>

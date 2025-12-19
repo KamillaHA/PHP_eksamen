@@ -393,11 +393,6 @@
     box-shadow: 0 0 0 2px rgba(29, 155, 240, 0.1);
 }
 
-.edit-profile-form .form-actions {
-    margin-top: 2rem;
-    text-align: right;
-}
-
 .update-profile-btn {
     background-color: #1d9bf0;
     color: white;
@@ -619,3 +614,52 @@
     opacity: 0.5;
     cursor: not-allowed;
 }
+
+.terms-notice {
+    font-size: 13px;
+    color: #536471;
+    margin: 15px 0;
+    line-height: 1.4;
+}
+
+.terms-notice a {
+    color: #1DA1F2;
+    text-decoration: none;
+}
+
+.terms-notice a:hover {
+    text-decoration: underline;
+}
+
+.signup-footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #536471;
+    font-size: 14px;
+}
+
+.signup-footer a {
+    color: #1DA1F2;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-footer a:hover {
+    text-decoration: underline;
+}
+
+.switch-to-login-btn {
+    cursor: pointer;
+}
+
+
+
+/* Center profile modals exactly in viewport
+.profile-edit-modal .x-dialog__content,
+.danger-modal .x-dialog__content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+} */
