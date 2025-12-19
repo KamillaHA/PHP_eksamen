@@ -1,12 +1,30 @@
 /* Global styling */
 
-/* 
-linjefarve - 5e5e5e 
-tekstfarve - f6f6f6
-baggrundsfarve - 0b0b0b
-*/
+* {
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
 
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
 
+main {
+    margin: 0 320px 0 220px; 
+    padding: 1rem;
+    min-height: 100vh;
+    background: #0b0b0b
+}
+
+.h1 {
+    color: #f6f6f6;
+}
 
 /* ----------------------------- */
 /* Overall css */
