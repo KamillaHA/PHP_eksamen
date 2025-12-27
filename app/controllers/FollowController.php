@@ -11,14 +11,35 @@ class FollowController
 
         require_once __DIR__ . "/../../private/x.php";
 
-        $follower  = $_SESSION["user"]["user_pk"];
-        $following = _validatePk("following_fk");
+        // hvem klikker
+        $followerPk = $_SESSION["user"]["user_pk"];
 
-        if (!FollowModel::isFollowing($follower, $following)) {
-            FollowModel::create($follower, $following);
+        // hvem bliver fulgt
+        $followingPk = _validatePk("following_fk");
+
+        // opret follow hvis den ikke findes
+        if (!FollowModel::isFollowing($followerPk, $followingPk)) {
+            FollowModel::create($followerPk, $followingPk);
         }
 
-        echo '<mixhtml mix-redirect="/home"></mixhtml>';
+        // bruges af knap-komponenten
+        $user = [
+            'user_pk' => $followingPk
+        ];
+
+        // nyt following-tal (til profile header)
+        $followingCount = FollowModel::countFollowing($followerPk);
+
+        // opdater knappen
+        echo '<mix-html mix-replace=".button-' . $followingPk . '">';
+        require __DIR__ . '/../views/micro_components/___button-unfollow.php';
+        echo '</mix-html>';
+
+        // opdater following-count
+        echo '<mix-html mix-replace=".profile-following-count">';
+        require __DIR__ . '/../views/micro_components/___following-count.php';
+        echo '</mix-html>';
+
         exit;
     }
 
@@ -30,12 +51,33 @@ class FollowController
 
         require_once __DIR__ . "/../../private/x.php";
 
-        FollowModel::delete(
-            $_SESSION["user"]["user_pk"],
-            _validatePk("following_fk")
-        );
+        // hvem klikker
+        $followerPk = $_SESSION["user"]["user_pk"];
 
-        echo '<mixhtml mix-redirect="/home"></mixhtml>';
+        // hvem bliver unfollowed
+        $followingPk = _validatePk("following_fk");
+
+        // slet follow
+        FollowModel::delete($followerPk, $followingPk);
+
+        // bruges af knap-komponenten
+        $user = [
+            'user_pk' => $followingPk
+        ];
+
+        // nyt following-tal (til profile header)
+        $followingCount = FollowModel::countFollowing($followerPk);
+
+        // opdater knappen
+        echo '<mix-html mix-replace=".button-' . $followingPk . '">';
+        require __DIR__ . '/../views/micro_components/___button-follow.php';
+        echo '</mix-html>';
+
+        // opdater following-count
+        echo '<mix-html mix-replace=".profile-following-count">';
+        require __DIR__ . '/../views/micro_components/___following-count.php';
+        echo '</mix-html>';
+
         exit;
     }
 }

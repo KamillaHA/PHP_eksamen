@@ -199,7 +199,7 @@
     margin-top: 5px;
 }
 
-.comment-dropdown.visible {
+.comment-dropdown.open {
     display: block;
 }
 
@@ -383,7 +383,7 @@
     margin-top: 5px;
 }
 
-.post-dropdown.visible {
+.post-dropdown.open {
     display: block;
 }
 

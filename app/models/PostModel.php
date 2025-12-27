@@ -48,21 +48,37 @@ class PostModel
         $stmt->execute($data);
     }
 
-    public static function update(string $postPk, string $message): void
+    public static function update(string $postPk, string $message, ?string $imagePath = null): void
     {
         require __DIR__ . '/../../private/db.php';
 
-        $stmt = $_db->prepare("
-            UPDATE posts
-            SET post_message = :message
-            WHERE post_pk = :pk
-        ");
+        if ($imagePath) {
+            $stmt = $_db->prepare("
+                UPDATE posts
+                SET post_message = :message,
+                    post_image_path = :image
+                WHERE post_pk = :pk
+            ");
 
-        $stmt->execute([
-            ':message' => $message,
-            ':pk'      => $postPk
-        ]);
+            $stmt->execute([
+                ':message' => $message,
+                ':image'   => $imagePath,
+                ':pk'      => $postPk
+            ]);
+        } else {
+            $stmt = $_db->prepare("
+                UPDATE posts
+                SET post_message = :message
+                WHERE post_pk = :pk
+            ");
+
+            $stmt->execute([
+                ':message' => $message,
+                ':pk'      => $postPk
+            ]);
+        }
     }
+
 
     public static function delete(string $postPk): void
     {

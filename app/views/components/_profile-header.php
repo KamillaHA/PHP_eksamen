@@ -5,8 +5,13 @@ $following = $following ?? 0;
 ?>
 
 <section class="profile-header">
-  <div class="profile-cover">
-    <form action="/api/api-update-cover.php" method="POST" enctype="multipart/form-data" class="cover-upload-form">
+    <div
+      class="profile-cover"
+      style="<?php if (!empty($user['user_cover_image'])): ?>
+        background-image: url('<?= htmlspecialchars($user['user_cover_image']) ?>');
+      <?php endif; ?>"
+    >
+    <form action="/profile/cover" method="POST" enctype="multipart/form-data" class="cover-upload-form">
       <input type="file" name="cover_image" accept="image/*" onchange="this.form.submit()" hidden>
       <button type="button" class="cover-upload-btn" onclick="this.previousElementSibling.click()">Change cover</button>
     </form>
@@ -30,8 +35,12 @@ $following = $following ?? 0;
       </p>
 
       <div class="profile-stats">
-        <span><strong><?php echo $following; ?></strong> Following</span>
-        <span><strong><?php echo $followers; ?></strong> Followers</span>
+        <span class="profile-following-count">
+          <strong><?php echo $following; ?></strong> Following
+        </span>
+        <span>
+          <strong><?php echo $followers; ?></strong> Followers
+        </span>
       </div>
     </div>
   </div>

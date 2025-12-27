@@ -14,9 +14,10 @@ $user = $_SESSION["user"];
             <button class="modal-close x-dialog__close">&times;</button>
         </div>
         <div class="modal-content">
-            <form class="edit-comment-form" action="/api/api-update-comment.php" method="POST" mix-post>
+            <form class="edit-comment-form" action="/comment/update" method="POST">
                 <!-- Hidden input til comment ID -->
                 <input type="hidden" name="comment_pk" id="edit_comment_pk">
+                <input type="hidden" name="post_pk" id="edit_post_pk">
                 
                 <!-- Bruger info -->
                 <div class="user-info">
@@ -45,7 +46,6 @@ $user = $_SESSION["user"];
                         id="editCommentSubmitBtn" 
                         mix-await="Updating..." 
                         mix-default="Update"
-                        disabled
                     >
                         Update
                     </button>

@@ -461,3 +461,38 @@ nav ul li a:hover {
 .scroll-top:hover {
     background: #555;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* til like: */
+/* Outline by default */
+.action.like .heart-icon {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+}
+
+/* Filled when liked */
+.action.like.is-liked .heart-icon {
+    fill: currentColor;
+    stroke: none;
+}

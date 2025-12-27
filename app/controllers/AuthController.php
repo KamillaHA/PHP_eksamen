@@ -3,6 +3,31 @@ require_once __DIR__ . "/../models/UserModel.php";
 
 class AuthController
 {
+    public static function signup(): void
+    {
+    session_start();
+    require_once __DIR__ . "/../../private/x.php";
+
+    try {
+        $user = [
+            ':pk'       => bin2hex(random_bytes(25)),
+            ':fullname' => _validateFullName(),
+            ':username' => _validateUsername(),
+            ':email'    => _validateEmail(),
+            ':password' => password_hash(_validatePassword(), PASSWORD_DEFAULT),
+        ];
+
+        UserModel::create($user);
+
+        echo '<mixhtml mix-redirect="/?login=1"></mixhtml>';
+        exit;
+
+    } catch (Exception $e) {
+        echo '<mixhtml mix-redirect="/?message=' . urlencode($e->getMessage()) . '"></mixhtml>';
+        exit;
+    }
+}
+
     public static function login(): void
     {
         session_start();

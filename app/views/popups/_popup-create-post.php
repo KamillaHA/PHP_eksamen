@@ -13,11 +13,11 @@ $user = $_SESSION["user"];
             <button class="modal-close x-dialog__close">&times;</button>
         </div>
         <div class="modal-content">
-            <form class="post-form" action="/api/api-create-post.php" method="POST" enctype="multipart/form-data">
+            <form class="post-form" action="/post/create" method="POST" enctype="multipart/form-data">
             <input 
                 type="file" 
                 name="post_image_path"
-                id="postImageInput"
+                id="createPostImageInput"
                 accept="image/*"
                 hidden
             >
@@ -33,7 +33,7 @@ $user = $_SESSION["user"];
                 <textarea name="post_message" placeholder="What's happening?!" maxlength="300" required mix-check="^.{1,300}$"></textarea>
                 <div class="post-form-actions">
                     <div class="post-form-icons">
-                        <button type="button" class="post-form-icon" title="Media" onclick="document.getElementById('postImageInput').click()">
+                        <button type="button" class="post-form-icon" title="Media" onclick="document.getElementById('createPostImageInput').click()">
                             <i class="fa-solid fa-image"></i>
                         </button>
 

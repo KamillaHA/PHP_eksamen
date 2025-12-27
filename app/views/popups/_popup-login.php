@@ -21,7 +21,7 @@ if (isset($_SESSION["user"])) {
             
             <h2>Log ind på X</h2>
             
-            <form class="login-form" action="/api/api-login.php" method="POST" mix-post mix-after="main">
+            <form class="login-form" action="/login" method="POST" mix-post mix-after="main">
                 <?php if(isset($_GET['message'])): ?>
                     <div class="error-message">
                         <?php echo htmlspecialchars($_GET['message']); ?>

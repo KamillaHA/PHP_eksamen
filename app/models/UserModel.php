@@ -18,7 +18,7 @@ class UserModel
     {
         require __DIR__ . "/../../private/db.php";
 
-        $sql = "SELECT user_pk, user_username, user_full_name, user_email
+        $sql = "SELECT user_pk, user_username, user_full_name, user_email, user_cover_image, created_at
                 FROM users WHERE user_pk = :pk";
         $stmt = $_db->prepare($sql);
         $stmt->bindValue(":pk", $pk);
@@ -53,6 +53,20 @@ class UserModel
             ":username" => $data["username"],
             ":fullname" => $data["fullname"],
             ":email" => $data["email"]
+        ]);
+    }
+
+    public static function updateCover(string $pk, string $path): void
+    {
+        require __DIR__ . "/../../private/db.php";
+
+        $_db->prepare("
+            UPDATE users
+            SET user_cover_image = :cover
+            WHERE user_pk = :pk
+        ")->execute([
+            ':cover' => $path,
+            ':pk' => $pk
         ]);
     }
 

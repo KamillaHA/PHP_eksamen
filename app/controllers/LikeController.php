@@ -18,14 +18,9 @@ class LikeController
             LikeModel::create($userPk, $postPk);
         }
 
-        // Beregn ny state
-        $userLiked = true;
-        $likeCount = LikeModel::countByPost($postPk);
-
-        require __DIR__ . '/../views/micro_components/___like-button.php';
+        http_response_code(204);
         exit;
     }
-
 
     public static function unlike(): void
     {
@@ -40,11 +35,8 @@ class LikeController
 
         LikeModel::delete($userPk, $postPk);
 
-        // Beregn ny state
-        $userLiked = false;
-        $likeCount = LikeModel::countByPost($postPk);
-
-        require __DIR__ . '/../views/micro_components/___like-button.php';
+        http_response_code(204);
         exit;
     }
-}
+
+};

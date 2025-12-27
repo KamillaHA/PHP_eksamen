@@ -24,14 +24,54 @@ switch ($uri) {
         require __DIR__ . '/app/views/components/_footer.php';
         exit;
 
+    case '/signup':
+        require_once __DIR__ . '/app/controllers/AuthController.php';
+        AuthController::signup();
+        break;
+
+    case '/login':
+        require_once __DIR__ . '/app/controllers/AuthController.php';
+        AuthController::login();
+        break;
+
     case '/profile':
-        require_once __DIR__ . '/app/controllers/ProfileController.php';
-        ProfileController::get();
+        require_once __DIR__ . '/app/controllers/UserController.php';
+        UserController::get();
+        break;
+
+    case '/profile/cover':
+        require_once __DIR__ . '/app/controllers/UserController.php';
+        UserController::updateCover();
+        break;
+
+    case '/profile/update':
+        require_once __DIR__ . '/app/controllers/UserController.php';
+        UserController::update();
+        break;
+
+    case '/profile/delete':
+        require_once __DIR__ . '/app/controllers/UserController.php';
+        UserController::delete();
         break;
 
     case '/home':
         require_once __DIR__ . '/app/controllers/PostController.php';
         PostController::index();
+        break;
+
+    case '/post/create':
+        require_once __DIR__ . '/app/controllers/PostController.php';
+        PostController::create();
+        break;
+
+    case '/post/update':
+        require_once __DIR__ . '/app/controllers/PostController.php';
+        PostController::update();
+        break;
+
+    case '/post/delete':
+        require_once __DIR__ . '/app/controllers/PostController.php';
+        PostController::delete();
         break;
 
     case '/follow':
@@ -52,6 +92,21 @@ switch ($uri) {
     case '/unlike':
         require_once __DIR__ . '/app/controllers/LikeController.php';
         LikeController::unlike();
+        break;
+
+    case '/comment':
+        require_once __DIR__ . '/app/controllers/CommentController.php';
+        CommentController::create();
+        break;
+
+    case '/comment/update':
+        require_once __DIR__ . '/app/controllers/CommentController.php';
+        CommentController::update();
+        break;
+
+    case '/comment/delete':
+        require_once __DIR__ . '/app/controllers/CommentController.php';
+        CommentController::delete();
         break;
 
     default:

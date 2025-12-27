@@ -416,6 +416,7 @@ body.page-landing p {
 .cover-upload-form {
     position: absolute;
     inset: 0;
+    z-index: 10;
 }
 
 .cover-upload-btn {
@@ -425,6 +426,8 @@ body.page-landing p {
     border: none;
     color: transparent;
     cursor: pointer;
+    pointer-events: auto;
+    z-index: 11;
 }
 
 /* Hover-effekt */

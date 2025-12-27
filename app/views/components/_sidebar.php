@@ -35,7 +35,7 @@ $trends = [
 ];
 ?>
 
-<aside class="sidebar" mix-root>
+<aside class="sidebar">
 
     <!-- Trends -->
     <div class="trends-section">
@@ -58,7 +58,7 @@ $trends = [
         </div>
     </div>
 
-    <!-- 👥 Who to follow -->
+    <!-- Who to follow -->
     <div class="follow-section">
         <h3 class="follow-title">Who to follow</h3>
 
@@ -85,6 +85,7 @@ $trends = [
 
             <!-- Button -->
             <div class="follow-action">
+                    <?php $followUserPk = $user['user_pk']; ?>
                 <?php if (!empty($user['isFollowing'])): ?>
                     <?php require __DIR__ . '/../micro_components/___button-unfollow.php'; ?>
                 <?php else: ?>

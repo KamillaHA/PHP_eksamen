@@ -15,13 +15,13 @@ $user = $_SESSION["user"];
         </div>
         <div class="modal-content">
 
-            <form class="edit-post-form" action="/api/api-update-post.php" method="POST" enctype="multipart/form-data">
+            <form class="edit-post-form" action="/post/update" method="POST" enctype="multipart/form-data">
                 <!-- Hidden input til post ID -->
                 <input type="hidden" name="post_pk" id="edit_post_pk">
             <input 
                 type="file" 
                 name="post_image_path"
-                id="postImageInput"
+                id="editPostImageInput"
                 accept="image/*"
                 hidden
             >
@@ -48,7 +48,7 @@ $user = $_SESSION["user"];
                 
                 <div class="post-form-actions">
                     <div class="post-form-icons">
-                        <button type="button" class="post-form-icon" title="Media" onclick="document.getElementById('postImageInput').click()">
+                        <button type="button" class="post-form-icon" title="Media" onclick="document.getElementById('editPostImageInput').click()">
                             <i class="fa-solid fa-image"></i>
                         </button>
                     </div>

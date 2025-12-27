@@ -5,7 +5,7 @@ $current_user_id = $current_user_id ?? null;
 
 // NY: Tjek om vi er i "single view" eller "feed view"
 $view_mode = isset($_GET['post']) && !empty($_GET['post']) ? 'single' : 'feed';
-$current_post_id = $_GET['post'] ?? null;
+$single_post_id = $_GET['post'] ?? null;
 
 // Inkluder comment komponent
 require_once __DIR__ . '/___comment.php';
@@ -79,7 +79,7 @@ if ($view_mode === 'single') {
                         <?php if ($current_user_id == $post['post_user_fk']): ?>
                         <div class="post-menu">
                             <button type="button" class="post-menu-btn" 
-                                    data-post-id="<?php echo $post['post_pk']; ?>" 
+                                    onclick="togglePostDropdown('<?= $post['post_pk']; ?>')" 
                                     aria-label="Post options">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M3 12c0-1.1.9-2 2-2s2 0.9 2 2-0.9 2-2 2-2-0.9-2-2zm9 2c1.1 0 2-0.9 2-2s-0.9-2-2-2-2 0.9-2 2 0.9 2 2 2zm7 0c1.1 0 2-0.9 2-2s-0.9-2-2-2-2 0.9-2 2 0.9 2 2 2z"/>
@@ -87,16 +87,18 @@ if ($view_mode === 'single') {
                             </button>
                             <div class="post-dropdown" id="post-dropdown-<?php echo $post['post_pk']; ?>">
                                 <button type="button" class="dropdown-item" 
-                                        data-action="edit-post" 
-                                        data-post-id="<?php echo $post['post_pk']; ?>" 
-                                        data-post-text="<?php echo htmlspecialchars($post['post_message'], ENT_QUOTES); ?>">
+                                    onclick="openEditPostPopup(
+                                        '<?= $post['post_pk']; ?>',
+                                        '<?= htmlspecialchars($post['post_message'], ENT_QUOTES); ?>'
+                                    )">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
                                         <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
                                     </svg>
                                     Edit Post
                                 </button>
-                                <form action="/api/api-delete-post.php" method="POST" class="dropdown-item-form" mix-post>
+                                    <form action="/post/delete" method="POST">
                                     <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
+                                    <input type="hidden" name="redirect_to" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
                                     <button type="submit" class="dropdown-item delete-btn">
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
                                             <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -191,7 +193,7 @@ if ($view_mode === 'single') {
         
 <!-- Add comment form -->
 <div class="add-comment-form">
-    <form action="/api/api-create-comment.php" method="POST" mix-post mix-target>
+    <form action="/comment" method="POST">
         <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
         
         <div class="comment-input-group">
