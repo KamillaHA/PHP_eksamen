@@ -14,7 +14,7 @@ $user = $_SESSION["user"];
             <button class="modal-close x-dialog__close">&times;</button>
         </div>
         <div class="modal-content">
-            <form class="comment-form" action="/api/api-create-comment.php" method="POST" mix-post mix-after="main">
+            <form class="comment-form" action="/api/api-create-comment" method="POST" mix-post mix-after="main">
                 <!-- Hidden input til post ID -->
                 <input type="hidden" name="post_pk" id="comment_post_pk">
                 

@@ -77,6 +77,12 @@ class AuthController
     public static function logout(): void
     {
         session_start();
+
+        require_once __DIR__ . "/../../private/x.php";
+        if (function_exists('_noCache')) {
+            _noCache();
+        }
+
         session_destroy();
         header("Location: /");
         exit;
