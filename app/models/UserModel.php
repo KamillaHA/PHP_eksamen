@@ -31,10 +31,22 @@ class UserModel
     {
         require __DIR__ . "/../../private/db.php";
 
-        $sql = "INSERT INTO users
-                (user_pk, user_username, user_full_name, user_email, user_password)
-                VALUES (:pk, :username, :fullname, :email, :password)";
-        $_db->prepare($sql)->execute($user);
+        try {
+            $sql = "INSERT INTO users
+                    (user_pk, user_username, user_full_name, user_email, user_password)
+                    VALUES (:pk, :username, :fullname, :email, :password)";
+            $_db->prepare($sql)->execute($user);
+            
+        } catch (PDOException $e) {
+            // Håndter UNIQUE constraint violation
+            if (strpos($e->getMessage(), 'unique_user_email') !== false) {
+                throw new Exception("Email er allerede i brug");
+            }
+            if (strpos($e->getMessage(), 'unique_user_username') !== false) {
+                throw new Exception("Brugernavn er allerede i brug");
+            }
+            throw $e; // Kast andre exceptions videre
+        }
     }
 
     public static function update(string $pk, array $data): void

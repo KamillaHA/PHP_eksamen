@@ -9,6 +9,12 @@ class FollowController
             session_start();
         }
 
+        if (!isset($_SESSION['user'])) {
+            http_response_code(401);
+            echo 'Du skal være logget ind for at følge nogen';
+            exit;
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
         // hvem klikker
@@ -47,6 +53,12 @@ class FollowController
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
+        }
+
+        if (!isset($_SESSION['user'])) {
+            http_response_code(401);
+            echo 'Du skal være logget ind for at unfølge nogen';
+            exit;
         }
 
         require_once __DIR__ . "/../../private/x.php";

@@ -1,11 +1,21 @@
 <?php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 require_once __DIR__ . '/../../../private/x.php';
-?>
 
+// Kald _noCache() på ALLE sider der har med auth at gøre
+$current_page = basename($_SERVER['PHP_SELF']);
+$auth_pages = ['home.php', 'profile.php', 'logout.php']; // Tilføj dine auth-relaterede sider
+
+if (isset($_SESSION['user_id']) || in_array($current_page, $auth_pages)) {
+    if (function_exists('_noCache')) {
+        _noCache();
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">

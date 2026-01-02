@@ -5,6 +5,16 @@ class CommentController
 {
     public static function create(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user'])) {
+            http_response_code(401);
+            echo 'Du skal være logget ind for at oprette en kommentar';
+            exit;
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
         $postPk = _validatePk("post_pk");
@@ -37,6 +47,16 @@ class CommentController
 
     public static function update(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user'])) {
+            http_response_code(401);
+            echo 'Du skal være logget ind for at redigere en kommentar';
+            exit;
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
         $commentPk = _validatePk("comment_pk");
@@ -65,6 +85,16 @@ class CommentController
 
     public static function delete(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user'])) {
+            http_response_code(401);
+            echo 'Du skal være logget ind for at slette en kommentar';
+            exit;
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
         $commentPk = _validatePk("comment_pk");

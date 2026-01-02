@@ -97,49 +97,75 @@ class UserController
 
     public static function updateCover(): void
     {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-    if (!isset($_SESSION['user'])) {
-        header("Location: /");
-        exit;
-    }
+        if (!isset($_SESSION['user'])) {
+            header("Location: /");
+            exit;
+        }
 
-    if (empty($_FILES['cover_image']['tmp_name'])) {
+        if (empty($_FILES['cover_image']['tmp_name'])) {
+            header("Location: /profile");
+            exit;
+        }
+
+        // Valider filstørrelse (max 10MB for cover)
+        $fileSizeKB = $_FILES['cover_image']['size'] / 1024;
+        if ($fileSizeKB > 10240) { // 10MB
+            header("Location: /profile");
+            exit;
+        }
+
+        // Tjek om filen blev uploadet korrekt
+        if (!is_uploaded_file($_FILES['cover_image']['tmp_name'])) {
+            header("Location: /profile");
+            exit;
+        }
+
+        $allowedTypes = [
+            'image/jpeg' => 'jpg',
+            'image/jpg' => 'jpg',
+            'image/png' => 'png',
+            'image/webp' => 'webp',
+            'image/gif' => 'gif'
+        ];
+        
+        $type = mime_content_type($_FILES['cover_image']['tmp_name']);
+
+        if (!isset($allowedTypes[$type])) {
+            header("Location: /profile");
+            exit;
+        }
+
+        // Brug korrekt filtype-endelse
+        $fileExtension = $allowedTypes[$type];
+        $filename = bin2hex(random_bytes(16)) . '.' . $fileExtension;
+        $uploadDir = __DIR__ . '/../../uploads/covers/';
+        $target = $uploadDir . $filename;
+
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        // Flyt filen med korrekt navn
+        if (!move_uploaded_file($_FILES['cover_image']['tmp_name'], $target)) {
+            header("Location: /profile");
+            exit;
+        }
+
+        $coverPath = '/uploads/covers/' . $filename;
+
+        require_once __DIR__ . '/../models/UserModel.php';
+        UserModel::updateCover($_SESSION['user']['user_pk'], $coverPath);
+
+        // opdatér session
+        $_SESSION['user']['user_cover_image'] = $coverPath;
+
         header("Location: /profile");
         exit;
     }
-
-    $allowed = ['image/jpeg', 'image/png', 'image/webp'];
-    $type = mime_content_type($_FILES['cover_image']['tmp_name']);
-
-    if (!in_array($type, $allowed)) {
-        header("Location: /profile");
-        exit;
-    }
-
-    $filename = bin2hex(random_bytes(16)) . '.webp';
-    $uploadDir = __DIR__ . '/../../uploads/covers/';
-    $target = $uploadDir . $filename;
-
-    if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
-
-    move_uploaded_file($_FILES['cover_image']['tmp_name'], $target);
-
-    $coverPath = '/uploads/covers/' . $filename;
-
-    require_once __DIR__ . '/../models/UserModel.php';
-    UserModel::updateCover($_SESSION['user']['user_pk'], $coverPath);
-
-    // opdatér session
-    $_SESSION['user']['user_cover_image'] = $coverPath;
-
-    header("Location: /profile");
-    exit;
-}
 
     public static function delete(): void
     {

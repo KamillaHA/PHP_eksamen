@@ -141,28 +141,56 @@ class PostController
             session_start();
         }
 
+        if (!isset($_SESSION['user'])) {
+            http_response_code(401);
+            echo 'Du skal være logget ind for at oprette et indlæg';
+            exit;
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
         $imagePath = null;
 
         if (!empty($_FILES['post_image_path']['tmp_name'])) {
-
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-            $fileType = mime_content_type($_FILES['post_image_path']['tmp_name']);
-
-            if (!in_array($fileType, $allowedTypes)) {
+            // Valider filstørrelse (max 5MB)
+            $fileSizeKB = $_FILES['post_image_path']['size'] / 1024;
+            if ($fileSizeKB > 5120) { // 5MB
                 http_response_code(400);
-                exit('Invalid image type');
+                exit('Filen er for stor. Maksimum 5MB tilladt.');
             }
 
-            $filename = bin2hex(random_bytes(16)) . '.webp';
+            // Tjek om filen blev uploadet korrekt
+            if (!is_uploaded_file($_FILES['post_image_path']['tmp_name'])) {
+                http_response_code(400);
+                exit('Filen blev ikke uploadet korrekt.');
+            }
+
+            $allowedTypes = [
+                'image/jpeg' => 'jpg',
+                'image/jpg' => 'jpg',
+                'image/png' => 'png',
+                'image/webp' => 'webp',
+                'image/gif' => 'gif'
+            ];
+            
+            $fileType = mime_content_type($_FILES['post_image_path']['tmp_name']);
+
+            if (!isset($allowedTypes[$fileType])) {
+                http_response_code(400);
+                exit('Kun JPEG, PNG, GIF og WebP billeder er tilladt');
+            }
+
+            // Brug korrekt filtype-endelse
+            $fileExtension = $allowedTypes[$fileType];
+            $filename = bin2hex(random_bytes(16)) . '.' . $fileExtension;
             $uploadDir = __DIR__ . '/../../uploads/';
             $targetPath = $uploadDir . $filename;
 
-            move_uploaded_file(
-                $_FILES['post_image_path']['tmp_name'],
-                $targetPath
-            );
+            // Flyt filen med korrekt navn
+            if (!move_uploaded_file($_FILES['post_image_path']['tmp_name'], $targetPath)) {
+                http_response_code(500);
+                exit('Kunne ikke gemme filen');
+            }
 
             $imagePath = '/uploads/' . $filename;
         }
@@ -181,6 +209,16 @@ class PostController
 
     public static function update(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user'])) {
+            http_response_code(401);
+            echo 'Du skal være logget ind for at redigere et indlæg';
+            exit;
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
         $postPk  = _validatePk("post_pk");
@@ -189,20 +227,45 @@ class PostController
 
         // Håndtér evt. nyt billede
         if (!empty($_FILES['post_image_path']['tmp_name'])) {
-
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-            $fileType = mime_content_type($_FILES['post_image_path']['tmp_name']);
-
-            if (!in_array($fileType, $allowedTypes)) {
+            // Valider filstørrelse (max 5MB)
+            $fileSizeKB = $_FILES['post_image_path']['size'] / 1024;
+            if ($fileSizeKB > 5120) {
                 header("Location: " . ($_SERVER['HTTP_REFERER'] ?? '/home'));
                 exit;
             }
 
-            $filename = bin2hex(random_bytes(16)) . '.webp';
+            // Tjek om filen blev uploadet korrekt
+            if (!is_uploaded_file($_FILES['post_image_path']['tmp_name'])) {
+                header("Location: " . ($_SERVER['HTTP_REFERER'] ?? '/home'));
+                exit;
+            }
+
+            $allowedTypes = [
+                'image/jpeg' => 'jpg',
+                'image/jpg' => 'jpg',
+                'image/png' => 'png',
+                'image/webp' => 'webp',
+                'image/gif' => 'gif'
+            ];
+            
+            $fileType = mime_content_type($_FILES['post_image_path']['tmp_name']);
+
+            if (!isset($allowedTypes[$fileType])) {
+                header("Location: " . ($_SERVER['HTTP_REFERER'] ?? '/home'));
+                exit;
+            }
+
+            // Brug korrekt filtype-endelse
+            $fileExtension = $allowedTypes[$fileType];
+            $filename = bin2hex(random_bytes(16)) . '.' . $fileExtension;
             $uploadDir = __DIR__ . '/../../uploads/';
             $targetPath = $uploadDir . $filename;
 
-            move_uploaded_file($_FILES['post_image_path']['tmp_name'], $targetPath);
+            // Flyt filen med korrekt navn
+            if (!move_uploaded_file($_FILES['post_image_path']['tmp_name'], $targetPath)) {
+                header("Location: " . ($_SERVER['HTTP_REFERER'] ?? '/home'));
+                exit;
+            }
 
             $imagePath = '/uploads/' . $filename;
         }
@@ -230,6 +293,16 @@ class PostController
 
     public static function delete(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user'])) {
+            http_response_code(401);
+            echo 'Du skal være logget ind for at slette et indlæg';
+            exit;
+        }
+
         require_once __DIR__ . "/../../private/x.php";
 
         $postPk = _validatePk("post_pk");
