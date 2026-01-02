@@ -54,6 +54,11 @@ switch ($uri) {
         UserController::delete();
         break;
 
+    case preg_match('#^/([^/]+)/status/([a-f0-9]+)$#', $uri, $matches) ? true : false:
+        require_once __DIR__ . '/app/controllers/PostController.php';
+        PostController::singleByUrl($matches[1], $matches[2]); // brugernavn og post ID
+        break;
+
     case '/home':
         require_once __DIR__ . '/app/controllers/PostController.php';
         PostController::index();

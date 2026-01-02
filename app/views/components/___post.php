@@ -117,9 +117,9 @@ if ($view_mode === 'single') {
                     <!-- Billede -->
                     <?php if (!empty($post['post_image_path'])): ?>
                         <div class="post-image">
-
                         <?php if ($view_mode === 'feed'): ?>
-                            <a href="/home?post=<?php echo $post['post_pk']; ?>" class="post-image-link">
+                            <!-- NYT: Brug den nye URL struktur /username/status/post_id -->
+                            <a href="/<?php echo $post['user_username']; ?>/status/<?php echo $post['post_pk']; ?>" class="post-image-link">
                                 <img src="<?php echo _($post['post_image_path']); ?>" 
                                     alt="Image for <?php echo _($post['post_message']); ?>">
                             </a>
@@ -127,14 +127,12 @@ if ($view_mode === 'single') {
                             <img src="<?php echo _($post['post_image_path']); ?>" 
                                 alt="Image for <?php echo _($post['post_message']); ?>">
                         <?php endif; ?>
-
                         </div>
                     <?php endif; ?>
                     
                     <!-- Post actions med både like og kommentar -->
                     <div class="post-actions">
-
-                            <!-- Like knap -->
+                        <!-- Like knap -->
                         <?php
                         $postPk    = $post['post_pk'];
                         $userLiked = $userLiked;
@@ -143,11 +141,7 @@ if ($view_mode === 'single') {
                         require __DIR__ . '/../micro_components/___button-like.php';
                         ?>
 
-
-
-
-
-                            <?php if ($view_mode === 'single'): ?>
+                        <?php if ($view_mode === 'single'): ?>
                             <!-- Single view: Vis count som tekst -->
                             <span class="comment-count-display">
                                 <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
@@ -158,8 +152,8 @@ if ($view_mode === 'single') {
                                 </span>
                             </span>
                         <?php else: ?>
-                            <!-- Feed view: Vis som link til single view -->
-                            <a href="/home?post=<?php echo $post['post_pk']; ?>" 
+                            <!-- Feed view: Vis som link til single view med NY URL struktur -->
+                            <a href="/<?php echo $post['user_username']; ?>/status/<?php echo $post['post_pk']; ?>" 
                                 class="comment-btn"
                                 title="View post and comments">
                                 <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
@@ -173,43 +167,41 @@ if ($view_mode === 'single') {
                     </div>
                     
                     <!-- Kommentarer - KUN vis i single view -->
-<!-- Kommentarer og tilføj kommentar form - KUN i single view -->
-<?php if ($view_mode === 'single'): ?>
-    <div class="comments-section single-view-comments">
-        <?php if ($commentCount > 0): ?>
-            <h4 class="comments-title">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"/>
-                </svg>
-                Comments (<?php echo $commentCount; ?>)
-            </h4>
-            
-            <div class="comments-list">
-                <?php foreach ($comments as $comment): 
-                    renderComment($comment, $current_user_id);
-                endforeach; ?>
-            </div>
-        <?php endif; ?>
-        
-<!-- Add comment form -->
-<div class="add-comment-form">
-    <form action="/comment" method="POST">
-        <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
-        
-        <div class="comment-input-group">
-            <textarea name="comment_text"
-                    id="write_comment"
-                        placeholder="Write a comment..." 
-                        rows="2"
-                        maxlength="255"
-                        required></textarea>
-            <button type="submit" class="comment-submit-btn">Post</button>
-        </div>
-    </form>
-</div>
-        </div>
-    </div>
-<?php endif; ?>
+                    <?php if ($view_mode === 'single'): ?>
+                        <div class="comments-section single-view-comments">
+                            <?php if ($commentCount > 0): ?>
+                                <h4 class="comments-title">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"/>
+                                    </svg>
+                                    Comments (<?php echo $commentCount; ?>)
+                                </h4>
+                                
+                                <div class="comments-list">
+                                    <?php foreach ($comments as $comment): 
+                                        renderComment($comment, $current_user_id);
+                                    endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                            
+                            <!-- Add comment form -->
+                            <div class="add-comment-form">
+                                <form action="/comment" method="POST">
+                                    <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
+                                    
+                                    <div class="comment-input-group">
+                                        <textarea name="comment_text"
+                                                id="write_comment"
+                                                placeholder="Write a comment..." 
+                                                rows="2"
+                                                maxlength="255"
+                                                required></textarea>
+                                        <button type="submit" class="comment-submit-btn">Post</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </article>

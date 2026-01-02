@@ -7,14 +7,31 @@ class CommentController
     {
         require_once __DIR__ . "/../../private/x.php";
 
+        $postPk = _validatePk("post_pk");
+        
         CommentModel::create([
             ":pk"   => bin2hex(random_bytes(25)),
             ":text" => validateCommentText(),
-            ":post" => _validatePk("post_pk"),
+            ":post" => $postPk,
             ":user" => $_SESSION["user"]["user_pk"]
         ]);
 
-        header("Location: /home?post=" . _validatePk("post_pk"));
+        // Hent brugernavn for redirect
+        require __DIR__ . '/../../private/db.php';
+        $stmt = $_db->prepare("
+            SELECT users.user_username 
+            FROM posts 
+            JOIN users ON posts.post_user_fk = users.user_pk 
+            WHERE posts.post_pk = ?
+        ");
+        $stmt->execute([$postPk]);
+        $post = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($post) {
+            header("Location: /" . $post['user_username'] . "/status/" . $postPk);
+        } else {
+            header("Location: /home");
+        }
         exit;
     }
 
@@ -28,7 +45,21 @@ class CommentController
 
         CommentModel::update($commentPk, $text);
 
-        header("Location: /home?post=" . $postPk);
+        require __DIR__ . '/../../private/db.php';
+        $stmt = $_db->prepare("
+            SELECT users.user_username 
+            FROM posts 
+            JOIN users ON posts.post_user_fk = users.user_pk 
+            WHERE posts.post_pk = ?
+        ");
+        $stmt->execute([$postPk]);
+        $post = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($post) {
+            header("Location: /" . $post['user_username'] . "/status/" . $postPk);
+        } else {
+            header("Location: /home");
+        }
         exit;
     }
 
@@ -41,7 +72,21 @@ class CommentController
 
         CommentModel::softDelete($commentPk);
 
-        header("Location: /home?post=" . $postPk);
+        require __DIR__ . '/../../private/db.php';
+        $stmt = $_db->prepare("
+            SELECT users.user_username 
+            FROM posts 
+            JOIN users ON posts.post_user_fk = users.user_pk 
+            WHERE posts.post_pk = ?
+        ");
+        $stmt->execute([$postPk]);
+        $post = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($post) {
+            header("Location: /" . $post['user_username'] . "/status/" . $postPk);
+        } else {
+            header("Location: /home");
+        }
         exit;
     }
 }
