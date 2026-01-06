@@ -21,7 +21,7 @@ if (isset($_SESSION["user"])) {
             
             <h2 class="popup-header">Log in to X</h2>
             
-            <form class="login-form" action="/login" method="POST" mix-post mix-after="main">
+            <form class="login-form" action="/login" method="POST">
                 <?php if(isset($_GET['message'])): ?>
                     <div class="error-message">
                         <?php echo htmlspecialchars($_GET['message']); ?>

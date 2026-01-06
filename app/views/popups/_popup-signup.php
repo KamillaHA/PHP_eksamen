@@ -21,7 +21,7 @@ if (isset($_SESSION["user"])) {
             
             <h2 class="popup-header">Join us on X</h2>
             
-            <form class="signup-form" action="/signup" method="POST" mix-post mix-after="main">
+            <form class="signup-form" action="/signup" method="POST">
                 <?php if(isset($_GET['message'])): ?>
                     <div class="error-message">
                         <?php echo htmlspecialchars($_GET['message']); ?>

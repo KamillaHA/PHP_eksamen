@@ -170,21 +170,6 @@ function _validatePassword() {
         throw new Exception("Password must be at most " . passwordMaxLength . " characters", 400);
     }
     
-    // // Mindst ét stort bogstav
-    // if (!preg_match('/[A-Z]/', $password)) {
-    //     throw new Exception("Password must contain at least one uppercase letter", 400);
-    // }
-    
-    // // Mindst ét lille bogstav
-    // if (!preg_match('/[a-z]/', $password)) {
-    //     throw new Exception("Password must contain at least one lowercase letter", 400);
-    // }
-    
-    // // Mindst ét tal
-    // if (!preg_match('/[0-9]/', $password)) {
-    //     throw new Exception("Password must contain at least one number", 400);
-    // }
-    
     return $password;
 }
 
