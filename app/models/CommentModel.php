@@ -39,7 +39,7 @@ class CommentModel
                 AND users.deleted_at IS NULL
                 WHERE comments.post_fk = :post
                 AND comments.deleted_at IS NULL
-                ORDER BY comments.created_at DESC
+                ORDER BY comments.created_at ASC
         ";
 
         $stmt = $_db->prepare($sql);

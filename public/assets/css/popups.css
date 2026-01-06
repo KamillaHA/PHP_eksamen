@@ -163,7 +163,7 @@
 
 .comment-menu-btn:hover {
   background-color: var(--color-primary-hover);
-  color: var(--color-primary-hover);
+  color: var(--color-text);
 }
 
 .comment-count {
