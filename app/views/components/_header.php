@@ -32,6 +32,11 @@ require_once __DIR__ . '/../../../private/x.php';
     <!-- SIDEBAR NAV -->
     <nav>
         <ul>
+            <li><a href="/home">
+                    <svg viewBox="0 0 24 24" width="24" height="24" style="fill: currentColor;">
+                        <path d="M 21.742 21.75 l -7.563 -11.179 l 7.056 -8.321 h -2.456 l -5.691 6.714 l -4.54 -6.714 H 2.359 l 7.29 10.776 L 2.25 21.75 h 2.456 l 6.035 -7.118 l 4.818 7.118 h 6.191 h -0.008 Z M 7.739 3.818 L 18.81 20.182 h -2.447 L 5.29 3.818 h 2.447 Z"/>
+                    </svg>
+                </a></li>
             <li><a href="/home"><i class="fa-solid fa-house"></i><span>Forside</span></a></li>
             <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>Explore</span></a></li>
             <li><a href="#"><i class="fa-regular fa-bell"></i><span>Notifications</span></a></li>
