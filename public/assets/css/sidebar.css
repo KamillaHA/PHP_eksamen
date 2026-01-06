@@ -1,0 +1,180 @@
+/* ======================================================
+   SIDEBAR
+====================================================== */
+
+/* ======================================================
+   SIDEBAR CONTAINER
+====================================================== */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 20rem;
+  height: 100vh;
+  padding: 1rem;
+  overflow-y: auto;
+
+  background: var(--color-bg);
+  border-left: var(--border-xs) solid var(--color-border);
+}
+
+/* Placeholder (hvis sidebar ikke vises) */
+.sidebar-placeholder {
+  color: var(--color-text);
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+/* ======================================================
+   PROFILE TAG
+====================================================== */
+
+#profile_tag {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--border-radius-sm);
+  transition: background-color 0.2s;
+  cursor: pointer;
+  margin: 0.5rem;
+  background-color: var(--color-text);
+  gap: 0.5rem;
+}
+
+#profile_tag .option {
+  margin-left: auto;
+  margin-right: 0.4rem;
+}
+
+#profile_tag .name {
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+#profile_tag .handle {
+  font-size: 0.75rem;
+  color: var(--color-bg-disabled);
+}
+
+
+/* ======================================================
+   SIDEBAR SECTIONS
+====================================================== */
+
+.follow-section,
+.trends-section {
+  background: var(--color-bg);
+  border: var(--border-xs) solid var(--color-border);
+  border-radius:var(--border-radius-xs);
+  padding: 1rem 1rem 0 1rem;
+  margin-top: 1rem;
+}
+
+.follow-title,
+.trends-title {
+  color: var(--color-text);
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* ======================================================
+   TRENDS
+====================================================== */
+
+.trends-list {
+  margin-bottom: 1rem;
+}
+
+.trend-item {
+  padding: 0.8rem 0 0.4rem 0;
+  border-bottom: var(--border-xs) solid var(--color-border);
+  cursor: pointer;
+
+  .trend-item:last-child {
+    border-bottom: none;
+  }
+
+  .trend-category {
+    color: var(--color-border);
+    font-size: 0.85rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .trend-name {
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0.2rem 0;
+  }
+
+  .trend-stats {
+    color: var(--color-border);
+    font-size: 0.85rem;
+  }
+}
+
+/* ======================================================
+   WHO TO FOLLOW
+====================================================== */
+
+.follow-list {
+  margin-bottom: 1rem;
+}
+
+.follow-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.8rem 0;
+  border-bottom: var(--border-xs) solid var(--color-border);
+  cursor: pointer;
+
+  .follow-item:last-child {
+    border-bottom: none;
+  }
+
+  .follow-avatar {
+    flex-shrink: 0;
+  }
+
+  .follow-user-info {
+    margin: 0 0.4rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .follow-name {
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0.2rem 0;
+  }
+
+  .follow-handle {
+    color: var(--color-border);
+    font-size: 0.85rem;
+  }
+
+  .follow-action {
+    width: 6.5rem;
+    display: flex;
+    justify-content: flex-end;
+    flex-shrink: 0;
+  }
+}
+
+/* ======================================================
+   MEDIA QUERIES (MOBILE FIRST)
+====================================================== */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    display: none;
+  }
+}

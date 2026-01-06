@@ -15,7 +15,7 @@
 
   <div class="x-landing__right">
     <h1 class="x-landing__title">Happening now</h1>
-    <h2 class="x-landing__subtitle">Join today.</h2>
+    <h2 class="x-landing__subtitle">Join today</h2>
 
     <div class="x-landing__buttons">
 
@@ -27,16 +27,9 @@
         Create an account
       </button>
       
-      <p class="x-landing__terms">
-        By signing up, you agree to the 
-        <a href="/terms">Terms of Service</a> and 
-        <a href="/privacy">Privacy Policy</a>, including 
-        <a href="/cookies">Cookie Use</a>.
-      </p>
-      
       <!-- Login -->
       <div class="x-landing__login">
-        <p class="x-landing__login-text">Already have an account?</p>
+        <!-- <p class="x-landing__login-text">Already have an account?</p> -->
         <button 
           class="x-landing__btn x-landing__btn--login" 
           data-open="loginModal"

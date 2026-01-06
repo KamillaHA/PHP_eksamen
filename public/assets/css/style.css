@@ -1,17 +1,39 @@
-/* Variabler */
-@import './variables.css';
+/* ======================================================
+   STYLESHEET ENTRY POINT
+====================================================== */
 
-/* Global styling */
-@import './app.css';
+/* 0. Variables */
+@import "./variables.css";
 
-/* Sider - Index, home og profile */
-@import './pages.css';
+/* 1. Base / Reset */
+@import "./base.css";
 
-/* Popup - Profile, post og comment */
-@import './popup.css';
+/* 2. Layout */
+@import "./layout.css";
 
-/* Komponenter - Header, footer, sidebar osv...*/
-@import './components.css';
+/* 3. Navigation */
+@import "./nav.css";
 
-/* MixHTML */
-@import './mixhtml.css';
+/* 4. Sidebar */
+@import "./sidebar.css";
+
+/* 5. Buttons */
+@import "./buttons.css";
+
+/* 6. Avatars */
+@import "./avatars.css";
+
+/* 7. Feed / Posts */
+@import "./feed.css";
+
+/* 8. Pages (landing, profile, single) */
+@import "./pages.css";
+
+/* 9. Popups / Modals */
+@import "./popups.css";
+
+/* 10. Utilities */
+@import "./utilities.css";
+
+/* 11. MixHTML (må ikke røres) */
+@import "./mixhtml.css";

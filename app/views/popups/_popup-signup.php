@@ -19,7 +19,7 @@ if (isset($_SESSION["user"])) {
                 </svg>
             </div>
             
-            <h2>Opret konto på X</h2>
+            <h2>Join us on X</h2>
             
             <form class="signup-form" action="/signup" method="POST" mix-post mix-after="main">
                 <?php if(isset($_GET['message'])): ?>
@@ -28,26 +28,26 @@ if (isset($_SESSION["user"])) {
                     </div>
                 <?php endif; ?>
                 
-                <input type="text" name="user_full_name" placeholder="Fulde navn" required>
-                <input type="text" name="user_username" placeholder="Brugernavn" required>
+                <input type="text" name="user_full_name" placeholder="Full name" required>
+                <input type="text" name="user_username" placeholder="Username" required>
                 <input type="email" name="user_email" placeholder="Email" required>
-                <input type="password" name="user_password" placeholder="Adgangskode" required>
+                <input type="password" name="user_password" placeholder="Password" required>
                 
                 <div class="terms-notice" style="font-size: 13px; color: #536471; margin: 15px 0;">
-                    <p>Ved at tilmelde dig accepterer du <a href="/terms" style="color: #1DA1F2;">Vilkår og Betingelser</a> og <a href="/privacy" style="color: #1DA1F2;">Privatlivspolitik</a>, inklusive <a href="/cookies" style="color: #1DA1F2;">Cookie-brug</a>.</p>
+                    <p>By joining X you accept <a href="/terms" style="color: #1DA1F2;">Terms and Conditions</a> and <a href="/privacy" style="color: #1DA1F2;">Privacypolicy</a>, including <a href="/cookies" style="color: #1DA1F2;">Cookie-use</a>.</p>
                 </div>
                 
                 <button type="submit" class="signup-submit-btn" 
                         mix-await="Opretter konto..." 
-                        mix-default="Tilmeld dig">
-                    Tilmeld dig
+                        mix-default="Join us">
+                    Join us
                 </button>
             </form>
             
             <div class="signup-footer">
-                <p>Har du allerede en konto? 
+                <p>Already have an account? 
                     <a href="#" class="switch-to-login-btn" style="color: #1DA1F2; text-decoration: none; font-weight: bold;">
-                        Log ind
+                        Log in
                     </a>
                 </p>
             </div>

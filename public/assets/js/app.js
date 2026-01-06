@@ -1,3 +1,4 @@
+console.log("APP.JS LOADED");
 /* ======================================================
     SCROLL-TOP KNAP
 ====================================================== */
@@ -12,23 +13,67 @@ window.addEventListener("scroll", () => {
 });
 
 
+
 /* ======================================================
     BURGER MENU
 ====================================================== */
 document.addEventListener("DOMContentLoaded", () => {
-    // Find burger-ikon og navigation
-    const burger = document.querySelector(".burger");
+    const body = document.body;
+    const topbar = document.querySelector(".mobile-topbar");
     const nav = document.querySelector("nav");
+    const overlay = document.querySelector(".nav-overlay");
 
-    // Stop hvis elementerne ikke findes på siden
-    if (!burger || !nav) return;
+    if (!topbar || !nav) return;
 
-    // Klik på burger → åbn/luk menu
-    burger.addEventListener("click", () => {
-        burger.classList.toggle("open");
-        nav.classList.toggle("active");
+    const openNav = () => body.classList.add("nav-open");
+    const closeNav = () => body.classList.remove("nav-open");
+
+    // Delegated avatar click
+    topbar.addEventListener("click", (e) => {
+        const burger = e.target.closest(".avatar-burger");
+        if (!burger) return;
+
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        body.classList.contains("nav-open") ? closeNav() : openNav();
+    });
+
+    nav.addEventListener("click", (e) => {
+        // Stop kun klik på selve navigationen, ikke posts
+        if (e.target.closest(".post-menu") || e.target.closest(".post-dropdown")) {
+            return;
+        }
+        e.stopPropagation();
+    });
+
+    // Overlay click → luk
+    if (overlay) {
+        overlay.addEventListener("click", () => {
+            closeNav();
+        });
+    }
+
+    // Nav link click → luk EFTER navigation
+    nav.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+            closeNav();
+        });
+    });
+
+    // Luk nav når der klikkes på POST-knappen (modal)
+    nav.querySelectorAll("[data-open]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            body.classList.remove("nav-open");
+        });
+    });
+
+    // ESC
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeNav();
     });
 });
+
+
 
 
 /* ======================================================
@@ -40,6 +85,7 @@ document.addEventListener("click", async (event) => {
     if (!likeBtn) return;
 
     event.preventDefault();
+    event.stopPropagation();
 
     // Hent post-id fra data-attribut
     const postId = likeBtn.dataset.postId;
@@ -88,16 +134,19 @@ window.togglePostDropdown = function (postPk) {
 };
 
 document.addEventListener("click", event => {
-    // Hvis der klikkes på menu-knappen eller selve dropdown → gør ingenting
+    // IGNORÉR clicks på like-knapper
+    if (event.target.closest(".action.like")) return;
+
+    // IGNORÉR clicks på post-menu
     if (
         event.target.closest(".post-menu-btn") ||
         event.target.closest(".post-dropdown")
     ) return;
 
-    // Klik udenfor → luk alle åbne post-dropdowns
     document.querySelectorAll(".post-dropdown.open")
         .forEach(d => d.classList.remove("open"));
 });
+
 
 
 

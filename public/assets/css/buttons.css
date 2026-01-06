@@ -1,0 +1,302 @@
+/* ======================================================
+   BUTTONS – GLOBAL
+====================================================== */
+
+/* ======================================================
+   PRIMARY / GENERIC BUTTONS
+====================================================== */
+
+.comment-submit-btn,
+.create-post-btn {
+  margin: 0.5rem 0;
+  padding: 0.4rem 0.7rem;
+  font-weight: bold;
+  font-size: small;
+  border-radius:var(--border-radius-sm);
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  border: thin solid var(--color-bg);
+  cursor: pointer;
+  transition: 0.2s;
+  align-self: center;
+}
+
+.create-post-btn {
+  font-size: 1rem;
+  width: 90%;
+
+  .create-post-btn:hover {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border: thin solid var(--color-text);
+  }
+}
+
+/* ======================================================
+   FOLLOW / UNFOLLOW (SIDEBAR / WHO TO FOLLOW)
+====================================================== */
+
+.follow-btn,
+.unfollow-btn {
+  color: var(--color-bg);
+  border-radius:var(--border-radius-sm);
+  padding: 0.4rem 0.8rem;
+  font-weight: bold;
+  font-size: small;
+  border: thin solid var(--color-bg);
+  cursor: pointer;
+  transition: 0.2s;
+  align-self: center;
+  background-color: var(--color-text);
+}
+
+/* ======================================================
+   PROFILE / SETTINGS BUTTONS
+====================================================== */
+
+.profile-header {
+  .profile-actions {
+    .profile-edit-btn {
+      background: transparent;
+      border: thin solid var(--color-border);
+      color: var(--color-text);
+      padding: 0.4rem 1rem;
+      border-radius:var(--border-radius-lg);
+      cursor: pointer;
+      font-weight: bold;
+      font-size: small;
+      transition: 0.2s;
+
+      .profile-edit-btn:hover {
+        background: var(--color-text);
+      }
+    }
+  }
+}
+
+.update-btn {
+  background: var(--color-primary);
+  color: var(--color-text);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+
+  .update-btn:hover {
+    background: var(--color-primary-hover);
+  }
+}
+
+.update-profile-btn {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius:var(--border-radius-lg);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: small;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.update-profile-btn:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.update-profile-btn:disabled {
+    background-color: var(--color-primary-disabled);
+    cursor: not-allowed;
+}
+
+.profile-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ======================================================
+   AUTH BUTTONS (LOGIN / SIGNUP)
+====================================================== */
+
+.login-form,
+.signup-form {
+  .login-submit-btn,
+  .signup-submit-btn {
+    width: 100%;
+    padding: 0.875rem;
+    background-color: var(--color-bg);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    .login-submit-btn:hover:not(:disabled),
+  .signup-submit-btn:hover:not(:disabled) {
+      background-color: var(--color-bg-disabled);
+    }
+
+    .login-submit-btn:disabled,
+  .signup-submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.x-landing__btn {
+  padding: 0.7rem;
+  margin: 1rem 0;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: var(--border-radius-sm);
+  border: thin solid var(--color-bg);
+  cursor: pointer;
+  transition: 0.2s;
+  width: 16rem;
+}
+
+.x-landing__btn.x-landing__btn--login {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    border: thin solid var(--color-text);
+
+    .x-landing__btn.x-landing__btn--login:hover {
+      background-color: var(--color-text);
+      color: var(--color-bg);
+      border: thin solid var(--color-bg);
+    }
+  }
+
+.x-landing__btn.x-landing__btn--signup {
+    background-color: var(--color-text);
+
+    .x-landing__btn.x-landing__btn--signup:hover {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      border: thin solid var(--color-text);
+    }
+  }
+
+
+a.x-landing__btn {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--font-family-base);
+}
+
+/* ======================================================
+   MODAL / POST / COMMENT FORM BUTTONS
+====================================================== */
+
+/* Bruges i:
+   - create post
+   - edit post
+   - create comment
+   - edit comment
+*/
+.post-submit-btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  font-size: small;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  .post-submit-btn:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+  }
+
+  .post-submit-btn:disabled {
+    background-color: var(--color-primary-disabled);
+    cursor: not-allowed;
+  }
+}
+
+/* ======================================================
+   DANGER / DELETE BUTTONS
+====================================================== */
+
+.delete-profile-btn {
+  background: transparent;
+  color: var(--color-delete);
+  border: thin solid var(--color-delete);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius-lg);
+  font-weight: bold;
+  font-size: small;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  .delete-profile-btn:hover {
+    background: var(--color-confirm-delete);
+  }
+}
+
+.confirm-actions {
+  .confirm-delete-btn,
+  .cancel-delete-profile {
+    color: white;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius:var(--border-radius-lg);
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .confirm-delete-btn {
+    background: var(--color-delete);
+
+    .confirm-delete-btn:hover {
+      background: var(--color-confirm-delete);
+    }
+  }
+
+  .cancel-delete-profile {
+    background: var(--color-primary);
+
+    .cancel-delete-profile:hover {
+      background: var(--color-primary-hover);
+    }
+  }
+}
+
+.cancel-btn {
+  background: transparent;
+  border: thin solid var(--color-border);
+  color: var(--color-bg);
+  padding: 0.6rem 1.2rem;
+  border-radius:var(--border-radius-lg);
+  cursor: pointer;
+}
+
+/* ======================================================
+   BACK / LOGOUT LINKS
+====================================================== */
+
+.btn-back,
+.btn-logout {
+  padding: 0.8rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn-back {
+  background: var(--color-text);
+  color: var(--color-bg-disabled);
+}
+
+.btn-logout {
+  background: var(--color-delete);
+  color: white;
+}
