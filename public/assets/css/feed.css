@@ -97,7 +97,7 @@
     
     .post-actions .comment-btn:hover {
       color: var(--color-primary);
-      background: rgba(24, 166, 249, 0.1);
+      background: var(--color-primary-hover);
     }
 
     .post-actions .comment-btn:hover .comment-count {
