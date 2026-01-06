@@ -8,9 +8,9 @@ class LikeModel
 
         $stmt = $_db->prepare(
             "SELECT 1 
-             FROM likes 
-             WHERE like_user_fk = :u 
-             AND like_post_fk = :p"
+            FROM likes 
+            WHERE like_user_fk = :u 
+            AND like_post_fk = :p"
         );
         $stmt->execute([
             ":u" => $userPk,
@@ -26,7 +26,7 @@ class LikeModel
 
         $_db->prepare(
             "INSERT INTO likes (like_user_fk, like_post_fk)
-             VALUES (:u, :p)"
+            VALUES (:u, :p)"
         )->execute([
             ":u" => $userPk,
             ":p" => $postPk
@@ -39,8 +39,8 @@ class LikeModel
 
         $_db->prepare(
             "DELETE FROM likes 
-             WHERE like_user_fk = :u 
-             AND like_post_fk = :p"
+            WHERE like_user_fk = :u 
+            AND like_post_fk = :p"
         )->execute([
             ":u" => $userPk,
             ":p" => $postPk
@@ -54,8 +54,8 @@ class LikeModel
 
         $stmt = $_db->prepare(
             "SELECT COUNT(*) 
-             FROM likes 
-             WHERE like_post_fk = :p"
+            FROM likes 
+            WHERE like_post_fk = :p"
         );
         $stmt->execute([":p" => $postPk]);
 

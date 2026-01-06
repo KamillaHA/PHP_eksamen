@@ -19,7 +19,7 @@ class PostController
 
         $current_user_id = $_SESSION['user']['user_pk'];
 
-        // 🔥 REDIRECT: Hvis der er et post parameter, redirect til ny URL struktur
+        // Hvis der er et post parameter, redirect til ny URL struktur
         if (isset($_GET['post']) && !empty($_GET['post'])) {
             require __DIR__ . '/../../private/db.php';
             $stmt = $_db->prepare("
@@ -146,7 +146,7 @@ class PostController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at oprette et indlæg';
+            echo 'You have to be logged in to create a post';
             exit;
         }
 
@@ -159,13 +159,13 @@ class PostController
             $fileSizeKB = $_FILES['post_image_path']['size'] / 1024;
             if ($fileSizeKB > 5120) { // 5MB
                 http_response_code(400);
-                exit('Filen er for stor. Maksimum 5MB tilladt.');
+                exit('The file is too big. 5MB max allowed');
             }
 
             // Tjek om filen blev uploadet korrekt
             if (!is_uploaded_file($_FILES['post_image_path']['tmp_name'])) {
                 http_response_code(400);
-                exit('Filen blev ikke uploadet korrekt.');
+                exit('The file wasn´t uploadet correct');
             }
 
             $allowedTypes = [
@@ -180,7 +180,7 @@ class PostController
 
             if (!isset($allowedTypes[$fileType])) {
                 http_response_code(400);
-                exit('Kun JPEG, PNG, GIF og WebP billeder er tilladt');
+                exit('Only JPEG, PNG, GIF og WebP images are allowed');
             }
 
             // Brug korrekt filtype-endelse
@@ -192,7 +192,7 @@ class PostController
             // Flyt filen med korrekt navn
             if (!move_uploaded_file($_FILES['post_image_path']['tmp_name'], $targetPath)) {
                 http_response_code(500);
-                exit('Kunne ikke gemme filen');
+                exit('Could not save the file');
             }
 
             $imagePath = '/uploads/' . $filename;
@@ -218,7 +218,7 @@ class PostController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at redigere et indlæg';
+            echo 'You have to be logged in to update a post';
             exit;
         }
 
@@ -302,7 +302,7 @@ class PostController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at slette et indlæg';
+            echo 'You have to be logged in to delete a post';
             exit;
         }
 

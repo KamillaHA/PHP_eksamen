@@ -100,7 +100,7 @@ class FollowModel
         $stmt = $_db->prepare("
             DELETE FROM follows
             WHERE follower_fk = :follower
-              AND following_fk = :following
+            AND following_fk = :following
         ");
 
         $stmt->execute([

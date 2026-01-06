@@ -32,7 +32,8 @@ class CommentModel
                     comments.post_fk AS post_pk,
                     comments.user_fk,
                     comments.created_at,
-                    users.user_username
+                    users.user_username,
+                    users.user_full_name
                 FROM comments
                 JOIN users ON comments.user_fk = users.user_pk
                 AND users.deleted_at IS NULL

@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("popup.js loaded");
 
 
   /* ======================================================
@@ -8,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   ====================================================== */
   // Åbner en popup og lukker automatisk alle andre
   function openModal(id) {
+
+    // FJERN GAMLE ERROR-MESSAGES
+    document.querySelectorAll(".error-message").forEach(el => el.remove());
 
     // Luk alle allerede åbne popups
     document.querySelectorAll(".dialog.active").forEach(dialog => {
@@ -128,4 +130,25 @@ document.addEventListener("DOMContentLoaded", () => {
   if (params.get("login") === "1") {
     openModal("loginModal");
   }
+});
+
+
+  /* ======================================================
+    NO REDIRECT IF LOGIN / SIGNUP IS WRONG
+  ====================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const popup = params.get("popup");
+
+    if (popup === "login") {
+        document.getElementById("loginModal")?.classList.add("active");
+    }
+
+    if (popup === "signup") {
+        document.getElementById("signupModal")?.classList.add("active");
+    }
+
+    if (popup) {
+        history.replaceState({}, document.title, "/");
+    }
 });

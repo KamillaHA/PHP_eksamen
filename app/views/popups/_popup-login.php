@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if (isset($_SESSION["user"])) {
     return;
@@ -22,10 +25,10 @@ if (isset($_SESSION["user"])) {
             <h2 class="popup-header">Log in to X</h2>
             
             <form class="login-form" action="/login" method="POST">
-                <?php if(isset($_GET['message'])): ?>
-                    <div class="error-message">
-                        <?php echo htmlspecialchars($_GET['message']); ?>
-                    </div>
+                <?php if (isset($_GET['message'])): ?>
+                <div class="error-message">
+                    <?= htmlspecialchars($_GET['message']) ?>
+                </div>
                 <?php endif; ?>
                 
                 <input name="user_email" type="email" placeholder="Email" required>

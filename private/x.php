@@ -208,3 +208,20 @@ function _validateFullName() {
     
     return $full_name;
 }
+
+
+
+
+
+
+// Flash hjælper til errormessage på popup signup/login
+
+function flash(string $key): ?string {
+    if (!isset($_SESSION[$key])) {
+        return null;
+    }
+
+    $value = $_SESSION[$key];
+    unset($_SESSION[$key]);
+    return $value;
+}

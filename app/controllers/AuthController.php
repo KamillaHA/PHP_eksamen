@@ -9,33 +9,24 @@ class AuthController
         require_once __DIR__ . "/../../private/x.php";
 
         try {
-            // Først valider input
-            $fullname = _validateFullName();
-            $username = _validateUsername();
-            $email = _validateEmail();
-            $password = _validatePassword();
+            _validateFullName();
+            _validateUsername();
+            _validateEmail();
+            _validatePassword();
 
-            // Tjek om email allerede findes i databasen (præ-validering)
-            $existingUser = UserModel::findByEmail($email);
-            if ($existingUser !== null) {
-                throw new Exception("Email er allerede i brug");
-            }
-
-            $user = [
+            UserModel::create([
                 ':pk'       => bin2hex(random_bytes(25)),
-                ':fullname' => $fullname,
-                ':username' => $username,
-                ':email'    => $email,
-                ':password' => password_hash($password, PASSWORD_DEFAULT),
-            ];
-
-            UserModel::create($user);
+                ':fullname' => $_POST['user_full_name'],
+                ':username' => $_POST['user_username'],
+                ':email'    => $_POST['user_email'],
+                ':password' => password_hash($_POST['user_password'], PASSWORD_DEFAULT),
+            ]);
 
             header("Location: /?login=1");
             exit;
 
         } catch (Exception $e) {
-            header("Location: /?message=" . urlencode($e->getMessage()));
+            header("Location: /?popup=signup&message=" . urlencode($e->getMessage()));
             exit;
         }
     }
@@ -51,28 +42,22 @@ class AuthController
 
             $user = UserModel::findByEmail($email);
 
-            // Altid samme fejlbesked uanset om email findes eller password er forkert
-            // Dette forhindrer "user enumeration" (at afsløre hvilke emails der findes)
-            if (!$user || !password_verify($password, $user["user_password"])) {
-                throw new Exception("Forkert email eller password", 401);
+            if (!$user || !password_verify($password, $user['user_password'])) {
+                throw new Exception("Wrong email or password");
             }
 
-            unset($user["user_password"]);
-            $_SESSION["user"] = $user;
+            unset($user['user_password']);
+            $_SESSION['user'] = $user;
 
             header("Location: /home");
             exit;
 
         } catch (Exception $e) {
-            // Log fejlen til server log (anbefales til debugging)
-            error_log("Login fejl: " . $e->getMessage());
-            
-            // Send en generisk fejlbesked til brugeren
-            $genericMessage = "Forkert email eller password";
-            header("Location: /login?message=" . urlencode($genericMessage));
+            header("Location: /?popup=login&message=" . urlencode("Wrong email or password"));
             exit;
         }
     }
+
 
     public static function logout(): void
     {

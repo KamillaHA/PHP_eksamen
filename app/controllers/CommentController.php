@@ -11,7 +11,7 @@ class CommentController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at oprette en kommentar';
+            echo 'You have to be logged in to create a comment';
             exit;
         }
 
@@ -53,7 +53,7 @@ class CommentController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at redigere en kommentar';
+            echo 'You have to be logged in to update a comment';
             exit;
         }
 
@@ -91,7 +91,7 @@ class CommentController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at slette en kommentar';
+            echo 'You have to be logged in to delete a comment';
             exit;
         }
 

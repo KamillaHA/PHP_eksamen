@@ -1,4 +1,3 @@
-console.log("APP.JS LOADED");
 /* ======================================================
     SCROLL-TOP KNAP
 ====================================================== */
@@ -11,7 +10,6 @@ window.addEventListener("scroll", () => {
     // Vis knappen når man har scrollet mere end 300px ned
     btn.classList.toggle("show", window.pageYOffset > 300);
 });
-
 
 
 /* ======================================================
@@ -72,8 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === "Escape") closeNav();
     });
 });
-
-
 
 
 /* ======================================================
@@ -148,8 +144,6 @@ document.addEventListener("click", event => {
 });
 
 
-
-
 /* ======================================================
     COMMENT DROPDOWN (⋮)
 ====================================================== */
@@ -173,4 +167,16 @@ document.addEventListener("click", event => {
     // Klik udenfor → luk alle åbne comment-dropdowns
     document.querySelectorAll(".comment-dropdown.open")
         .forEach(d => d.classList.remove("open"));
+});
+
+
+/* ======================================================
+    BACK TO FEED
+====================================================== */
+document.addEventListener("click", (e) => {
+    const backBtn = e.target.closest(".js-back");
+    if (!backBtn) return;
+
+    e.preventDefault();
+    window.history.back();
 });

@@ -1,5 +1,8 @@
 <?php
-// Hvis bruger allerede er logget ind, vis ikke popup
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (isset($_SESSION["user"])) {
     return;
 }
@@ -22,10 +25,10 @@ if (isset($_SESSION["user"])) {
             <h2 class="popup-header">Join us on X</h2>
             
             <form class="signup-form" action="/signup" method="POST">
-                <?php if(isset($_GET['message'])): ?>
-                    <div class="error-message">
-                        <?php echo htmlspecialchars($_GET['message']); ?>
-                    </div>
+                <?php if (isset($_GET['message'])): ?>
+                <div class="error-message">
+                    <?= htmlspecialchars($_GET['message']) ?>
+                </div>
                 <?php endif; ?>
                 
                 <input type="text" name="user_full_name" placeholder="Full name" required>
@@ -34,7 +37,7 @@ if (isset($_SESSION["user"])) {
                 <input type="password" name="user_password" placeholder="Password" required>
                 
                 <div class="terms-notice" style="font-size: 13px; color: #536471; margin: 15px 0;">
-                    <p>By joining X you accept <a href="/terms" style="color: #1DA1F2;">Terms and Conditions</a> and <a href="/privacy" style="color: #1DA1F2;">Privacypolicy</a>, including <a href="/cookies" style="color: #1DA1F2;">Cookie-use</a>.</p>
+                    <p>By joining X you accept <a href="/#" style="color: #1DA1F2;">Terms and Conditions</a> and <a href="/#" style="color: #1DA1F2;">Privacypolicy</a>, including <a href="/#" style="color: #1DA1F2;">Cookie-use</a>.</p>
                 </div>
                 
                 <button type="submit" class="signup-submit-btn" 
@@ -61,6 +64,8 @@ document.querySelectorAll('.switch-to-login-btn').forEach(btn => {
     btn.addEventListener('click', function(e) {
         e.preventDefault();
         
+        // window.clearAuthErrors();
+
         // Luk signup popup
         const signupModal = document.getElementById('signupModal');
         if (signupModal) {
@@ -75,13 +80,15 @@ document.querySelectorAll('.switch-to-login-btn').forEach(btn => {
     });
 });
 
-// Switch fra login til signup (tilføj også i popup-login.php)
+// Switch fra login til signup 
 document.addEventListener('DOMContentLoaded', function() {
     const switchToSignupBtn = document.querySelector('.login-footer a[href="/signup"]');
     if (switchToSignupBtn) {
         switchToSignupBtn.addEventListener('click', function(e) {
             e.preventDefault();
             
+            // window.clearAuthErrors();
+
             // Luk login popup
             const loginModal = document.getElementById('loginModal');
             if (loginModal) {

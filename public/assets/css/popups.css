@@ -20,7 +20,7 @@
 .dialog-overlay {
   position: absolute;
   inset: 0;
-  background: var(--color-bg);
+  backdrop-filter: blur(0.25rem);
   opacity: 0;
   transition: opacity 0.3s ease;
 }

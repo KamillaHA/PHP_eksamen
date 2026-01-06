@@ -7,7 +7,7 @@ function renderComment($comment, $current_user_id = null) {
         <div class="comment-header">
             <div class="comment-header-left">
                 <strong class="comment-author">
-                    <?= _($comment['user_username']) ?>
+                    <?= _($comment['user_full_name']) ?>
                 </strong>
 
                 <small class="comment-time">

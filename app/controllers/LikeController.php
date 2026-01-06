@@ -11,7 +11,7 @@ class LikeController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at like';
+            echo 'You have to be logged in to like a post';
             exit;
         }
 
@@ -36,7 +36,7 @@ class LikeController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at unlike';
+            echo 'You have to be logged in to unlike a post';
             exit;
         }
 

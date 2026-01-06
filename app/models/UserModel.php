@@ -51,10 +51,10 @@ class UserModel
         } catch (PDOException $e) {
             // Håndter UNIQUE constraint violation
             if (strpos($e->getMessage(), 'unique_user_email') !== false) {
-                throw new Exception("Email er allerede i brug");
+                throw new Exception("Email already in use");
             }
             if (strpos($e->getMessage(), 'unique_user_username') !== false) {
-                throw new Exception("Brugernavn er allerede i brug");
+                throw new Exception("Username already in use");
             }
             throw $e; // Kast andre exceptions videre
         }

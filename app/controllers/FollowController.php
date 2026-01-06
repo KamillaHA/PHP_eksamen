@@ -11,7 +11,7 @@ class FollowController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at følge nogen';
+            echo 'You have to be logged in to follow another user';
             exit;
         }
 
@@ -57,7 +57,7 @@ class FollowController
 
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'Du skal være logget ind for at unfølge nogen';
+            echo 'You have to be logged in to unfollow another user';
             exit;
         }
 
