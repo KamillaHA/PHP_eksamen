@@ -13,7 +13,7 @@ $current_user_id = $user['user_pk'];
 
     <?php
         require __DIR__ . '/components/_profile-header.php';
-        require __DIR__ . '/components/___post.php';
+        require __DIR__ . '/components/_post.php';
     ?>
 
 </main>

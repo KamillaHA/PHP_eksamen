@@ -10,7 +10,7 @@
   position: fixed;
   top: 0;
   right: 0;
-  width: 28rem;
+  width: 26rem;
   height: 100vh;
   padding: 1rem;
   overflow-y: auto;
@@ -39,9 +39,10 @@
   border-radius: var(--border-radius-sm);
   transition: background-color 0.2s;
   cursor: pointer;
-  margin: 0.5rem;
-  background-color: var(--color-text);
+  margin: 0rem 3rem 1rem 3rem;
+  background-color: var(--color-bg);
   gap: 0.5rem;
+  border: thin solid var(--color-bg-disabled);
 }
 
 #profile_tag .option {
@@ -51,11 +52,12 @@
 
 #profile_tag .name {
   font-weight: bold;
-  font-size: 0.85rem;
+  font-size: 1rem;
+  color: var(--color-text);
 }
 
 #profile_tag .handle {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: var(--color-bg-disabled);
 }
 
@@ -174,5 +176,11 @@
 @media (max-width: 1024px) {
   .sidebar {
     display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  #profile_tag {
+    margin: 0 3.5rem 1rem 3.5rem;
   }
 }

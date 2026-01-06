@@ -3,6 +3,8 @@
 require_once __DIR__ . '/../models/UserModel.php';
 require_once __DIR__ . '/../models/PostModel.php';
 require_once __DIR__ . '/../models/FollowModel.php';
+require_once __DIR__ . '/../models/CommentModel.php';
+require_once __DIR__ . '/../models/LikeModel.php';
 
 class UserController
 {
@@ -177,9 +179,21 @@ class UserController
             header("Location: /login");
             exit;
         }
+        $userPk = $_SESSION['user']['user_pk'];
 
-        UserModel::delete($_SESSION['user']['user_pk']);
+        // Soft delete bruger
+        UserModel::delete($userPk);
 
+        // Soft delete alle posts
+        PostModel::softDeleteByUser($userPk);
+
+        // Soft delete kommentarer
+        CommentModel::softDeleteByUser($userPk);
+
+        // Hard delete likes
+        LikeModel::deleteByUser($userPk);
+
+        // Log ud
         session_destroy();
 
         header("Location: /");

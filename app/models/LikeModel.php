@@ -61,4 +61,17 @@ class LikeModel
 
         return (int) $stmt->fetchColumn();
     }
+
+// Delete likes by soft deleted user
+    public static function deleteByUser(string $userPk): void
+{
+    require __DIR__ . "/../../private/db.php";
+
+    $_db->prepare("
+        DELETE FROM likes
+        WHERE like_user_fk = :user
+    ")->execute([
+        ':user' => $userPk
+    ]);
+}
 }

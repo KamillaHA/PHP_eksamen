@@ -6,9 +6,13 @@ class FollowModel
     {
         require __DIR__ . '/../../private/db.php';
 
-        $stmt = $_db->prepare(
-            "SELECT COUNT(*) FROM follows WHERE following_fk = ?"
-        );
+        $stmt = $_db->prepare("
+            SELECT COUNT(*)
+            FROM follows
+            JOIN users ON follows.follower_fk = users.user_pk
+            WHERE follows.following_fk = ?
+            AND users.deleted_at IS NULL
+        ");
         $stmt->execute([$userPk]);
 
         return (int) $stmt->fetchColumn();
@@ -18,15 +22,19 @@ class FollowModel
     {
         require __DIR__ . '/../../private/db.php';
 
-        $stmt = $_db->prepare(
-            "SELECT COUNT(*) FROM follows WHERE follower_fk = ?"
-        );
+        $stmt = $_db->prepare("
+            SELECT COUNT(*)
+            FROM follows
+            JOIN users ON follows.following_fk = users.user_pk
+            WHERE follows.follower_fk = ?
+            AND users.deleted_at IS NULL
+        ");
         $stmt->execute([$userPk]);
 
         return (int) $stmt->fetchColumn();
     }
 
-    // 🔹 forslag til "Who to follow"
+    // forslag til "Who to follow"
     public static function suggestions(string $currentUserPk): array
     {
         require __DIR__ . '/../../private/db.php';
@@ -35,7 +43,8 @@ class FollowModel
             SELECT user_pk, user_username, user_full_name
             FROM users
             WHERE user_pk != :current_user
-            ORDER BY RAND()
+            AND deleted_at IS NULL
+            ORDER BY created_at ASC
             LIMIT 3
         ");
 
@@ -55,7 +64,7 @@ class FollowModel
             SELECT 1
             FROM follows
             WHERE follower_fk = :current
-              AND following_fk = :suggested
+            AND following_fk = :suggested
             LIMIT 1
         ");
 

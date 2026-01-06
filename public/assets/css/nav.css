@@ -27,6 +27,7 @@ nav ul {
   flex-direction: column;
   gap: 0.2rem;
   padding: 0.5rem;
+  margin-left: 2rem;
 }
 
 nav li {
@@ -35,7 +36,7 @@ nav li {
 
 nav a {
   color: var(--color-text);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -104,6 +105,11 @@ body.nav-open .nav-overlay {
 @media (min-width: 768px) {
   nav {
     transform: translateX(0);
+    width: 24rem;
+  }
+
+  nav ul {
+    margin: 0 3rem;
   }
 
   .mobile-topbar {

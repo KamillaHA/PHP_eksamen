@@ -14,7 +14,7 @@ main {
 .posts-container {
   max-width: 100%;
   color: var(--color-text);
-  margin-top: 1rem;
+  margin-top: 3rem;
 }
 
 /* ======================================================
@@ -29,7 +29,7 @@ main {
 @media (min-width: 768px) {
   main {
     padding: 1rem;
-    margin-left: 20rem; /* nav width */
+    margin-left: 24rem; /* nav width */
   }
 
   .posts-container {
@@ -44,7 +44,7 @@ main {
 
 @media (min-width: 1025px) {
   main {
-    margin-right: 28rem; /* sidebar width */
+    margin-right: 26rem; /* sidebar width */
   }
 
   .posts-container {

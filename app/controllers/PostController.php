@@ -37,10 +37,10 @@ class PostController
             }
         }
 
-        // 1️⃣ Hent alle posts (med user info)
+        // Hent alle posts (med user info)
         $posts = PostModel::getAll();
 
-        // 2️⃣ Berig hvert post med comments + likes
+        // Berig hvert post med comments + likes
         foreach ($posts as &$post) {
             $postPk = $post['post_pk'];
 
@@ -64,7 +64,7 @@ class PostController
         }
         unset($user);
 
-        // 3️⃣ Send data til view
+        // Send data til view
         require __DIR__ . '/../views/home.php';
         exit;
     }
@@ -81,6 +81,9 @@ class PostController
         }
 
         $current_user_id = $_SESSION['user']['user_pk'];
+
+        // Gem hvor brugeren kom fra (home / profile )
+        $_SESSION['back_to_feed'] = $_SERVER['HTTP_REFERER'] ?? '/home';
 
         // Tjek om post findes
         require __DIR__ . '/../../private/db.php';
@@ -121,7 +124,7 @@ class PostController
         }
         unset($p);
 
-        // Sæt $_GET['post'] så ___post.php kan vise single view
+        // Sæt $_GET['post'] så _post.php kan vise single view
         $_GET['post'] = $postId;
         
         $followSuggestions = FollowModel::suggestions($current_user_id);

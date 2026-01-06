@@ -10,8 +10,9 @@ class PostModel
             SELECT posts.*, users.user_username, users.user_full_name
             FROM posts
             JOIN users ON posts.post_user_fk = users.user_pk
+            AND users.deleted_at IS NULL
             WHERE posts.post_user_fk = ?
-              AND posts.deleted_at IS NULL
+            AND posts.deleted_at IS NULL
             ORDER BY posts.created_at DESC
         ");
 
@@ -19,7 +20,7 @@ class PostModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 🔥 DEN MANGLENDE METODE (til /home)
+    // til /home
     public static function getAll(): array
     {
         require __DIR__ . '/../../private/db.php';
@@ -28,6 +29,7 @@ class PostModel
             SELECT posts.*, users.user_username, users.user_full_name
             FROM posts
             JOIN users ON posts.post_user_fk = users.user_pk
+            AND users.deleted_at IS NULL
             WHERE posts.deleted_at IS NULL
             ORDER BY posts.created_at DESC
         ");
@@ -92,4 +94,19 @@ class PostModel
 
         $stmt->execute([':pk' => $postPk]);
     }
+
+
+    public static function softDeleteByUser(string $userPk): void
+    {
+    require __DIR__ . '/../../private/db.php';
+
+    $_db->prepare("
+        UPDATE posts
+        SET deleted_at = CURRENT_TIMESTAMP
+        WHERE post_user_fk = :user
+        AND deleted_at IS NULL
+    ")->execute([
+        ':user' => $userPk
+    ]);
+}
 }

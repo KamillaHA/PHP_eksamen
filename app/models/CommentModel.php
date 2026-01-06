@@ -35,6 +35,7 @@ class CommentModel
                     users.user_username
                 FROM comments
                 JOIN users ON comments.user_fk = users.user_pk
+                AND users.deleted_at IS NULL
                 WHERE comments.post_fk = :post
                 AND comments.deleted_at IS NULL
                 ORDER BY comments.created_at DESC
@@ -96,6 +97,23 @@ class CommentModel
             WHERE comment_pk = :pk
         ")->execute([
             ":pk" => $commentPk
+        ]);
+    }
+
+    /* =========================
+    SOFT DELETE COMMENTS BY DELETED USER
+    ========================= */
+    public static function softDeleteByUser(string $userPk): void
+    {
+        require __DIR__ . '/../../private/db.php';
+
+        $_db->prepare("
+            UPDATE comments
+            SET deleted_at = CURRENT_TIMESTAMP
+            WHERE user_fk = :user
+            AND deleted_at IS NULL
+        ")->execute([
+            ':user' => $userPk
         ]);
     }
 

@@ -6,7 +6,13 @@ class UserModel
     {
         require __DIR__ . "/../../private/db.php";
 
-        $sql = "SELECT * FROM users WHERE user_email = :email LIMIT 1";
+        $sql = "
+            SELECT *
+            FROM users
+            WHERE user_email = :email
+            AND deleted_at IS NULL
+            LIMIT 1
+        ";        
         $stmt = $_db->prepare($sql);
         $stmt->bindValue(":email", $email);
         $stmt->execute();
@@ -18,8 +24,13 @@ class UserModel
     {
         require __DIR__ . "/../../private/db.php";
 
-        $sql = "SELECT user_pk, user_username, user_full_name, user_email, user_cover_image, created_at
-                FROM users WHERE user_pk = :pk";
+        $sql = "
+            SELECT user_pk, user_username, user_full_name,
+            user_email, user_cover_image, created_at
+            FROM users
+            WHERE user_pk = :pk
+            AND deleted_at IS NULL
+        ";
         $stmt = $_db->prepare($sql);
         $stmt->bindValue(":pk", $pk);
         $stmt->execute();
@@ -86,7 +97,13 @@ class UserModel
     {
         require __DIR__ . "/../../private/db.php";
 
-        $_db->prepare("DELETE FROM users WHERE user_pk = :pk")
-            ->execute([":pk" => $pk]);
+        $_db->prepare("
+            UPDATE users
+            SET deleted_at = CURRENT_TIMESTAMP
+            WHERE user_pk = :pk
+            AND deleted_at IS NULL
+        ")->execute([
+            ":pk" => $pk
+        ]);
     }
 }
