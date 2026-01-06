@@ -60,7 +60,7 @@ body.page-landing {
     background: var(--color-bg);
   }
 
-  h1 {
+  h1, .x-landing__subtitle {
     color: var(--color-text);
   }
 
