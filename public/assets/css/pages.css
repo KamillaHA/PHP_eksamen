@@ -7,7 +7,7 @@
     INDEX / WELCOME (LANDING PAGE)
 ====================================================== */
 
-.x-landing {
+.landing {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,29 +17,29 @@
   text-align: center;
 }
 
-.x-landing__left,
-.x-landing__right {
+.landing-left,
+.landing-right {
   width: 100%;
 }
 
-.x-landing__logo {
+.landing-logo {
   display: flex;
   justify-content: center;
 }
-.x-landing__logo svg {
+.landing-logo svg {
   width: 12rem;
   max-width: 100%;
   color: var(--color-text);
 }
 
-.x-landing__right {
+.landing-right {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
 }
 
-.x-landing__subtitle {
+.landing-subtitle {
   margin-bottom: 2rem;
 }
 
@@ -48,20 +48,20 @@
 ====================================================== */
 
 body.page-landing {
-  background: var(--color-text);
+  background: var(--color-bg);
 }
 
 body.page-landing main {
-  background: var(--color-text);
+  background: var(--color-bg);
   margin: 0;
   padding: 0;
 }
 
-body.page-landing .x-landing {
+body.page-landing .landing {
   background: var(--color-bg);
 }
 
-body.page-landing h1, body.page-landing .x-landing__subtitle {
+body.page-landing h1, body.page-landing .landing-subtitle {
   color: var(--color-text);
 }
 
@@ -234,7 +234,7 @@ margin-top: 1rem;
 ====================================================== */
 
 @media (min-width: 768px) {
-  .x-landing {
+  .landing {
     flex-direction: row;
     justify-content: center;  
     align-items: center;    
@@ -242,22 +242,22 @@ margin-top: 1rem;
     padding: 0 4rem;
   }
 
-  .x-landing__left,
-  .x-landing__right {
+  .landing-left,
+  .landing-right {
     flex: unset;            
     align-items: center;
   }
 
-  .x-landing__logo {
+  .landing-logo {
     display: flex;
     justify-content: center;
     text-align: center;
   }
-  .x-landing__logo svg {
+  .landing-logo svg {
     width: 25rem;
   }
 
-  .x-landing__right {
+  .landing-right {
     gap: 1.25rem;
   }
 }

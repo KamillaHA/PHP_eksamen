@@ -6,18 +6,18 @@
     GENERIC DIALOG
 ====================================================== */
 
-.x-dialog {
+.dialog {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 1000;
 }
 
-.x-dialog.active {
+.dialog.active {
   display: block;
 }
 
-.x-dialog__overlay {
+.dialog-overlay {
   position: absolute;
   inset: 0;
   background: var(--color-bg);
@@ -25,11 +25,11 @@
   transition: opacity 0.3s ease;
 }
 
-.x-dialog.active .x-dialog__overlay {
+.dialog.active .dialog-overlay {
   opacity: 1;
 }
 
-.x-dialog__content {
+.dialog-content {
   position: relative;
   background: var(--color-text);
   margin: 4rem 1rem;
@@ -42,7 +42,7 @@
   transform: translate(66.5%, 20%) scale(1);
 }
 
-.x-dialog.active .x-dialog__content {
+.dialog.active .dialog-content {
   opacity: 1;
 }
 
@@ -266,19 +266,19 @@
 }
 
 /* ======================================================
-    LOGIN / SIGNUP POPUPS  ✅ FIXED
+    LOGIN / SIGNUP POPUPS
 ====================================================== */
 
-  .login-popup .x-dialog__overlay,
-.signup-popup .x-dialog__overlay {
+  .login-popup .dialog-overlay,
+.signup-popup .dialog-overlay {
     position: fixed;
     inset: 0;
     background-color: var(--color-bg-hover);
     backdrop-filter: blur(0.25rem);
   }
 
-  .login-popup .x-dialog__content,
-.signup-popup .x-dialog__content {
+  .login-popup .dialog-content,
+.signup-popup .dialog-content {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -298,8 +298,8 @@
     transition: all 0.3s ease;
   }
 
-  .login-popup.active .x-dialog__content,
-.signup-popup.active .x-dialog__content {
+  .login-popup.active .dialog-content,
+.signup-popup.active .dialog-content {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
@@ -315,6 +315,7 @@
   .login-popup .modal-content,
 .signup-popup .modal-content {
     padding: 2rem;
+    padding-top: 0;
   }
 
   form input {
@@ -334,10 +335,20 @@
   }
 
 
+  .popup-header {
+    margin: 1rem 0;
+  }
+
+  .popup-logo {
+    display: flex;
+    justify-content: center;
+  }
+
+
 /* Mobile fullscreen */
 @media (max-width: 480px) {
-    .login-popup .x-dialog__content, 
-    .signup-popup .x-dialog__content {
+    .login-popup .dialog-content, 
+    .signup-popup .dialog-content {
       inset: 0;
       top: 0;
       left: 0;
@@ -354,8 +365,8 @@
       border-radius:var(--border-radius-xs);
     }
 
-      .login-popup.active .x-dialog__content,
-  .signup-popup.active .x-dialog__content {
+      .login-popup.active .dialog-content,
+  .signup-popup.active .dialog-content {
       transform: none;
     }
 
@@ -364,7 +375,7 @@
       padding: 1.25rem;
     }
 
-  .x-dialog__content {
+  .dialog-content {
     transform: none;
   }
 

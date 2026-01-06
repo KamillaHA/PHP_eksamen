@@ -4,13 +4,13 @@ if (!isset($_SESSION['user'])) {
 }
 ?>
 
-<div id="confirmDeleteProfileModal" class="x-dialog danger-modal">
-    <div class="x-dialog__overlay"></div>
+<div id="confirmDeleteProfileModal" class="dialog danger-modal">
+    <div class="dialog-overlay"></div>
 
-    <div class="x-dialog__content">
+    <div class="dialog-content">
         <div class="modal-header">
             <h3>Delete profile</h3>
-            <button class="modal-close x-dialog__close" aria-label="Close">&times;</button>
+            <button class="modal-close dialog-close" aria-label="Close">&times;</button>
         </div>
 
         <div class="modal-content">
@@ -24,7 +24,7 @@ if (!isset($_SESSION['user'])) {
                 <!-- Cancel -->
                 <button
                     type="button"
-                    class="cancel-delete-profile x-dialog__close"
+                    class="cancel-delete-profile dialog-close"
                 >
                     Cancel
                 </button>

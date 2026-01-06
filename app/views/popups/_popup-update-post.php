@@ -7,11 +7,11 @@ $user = $_SESSION["user"];
 ?>
 
 <!-- Edit Post Popup Modal -->
-<div id="editPostModal" class="x-dialog">
-    <div class="x-dialog__overlay"></div>
-    <div class="x-dialog__content">
+<div id="editPostModal" class="dialog">
+    <div class="dialog-overlay"></div>
+    <div class="dialog-content">
         <div class="modal-header">
-            <button class="modal-close x-dialog__close">&times;</button>
+            <button class="modal-close dialog-close">&times;</button>
         </div>
         <div class="modal-content">
 

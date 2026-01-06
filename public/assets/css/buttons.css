@@ -143,7 +143,7 @@ AUTH BUTTONS (LOGIN / SIGNUP)
     cursor: not-allowed;
 }
 
-.x-landing__btn {
+.landing-btn {
     padding: 0.7rem;
     margin: 1rem 0;
     font-size: 1rem;
@@ -155,29 +155,29 @@ AUTH BUTTONS (LOGIN / SIGNUP)
     width: 16rem;
 }
 
-.x-landing__btn.x-landing__btn--login {
+.landing-btn.landing-btn-login {
     background-color: var(--color-bg);
     color: var(--color-text);
     border: thin solid var(--color-text);
 }
 
-.x-landing__btn.x-landing__btn--login:hover {
+.landing-btn.landing-btn-login:hover {
     background-color: var(--color-text);
     color: var(--color-bg);
     border: thin solid var(--color-bg);
 }
 
-.x-landing__btn.x-landing__btn--signup {
+.landing-btn.landing-btn-signup {
     background-color: var(--color-text);
 }
 
-.x-landing__btn.x-landing__btn--signup:hover {
+.landing-btn.landing-btn-signup:hover {
     background-color: var(--color-bg);
     color: var(--color-text);
     border: thin solid var(--color-text);
 }
 
-a.x-landing__btn {
+a.landing-btn {
     display: inline-block;
     text-align: center;
     text-decoration: none;

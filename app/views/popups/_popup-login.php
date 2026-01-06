@@ -5,11 +5,11 @@ if (isset($_SESSION["user"])) {
 }
 ?>
 
-<div id="loginModal" class="x-dialog login-popup">
-    <div class="x-dialog__overlay"></div>
-    <div class="x-dialog__content">
+<div id="loginModal" class="dialog login-popup">
+    <div class="dialog-overlay"></div>
+    <div class="dialog-content">
         <div class="modal-header">
-            <button class="modal-close x-dialog__close">&times;</button>
+            <button class="modal-close dialog-close">&times;</button>
         </div>
         
         <div class="modal-content">
@@ -19,7 +19,7 @@ if (isset($_SESSION["user"])) {
                 </svg>
             </div>
             
-            <h2>Log in to X</h2>
+            <h2 class="popup-header">Log in to X</h2>
             
             <form class="login-form" action="/login" method="POST" mix-post mix-after="main">
                 <?php if(isset($_GET['message'])): ?>

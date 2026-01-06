@@ -6,11 +6,11 @@ if (!isset($_SESSION["user"])) {
 $user = $_SESSION["user"];
 ?>
 
-<div id="createPostModal" class="x-dialog">
-    <div class="x-dialog__overlay"></div>
-    <div class="x-dialog__content">
+<div id="createPostModal" class="dialog">
+    <div class="dialog-overlay"></div>
+    <div class="dialog-content">
         <div class="modal-header">
-            <button class="modal-close x-dialog__close">&times;</button>
+            <button class="modal-close dialog-close">&times;</button>
         </div>
         <div class="modal-content">
             <form class="post-form" action="/post/create" method="POST" enctype="multipart/form-data">

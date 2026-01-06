@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function openModal(id) {
 
     // Luk alle allerede åbne popups
-    document.querySelectorAll(".x-dialog.active").forEach(dialog => {
+    document.querySelectorAll(".dialog.active").forEach(dialog => {
       dialog.classList.remove("active");
     });
 
@@ -48,18 +48,18 @@ document.addEventListener("DOMContentLoaded", () => {
   // Luk popup når der klikkes på overlay eller X-knappen
   document.addEventListener("click", event => {
     if (
-      event.target.classList.contains("x-dialog__overlay") ||
-      event.target.classList.contains("x-dialog__close")
+      event.target.classList.contains("dialog-overlay") ||
+      event.target.classList.contains("dialog-close")
     ) {
       // Finder den popup klikket skete i og lukker den
-      closeModal(event.target.closest(".x-dialog"));
+      closeModal(event.target.closest(".dialog"));
     }
   });
 
   // Luk alle aktive popups når brugeren trykker ESC
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
-      document.querySelectorAll(".x-dialog.active").forEach(closeModal);
+      document.querySelectorAll(".dialog.active").forEach(closeModal);
     }
   });
 

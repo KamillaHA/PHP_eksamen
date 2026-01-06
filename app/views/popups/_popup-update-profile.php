@@ -7,12 +7,12 @@ $user = $_SESSION["user"];
 ?>
 
 <!-- Update Profile Popup Modal -->
-<div id="editProfileModal" class="x-dialog profile-edit-modal">
-    <div class="x-dialog__overlay"></div>
-    <div class="x-dialog__content">
+<div id="editProfileModal" class="dialog profile-edit-modal">
+    <div class="dialog-overlay"></div>
+    <div class="dialog-content">
         <div class="modal-header">
             <h3 class="update-header">Update Profile</h3>
-            <button class="modal-close x-dialog__close">&times;</button>
+            <button class="modal-close dialog-close">&times;</button>
         </div>
         <div class="modal-content">
             <form class="edit-profile-form" action="/profile/update" method="POST">
