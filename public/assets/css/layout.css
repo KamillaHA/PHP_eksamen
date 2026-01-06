@@ -14,7 +14,12 @@ main {
 .posts-container {
   max-width: 100%;
   color: var(--color-text);
-  margin-top: 3rem;
+  margin-top: 4rem;
+}
+
+.no-posts {
+  margin-left: 1.5rem;
+  font-family: var(--font-family-base);
 }
 
 /* ======================================================

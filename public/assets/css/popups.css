@@ -18,7 +18,7 @@
 }
 
 .dialog-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
   backdrop-filter: blur(0.25rem);
   opacity: 0;
@@ -30,20 +30,26 @@
 }
 
 .dialog-content {
-  position: relative;
-  background: var(--color-text);
-  margin: 4rem 1rem;
-  padding: 0;
-  max-width: 37.5rem;
-  border-radius: var(--border-radius-xs);
-  box-shadow: 0 1.25rem 3.75rem var(--color-bg);
-  opacity: 0;
-  transition: all 0.3s ease;
-  transform: translate(66.5%, 20%) scale(1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: 4rem 1rem;
+    width: 90%;
+    max-width: 37.5rem;
+    max-height: 90vh;
+    overflow-y: auto;
+    background-color: var(--color-text);
+    border-radius:var(--border-radius-xs);
+    box-shadow: 0 1.25rem 3.75rem var(--color-bg);
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    transition: all 0.3s ease;
 }
 
 .dialog.active .dialog-content {
   opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+
 }
 
 /* ======================================================
@@ -248,7 +254,7 @@
 
 .post-menu-btn:hover {
   background-color: var(--color-primary-hover);
-  color: var(--color-primary-hover);
+  color: var(--color-text);
 }
 
 .post-dropdown {
@@ -283,28 +289,34 @@
   }
 
   .login-popup .dialog-content,
-.signup-popup .dialog-content {
+.signup-popup .dialog-content, .dialog-content {
     position: fixed;
     top: 50%;
     left: 50%;
     margin: 0;
-
     width: 90%;
-    max-width: 25rem;
     max-height: 90vh;
     overflow-y: auto;
-
     background-color: var(--color-text);
     border-radius:var(--border-radius-xs);
     box-shadow: 0 1.25rem 3.75rem var(--color-bg);
-
     transform: translate(-50%, -50%) scale(0.9);
     opacity: 0;
     transition: all 0.3s ease;
   }
 
+  .login-popup .dialog-content,
+.signup-popup .dialog-content {
+    max-width: 25rem;
+}
+
+.dialog-content {
+  max-width: 37.5rem;
+}
+
   .login-popup.active .dialog-content,
-.signup-popup.active .dialog-content {
+.signup-popup.active .dialog-content,
+.dialog.active .dialog-content {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }

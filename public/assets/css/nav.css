@@ -76,7 +76,7 @@ body.nav-open nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.75rem;
+  padding: 2rem 1rem;
 }
 
 /* ======================================================

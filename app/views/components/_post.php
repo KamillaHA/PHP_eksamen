@@ -27,7 +27,7 @@ require_once __DIR__ . '/_comment.php';
 
     <!-- Ingen posts fundet -->
     <?php if (empty($posts)): ?>
-        <p>No posts found.</p>
+        <p class="no-posts">No posts found.</p>
     <?php else: ?>
 
     <?php 
