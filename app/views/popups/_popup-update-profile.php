@@ -1,24 +1,46 @@
 <?php
 
+// Tjekker om brugeren er logget ind
+// Hvis der ikke findes en bruger i sessionen,
+// vises profil-redigerings-modal’en ikke
 if (!isset($_SESSION["user"])) {
     return;
 }
+// Gemmer den loggede bruger i en variabel
+// så vi nemt kan bruge brugerdata i formularen
 $user = $_SESSION["user"];
 ?>
 
-<!-- Update Profile Popup Modal -->
+<!-- Modal til opdatering af brugerprofil -->
 <div id="editProfileModal" class="dialog profile-edit-modal">
+
+    <!-- Overlay der mørklægger baggrunden -->
     <div class="dialog-overlay"></div>
+
+    <!-- Selve modal-indholdet -->
     <div class="dialog-content">
+
+        <!-- Header med titel og luk-knap -->
         <div class="modal-header">
             <h3 class="update-header">Update Profile</h3>
+
+            <!-- Lukker modal’en via JavaScript -->
             <button class="modal-close dialog-close">&times;</button>
         </div>
+
+        <!-- Modalens indhold -->
         <div class="modal-content">
+
+            <!-- Formular til opdatering af profil -->
+            <!-- Sender en POST-request til /profile/update -->
             <form class="edit-profile-form" action="/profile/update" method="POST">
-                <!-- Email Field -->
+
+                <!-- Email-felt -->
                 <div class="form-group">
                     <label for="user_email">Email</label>
+
+                    <!-- Email udfyldes med nuværende værdi -->
+                    <!-- htmlspecialchars beskytter mod XSS -->
                     <input 
                         type="email" 
                         name="user_email" 
@@ -30,9 +52,11 @@ $user = $_SESSION["user"];
                     >
                 </div>
                 
-                <!-- Username Field -->
+                <!-- Brugernavn-felt -->
                 <div class="form-group">
                     <label for="user_username">Username</label>
+
+                    <!-- Validerer længde og tilladte tegn -->
                     <input 
                         type="text" 
                         name="user_username" 
@@ -44,9 +68,11 @@ $user = $_SESSION["user"];
                     >
                 </div>
                 
-                <!-- Full Name Field -->
+                <!-- Fuldt navn-felt -->
                 <div class="form-group">
                     <label for="user_full_name">Full Name</label>
+
+                    <!-- Validerer længde på navn -->
                     <input 
                         type="text" 
                         name="user_full_name" 
@@ -58,7 +84,9 @@ $user = $_SESSION["user"];
                     >
                 </div>
                 
+                <!-- Knapper til profilhandlinger -->
                 <div class="profile-btns">
+
                 <!-- Opdatér profil knap -->
                 <div class="form-actions">
                     <button 
@@ -72,6 +100,7 @@ $user = $_SESSION["user"];
                 </div>
             
                 <!-- Slet profil knap -->
+                <!-- Åbner bekræftelses-modal -->
                 <div class="form-actions danger-zone">
                     <button 
                         type="button"

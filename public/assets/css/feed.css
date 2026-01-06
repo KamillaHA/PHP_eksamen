@@ -96,12 +96,12 @@
     }
     
     .post-actions .comment-btn:hover {
-      color: var(--color-text);
+      color: var(--color-primary);
       background: var(--color-primary-hover);
     }
 
-    .post-actions .comment-count {
-      color: var(--color-border);
+    .post-actions .comment-btn:hover .comment-count {
+      color: var(--color-primary);
       font-size: 0.85rem;
     }
 
@@ -124,6 +124,11 @@
   font: inherit;
   text-decoration: none;
 }
+
+  .action.like:hover {
+    color: rgb(249, 24, 128);
+  }
+
   .heart-icon {
     width: 1.125rem;
     height: 1.125rem;

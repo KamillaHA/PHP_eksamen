@@ -2,10 +2,13 @@
 
 class LikeModel
 {
+    // Tjekker om en bruger allerede har liket et post
     public static function exists(string $userPk, string $postPk): bool
     {
+        // Indlæser databaseforbindelsen
         require __DIR__ . "/../../private/db.php";
 
+        // Returnerer 1 hvis relationen findes
         $stmt = $_db->prepare(
             "SELECT 1 
             FROM likes 
@@ -20,6 +23,7 @@ class LikeModel
         return (bool) $stmt->fetchColumn();
     }
 
+    // Opretter et like på et post
     public static function create(string $userPk, string $postPk): void
     {
         require __DIR__ . "/../../private/db.php";
@@ -33,6 +37,7 @@ class LikeModel
         ]);
     }
 
+    // Fjerner et like (unlike)
     public static function delete(string $userPk, string $postPk): void
     {
         require __DIR__ . "/../../private/db.php";
@@ -47,7 +52,7 @@ class LikeModel
         ]);
     }
 
-    /* Antal likes */
+    // Tæller antal likes på et post
     public static function countByPost(string $postPk): int
     {
         require __DIR__ . "/../../private/db.php";
@@ -62,7 +67,8 @@ class LikeModel
         return (int) $stmt->fetchColumn();
     }
 
-// Delete likes by soft deleted user
+    // Sletter alle likes fra en bestemt bruger
+    // Bruges fx når en bruger soft deletes
     public static function deleteByUser(string $userPk): void
 {
     require __DIR__ . "/../../private/db.php";

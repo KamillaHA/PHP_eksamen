@@ -2,10 +2,13 @@
 
 class UserModel
 {
+    // Finder en bruger via email (bruges ved login)
     public static function findByEmail(string $email): ?array
     {
+        // Indlæser databaseforbindelsen
         require __DIR__ . "/../../private/db.php";
 
+        // Henter kun aktive (ikke slettede) brugere
         $sql = "
             SELECT *
             FROM users
@@ -17,13 +20,16 @@ class UserModel
         $stmt->bindValue(":email", $email);
         $stmt->execute();
 
+        // Returnerer null hvis brugeren ikke findes
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
+    // Finder en bruger via primærnøgle (bruges bl.a. til session-opdatering)
     public static function findByPk(string $pk): ?array
     {
         require __DIR__ . "/../../private/db.php";
 
+        // Henter kun de felter der bruges i session og views
         $sql = "
             SELECT user_pk, user_username, user_full_name,
             user_email, user_cover_image, created_at
@@ -38,28 +44,36 @@ class UserModel
         return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
+    // Opretter en ny bruger
     public static function create(array $user): void
     {
         require __DIR__ . "/../../private/db.php";
 
         try {
+            // Indsætter ny bruger med hashed password
             $sql = "INSERT INTO users
                     (user_pk, user_username, user_full_name, user_email, user_password)
-                    VALUES (:pk, :username, :fullname, :email, :password)";
+                    VALUES (:pk, :username, :fullname, :email, :password)
+                ";
+
             $_db->prepare($sql)->execute($user);
             
         } catch (PDOException $e) {
-            // Håndter UNIQUE constraint violation
+            // Mapper database-fejl til brugervenlige beskeder
             if (strpos($e->getMessage(), 'unique_user_email') !== false) {
                 throw new Exception("Email already in use");
             }
+
             if (strpos($e->getMessage(), 'unique_user_username') !== false) {
                 throw new Exception("Username already in use");
             }
-            throw $e; // Kast andre exceptions videre
+
+            // Andre database-fejl kastes videre
+            throw $e;
         }
     }
 
+    // Opdaterer brugerens basisoplysninger
     public static function update(string $pk, array $data): void
     {
         require __DIR__ . "/../../private/db.php";
@@ -79,6 +93,7 @@ class UserModel
         ]);
     }
 
+    // Opdaterer brugerens cover-billede
     public static function updateCover(string $pk, string $path): void
     {
         require __DIR__ . "/../../private/db.php";
@@ -93,10 +108,12 @@ class UserModel
         ]);
     }
 
+    // Soft delete af bruger
     public static function delete(string $pk): void
     {
         require __DIR__ . "/../../private/db.php";
 
+        // Marker brugeren som slettet i stedet for at fjerne data
         $_db->prepare("
             UPDATE users
             SET deleted_at = CURRENT_TIMESTAMP

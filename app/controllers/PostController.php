@@ -1,4 +1,6 @@
 <?php
+
+// Loader de nødvendige models som PostController afhænger af
 require_once __DIR__ . "/../models/PostModel.php";
 require_once __DIR__ . "/../models/CommentModel.php";
 require_once __DIR__ . "/../models/LikeModel.php";
@@ -8,20 +10,25 @@ class PostController
 {
     public static function index(): void
     {
+        // Sørger for at sessionen er startet
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
+        // Kun loggede brugere må se feedet
         if (!isset($_SESSION['user'])) {
             header("Location: /");
             exit;
         }
 
+        // Gem den loggede brugers PK
         $current_user_id = $_SESSION['user']['user_pk'];
 
         // Hvis der er et post parameter, redirect til ny URL struktur
         if (isset($_GET['post']) && !empty($_GET['post'])) {
             require __DIR__ . '/../../private/db.php';
+
+            // Find postens ejer for at bygge korrekt URL
             $stmt = $_db->prepare("
                 SELECT users.user_username 
                 FROM posts 
@@ -31,20 +38,21 @@ class PostController
             $stmt->execute([$_GET['post']]);
             $post = $stmt->fetch(PDO::FETCH_ASSOC);
             
+            // Redirect til /username/status/postId
             if ($post) {
                 header("Location: /" . $post['user_username'] . "/status/" . $_GET['post']);
                 exit;
             }
         }
 
-        // Hent alle posts (med user info)
+        // Hent alle posts til feedet (grunddata)
         $posts = PostModel::getAll();
 
-        // Berig hvert post med comments + likes
+        // Berig hvert post med kommentarer og likes
         foreach ($posts as &$post) {
             $postPk = $post['post_pk'];
 
-            // Comments
+            // Kommentarer
             $post['comments'] = CommentModel::findByPost($postPk);
             $post['commentCount'] = CommentModel::countByPost($postPk);
 
@@ -52,10 +60,12 @@ class PostController
             $post['likeCount'] = LikeModel::countByPost($postPk);
             $post['userLiked'] = LikeModel::exists($current_user_id, $postPk);
         }
-        unset($post); // vigtigt ved reference-loop
+        unset($post); // VIGTIGT: bryder reference fra foreach
 
+        // Forslag til brugere man kan følge
         $followSuggestions = FollowModel::suggestions($current_user_id);
 
+        // Marker hvilke forslag brugeren allerede følger
         foreach ($followSuggestions as &$user) {
             $user['isFollowing'] = FollowModel::isFollowing(
                 $current_user_id,
@@ -64,17 +74,19 @@ class PostController
         }
         unset($user);
 
-        // Send data til view
+        // Send data videre til view
         require __DIR__ . '/../views/home.php';
         exit;
     }
 
     public static function singleByUrl(string $username, string $postId): void
     {
+        // Sørger for aktiv session
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
+        // Kun loggede brugere må se posts
         if (!isset($_SESSION['user'])) {
             header("Location: /");
             exit;
@@ -82,10 +94,10 @@ class PostController
 
         $current_user_id = $_SESSION['user']['user_pk'];
 
-        // Gem hvor brugeren kom fra (home / profile )
+        // Gem hvor brugeren kom fra (bruges til "Tilbage"-knap)
         $_SESSION['back_to_feed'] = $_SERVER['HTTP_REFERER'] ?? '/home';
 
-        // Tjek om post findes
+        // Tjek om posten eksisterer og ikke er slettet
         require __DIR__ . '/../../private/db.php';
         
         $stmt = $_db->prepare("
@@ -99,19 +111,20 @@ class PostController
         $stmt->execute([':post_pk' => $postId]);
         $post = $stmt->fetch(PDO::FETCH_ASSOC);
         
+        // Hvis posten ikke findes → 404
         if (!$post) {
             http_response_code(404);
             echo 'Post not found';
             exit;
         }
 
-        // Hvis brugernavn i URL ikke matcher, redirect til korrekt URL
+        // Hvis URL-brugernavn ikke matcher postens ejer → redirect til korrekt URL
         if ($post['user_username'] !== $username) {
             header("Location: /" . $post['user_username'] . "/status/" . $postId);
             exit;
         }
 
-        // Hent ALLE posts (til feed)
+        // Hent ALLE posts igen (bruges af feedet i home.php)
         $posts = PostModel::getAll();
         
         // Berig ALLE posts med kommentarer og likes
@@ -124,37 +137,44 @@ class PostController
         }
         unset($p);
 
-        // Sæt $_GET['post'] så _post.php kan vise single view
+        // Bruges af viewet til at vise single post
         $_GET['post'] = $postId;
         
+        // Follow-suggestions
         $followSuggestions = FollowModel::suggestions($current_user_id);
         foreach ($followSuggestions as &$user) {
             $user['isFollowing'] = FollowModel::isFollowing($current_user_id, $user['user_pk']);
         }
         unset($user);
 
-        // Brug det EKSISTERENDE home.php view
+        // Genbrug home.php som single-post view
         require __DIR__ . '/../views/home.php';
         exit;
     }
 
     public static function create(): void
     {
+        // Sørger for aktiv session
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
+        // Kun loggede brugere må oprette posts
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
             echo 'You have to be logged in to create a post';
             exit;
         }
 
+        // Indlæser valideringsfunktioner
         require_once __DIR__ . "/../../private/x.php";
 
+        // Default: ingen billede
         $imagePath = null;
 
+        // Hvis der er uploadet et billede
         if (!empty($_FILES['post_image_path']['tmp_name'])) {
+
             // Valider filstørrelse (max 5MB)
             $fileSizeKB = $_FILES['post_image_path']['size'] / 1024;
             if ($fileSizeKB > 5120) { // 5MB
@@ -162,12 +182,13 @@ class PostController
                 exit('The file is too big. 5MB max allowed');
             }
 
-            // Tjek om filen blev uploadet korrekt
+            // Tjek at filen faktisk er uploadet via HTTP POST
             if (!is_uploaded_file($_FILES['post_image_path']['tmp_name'])) {
                 http_response_code(400);
                 exit('The file wasn´t uploadet correct');
             }
 
+            // Tilladte billedtyper
             $allowedTypes = [
                 'image/jpeg' => 'jpg',
                 'image/jpg' => 'jpg',
@@ -178,26 +199,29 @@ class PostController
             
             $fileType = mime_content_type($_FILES['post_image_path']['tmp_name']);
 
+            // Afvis ikke-tilladte filtyper
             if (!isset($allowedTypes[$fileType])) {
                 http_response_code(400);
                 exit('Only JPEG, PNG, GIF og WebP images are allowed');
             }
 
-            // Brug korrekt filtype-endelse
+            // Generér sikkert filnavn
             $fileExtension = $allowedTypes[$fileType];
             $filename = bin2hex(random_bytes(16)) . '.' . $fileExtension;
             $uploadDir = __DIR__ . '/../../uploads/';
             $targetPath = $uploadDir . $filename;
 
-            // Flyt filen med korrekt navn
+            // Flyt filen til uploads-mappen
             if (!move_uploaded_file($_FILES['post_image_path']['tmp_name'], $targetPath)) {
                 http_response_code(500);
                 exit('Could not save the file');
             }
 
+            // Gem relativ sti i databasen
             $imagePath = '/uploads/' . $filename;
         }
 
+        // Opret post i databasen
         PostModel::create([
             ':pk'      => bin2hex(random_bytes(25)),
             ':message' => _validatePost(),
@@ -205,6 +229,7 @@ class PostController
             ':user'    => $_SESSION['user']['user_pk']
         ]);
 
+        // Redirect tilbage til hvor brugeren kom fra
         $redirect = $_SERVER['HTTP_REFERER'] ?? '/home';
         header("Location: " . $redirect);
         exit;
@@ -212,10 +237,12 @@ class PostController
 
     public static function update(): void
     {
+        // Sørger for aktiv session
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
+        // Kun loggede brugere må redigere posts
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
             echo 'You have to be logged in to update a post';
@@ -224,12 +251,14 @@ class PostController
 
         require_once __DIR__ . "/../../private/x.php";
 
+        // Valider input
         $postPk  = _validatePk("post_pk");
         $message = _validatePost();
         $imagePath = null;
 
         // Håndtér evt. nyt billede
         if (!empty($_FILES['post_image_path']['tmp_name'])) {
+
             // Valider filstørrelse (max 5MB)
             $fileSizeKB = $_FILES['post_image_path']['size'] / 1024;
             if ($fileSizeKB > 5120) {
@@ -273,9 +302,10 @@ class PostController
             $imagePath = '/uploads/' . $filename;
         }
 
+        // Opdater post i databasen
         PostModel::update($postPk, $message, $imagePath);
 
-        // Redirect tilbage til den korrekte single post URL
+        // Redirect til korrekt single post URL
         require __DIR__ . '/../../private/db.php';
         $stmt = $_db->prepare("
             SELECT users.user_username 
@@ -296,10 +326,12 @@ class PostController
 
     public static function delete(): void
     {
+        // Sørger for aktiv session
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
+        // Kun loggede brugere må slette posts
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
             echo 'You have to be logged in to delete a post';
@@ -308,10 +340,13 @@ class PostController
 
         require_once __DIR__ . "/../../private/x.php";
 
+        // Valider postens PK
         $postPk = _validatePk("post_pk");
         
+        // Soft delete af posten
         PostModel::delete($postPk);
 
+        // Bestem hvor brugeren skal sendes hen bagefter
         $redirect = $_POST['redirect_to'] ?? '/home';
 
         // Hvis redirect peger på en single post URL, redirect til home i stedet
@@ -319,6 +354,7 @@ class PostController
             $redirect = '/home';
         }
 
+        // Undgå redirect tilbage til slettet single-post side
         header("Location: " . $redirect);
         exit;
     }

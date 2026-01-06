@@ -4,7 +4,7 @@
 :root {
     /* Brand / actions */
     --color-primary: #1da1f2;
-    --color-primary-hover: #0d8bd9;
+    --color-primary-hover: #0d8bd925;
     --color-primary-disabled: #9bd1f9;
 
     --color-delete: #ef4444;

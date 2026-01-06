@@ -1,9 +1,14 @@
 <?php
 
+// Hjælpefunktion til sikkert output af tekst i HTML
+// Escaper HTML for at undgå XSS
+// Echo’er direkte (returnerer ikke noget)
+// Bruges KUN til output – aldrig til logik
 function _($text) {
     echo htmlspecialchars($text ?? '', ENT_QUOTES, 'UTF-8');
 }
 
+// Slår caching fra (fx ved logout)
 function _noCache() {
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Pragma: no-cache");
@@ -13,30 +18,39 @@ function _noCache() {
 
 define("commentMinLength", 1);
 define("commentMaxLength", 255);
+
+// Validerer kommentar-tekst fra POST
 function validateCommentText() {
+
+    // Tjek at feltet findes
     if (!isset($_POST['comment_text'])) {
         throw new Exception("Comment text is required", 400);
     }
     
+    // Fjern whitespace
     $commentText = trim($_POST['comment_text']);
     
+    // Må ikke være tom
     if (empty($commentText)) {
         throw new Exception("Comment text cannot be empty", 400);
     }
 
-    // Fjern potentielt farlig HTML
+    // Fjern HTML
     $commentText = strip_tags($commentText);
     
+    // Længde-validering
     $len = strlen($commentText);
-
     if ($len < commentMinLength || $len > commentMaxLength) {
         throw new Exception("Comment must be between " . commentMinLength . " and " . commentMaxLength . " characters", 400);
     }
+
     return $commentText;
 }
 
 define("postMinLength", 1);
 define("postMaxLength", 300);
+
+// Validerer opslag-tekst
 function _validatePost() {
     if (!isset($_POST['post_message'])) {
         throw new Exception("Message is required", 400);
@@ -61,6 +75,8 @@ function _validatePost() {
 
 define("pkMinLength", 1);
 define("pkMaxLength", 50);
+
+// Validerer primary key fra POST
 function _validatePk($fieldName) {
     if (!isset($_POST[$fieldName])) {
         throw new Exception("Primary key field '$fieldName' is required", 400);
@@ -79,7 +95,7 @@ function _validatePk($fieldName) {
         throw new Exception("Primary key must be at most " . pkMaxLength . " characters", 400);
     }
     
-    // Tjek at det kun er alfanumerisk
+    // Kun bogstaver og tal
     if (!ctype_alnum($pk)) {
         throw new Exception("Primary key must contain only letters and numbers", 400);
     }
@@ -89,6 +105,8 @@ function _validatePk($fieldName) {
 
 define("usernameMinLength", 3);
 define("usernameMaxLength", 20);
+
+// Validerer brugernavn
 function _validateUsername() {
     if (!isset($_POST['user_username'])) {
         throw new Exception("Username is required", 400);
@@ -110,7 +128,7 @@ function _validateUsername() {
         throw new Exception("Username can only contain letters, numbers and underscores", 400);
     }
     
-    // Starter med bogstav
+    // Skal starte med bogstav
     if (!ctype_alpha($username[0])) {
         throw new Exception("Username must start with a letter", 400);
     }
@@ -120,6 +138,8 @@ function _validateUsername() {
 
 define("emailMinLength", 6);
 define("emailMaxLength", 100);
+
+// Validerer email
 function _validateEmail() {
     if (!isset($_POST['user_email'])) {
         throw new Exception("Email is required", 400);
@@ -152,6 +172,8 @@ function _validateEmail() {
 
 define("passwordMinLength", 6);
 define("passwordMaxLength", 50);
+
+// Validerer password (hashing sker andet sted)
 function _validatePassword() {
     if (!isset($_POST['user_password'])) {
         throw new Exception("Password is required", 400);
@@ -175,6 +197,8 @@ function _validatePassword() {
 
 define("fullNameMinLength", 3);
 define("fullNameMaxLength", 20);
+
+// Validerer fuldt navn
 function _validateFullName() {
     if (!isset($_POST['user_full_name'])) {
         throw new Exception("Full name is required", 400);
@@ -193,7 +217,7 @@ function _validateFullName() {
         throw new Exception("Full name must be at most " . fullNameMaxLength . " characters", 400);
     }
     
-    // Kun tilladte tegn (bogstaver, mellemrum og bindestreger)
+    // Kun tilladte tegn (bogstaver, mellemrum og bindestreger) (inkl. danske bogstaver)
     if (!preg_match('/^[a-zA-ZæøåÆØÅ\s\-]+$/', $full_name)) {
         throw new Exception("Full name can only contain letters, spaces and hyphens", 400);
     }
