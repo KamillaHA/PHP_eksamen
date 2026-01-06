@@ -13,7 +13,7 @@ $following = $following ?? 0;
     >
     <form action="/profile/cover" method="POST" enctype="multipart/form-data" class="cover-upload-form">
       <input type="file" name="cover_image" accept="image/*" onchange="this.form.submit()" hidden>
-      <button type="button" class="cover-upload-btn" onclick="this.previousElementSibling.click()">Change cover</button>
+      <button type="button" class="cover-upload-btn" onclick="this.previousElementSibling.click()"></button>
     </form>
   </div>
 

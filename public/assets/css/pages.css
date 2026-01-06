@@ -1,10 +1,10 @@
 /* ======================================================
-   PAGES – GLOBAL
-   Index / Profile / Single
+    PAGES – GLOBAL
+    Index / Profile / Single
 ====================================================== */
 
 /* ======================================================
-   INDEX / WELCOME (LANDING PAGE)
+    INDEX / WELCOME (LANDING PAGE)
 ====================================================== */
 
 .x-landing {
@@ -25,11 +25,11 @@
 .x-landing__logo {
   display: flex;
   justify-content: center;
-  svg {
-    width: 12rem;
-    max-width: 100%;
-    color: var(--color-text);
-  }
+}
+.x-landing__logo svg {
+  width: 12rem;
+  max-width: 100%;
+  color: var(--color-text);
 }
 
 .x-landing__right {
@@ -44,33 +44,33 @@
 }
 
 /* ======================================================
-   LANDING – BODY OVERRIDES
+    LANDING – BODY OVERRIDES
 ====================================================== */
 
 body.page-landing {
   background: var(--color-text);
+}
 
-  main {
-    background: var(--color-text);
-    margin: 0;
-    padding: 0;
-  }
+body.page-landing main {
+  background: var(--color-text);
+  margin: 0;
+  padding: 0;
+}
 
-  .x-landing {
-    background: var(--color-bg);
-  }
+body.page-landing .x-landing {
+  background: var(--color-bg);
+}
 
-  h1, .x-landing__subtitle {
-    color: var(--color-text);
-  }
+body.page-landing h1, body.page-landing .x-landing__subtitle {
+  color: var(--color-text);
+}
 
-  h2, p {
-    color: var(--color-bg);
-  }
+body.page-landing h2, body.page-landing p {
+  color: var(--color-bg);
 }
 
 /* ======================================================
-   PROFILE PAGE
+    PROFILE PAGE
 ====================================================== */
 
 .profile-info,
@@ -81,47 +81,41 @@ body.page-landing {
   border-bottom: thin solid var(--color-text);
 }
 
-.profile-details {
-  p {
+.profile-details p {
     margin: 0.5rem 0;
     font-size: 1.1rem;
   }
-}
 
 /* Profile forms */
-.profile-form {
-  .form-group {
-    margin-bottom: 1rem;
-  }
+.edit-profile-form .form-group, .profile-form .form-group {
+  margin-bottom: 1rem;
+}
+.edit-profile-form label, .profile-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
 
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-  }
-
-  input {
-    width: 100%;
-    padding: 0.7rem;
-    border: thin solid var(--color-text);
-    border-radius: var(--border-radius-xs);
-    font-size: 1rem;
-  }
+#editPostTextarea, #editCommentTextarea, .edit-profile-form input, .profile-form input {
+  width: 100%;
+  padding: 0.7rem;
+  border: thin solid var(--color-text);
+  border-radius: var(--border-radius-xs);
+  font-size: 1rem;
 }
 
 /* ======================================================
-   PROFILE HEADER / COVER
+    PROFILE HEADER / COVER
 ====================================================== */
 
 .profile-header {
   border-bottom: var(--border-xs) solid var(--color-border);
   margin-bottom: 1.5rem;
-
-    .profile-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
-    }
+}
+.profile-header .profile-actions {
+display: flex;
+justify-content: flex-end;
+margin-top: 1rem;
 }
 
 .profile-cover {
@@ -131,33 +125,35 @@ body.page-landing {
   background-position: center;
   position: relative;
   cursor: pointer;
+}
 
-  .profile-cover:hover::after {
-    content: "Change cover";
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--color-bg);
-    color: var(--color-text);
-    font-weight: bold;
-    font-size: 1rem;
-  }
+.profile-cover:hover::after {
+  content: "Change cover";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(0.25rem);
+  color: var(--color-text);
+  font-weight: bold;
+  font-size: 1rem;
+  pointer-events: none;
 }
 
 .cover-upload-form {
   position: absolute;
   inset: 0;
-  z-index: 10;
+  z-index: 8;
 }
 
 .cover-upload-btn {
   position: absolute;
+  font-family: var(--font-family-base);
   inset: 0;
-  background: var(--color-bg);
   border: none;
-  color: transparent;
+  background: transparent;
+  color: var(--color-bg);
   cursor: pointer;
   pointer-events: auto;
   z-index: 11;
@@ -194,14 +190,14 @@ body.page-landing {
   gap: 1.5rem;
   color: var(--color-text);
   font-size: 0.95rem;
+}
 
-  strong {
-    margin-right: 0.25rem;
-  }
+.profile-stats strong {
+  margin-right: 0.25rem;
 }
 
 /* ======================================================
-   SINGLE POST PAGE ELEMENTS
+    SINGLE POST PAGE ELEMENTS
 ====================================================== */
 
 .single-view-header {
@@ -210,7 +206,7 @@ body.page-landing {
   border-bottom: var(--border-xs) solid var(--color-border);
 }
 
-.back-to-feed-btn {
+.single-view-header .back-to-feed-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -220,10 +216,11 @@ body.page-landing {
   padding: 0.5rem 1rem;
   border-radius: var(--border-radius-xs);
   transition: background-color 0.2s;
-
-  .back-to-feed-btn:hover {
-    background-color: var(--color-primary-hover);
-  }
+  margin-left: 1rem;
+}
+.single-view-header .back-to-feed-btn:hover {
+  background-color: var(--color-primary-hover);
+  color: var(--color-text);
 }
 
 .posts-list {
@@ -233,7 +230,7 @@ body.page-landing {
 }
 
 /* ======================================================
-   MEDIA QUERIES (MOBILE FIRST)
+    MEDIA QUERIES (MOBILE FIRST)
 ====================================================== */
 
 @media (min-width: 768px) {
@@ -255,9 +252,9 @@ body.page-landing {
     display: flex;
     justify-content: center;
     text-align: center;
-    svg {
-      width: 25rem;
-    }
+  }
+  .x-landing__logo svg {
+    width: 25rem;
   }
 
   .x-landing__right {

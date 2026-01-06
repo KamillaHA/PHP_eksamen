@@ -1,56 +1,53 @@
 /* ======================================================
-   LAYOUT – GLOBAL
+    LAYOUT – GLOBAL
 ====================================================== */
 
 /* ======================================================
-   MAIN WRAPPER
+    MAIN WRAPPER
 ====================================================== */
 
 main {
   min-height: 100vh;
-  padding-top: 3.75rem; /* plads til mobile topbar */
+  padding-top: 2.75rem; /* plads til mobile topbar */
+}
 
-  /* ======================================================
-     POSTS CONTAINER
-  ====================================================== */
-
-  .posts-container {
-    max-width: 100%;
-    color: var(--color-text);
-  }
+.posts-container {
+  max-width: 100%;
+  color: var(--color-text);
+  margin-top: 1rem;
 }
 
 /* ======================================================
-   MEDIA QUERIES
-   MOBILE FIRST
+    MEDIA QUERIES
+    MOBILE FIRST
 ====================================================== */
 
 /* ======================================================
-   TABLET
+    TABLET
 ====================================================== */
 
 @media (min-width: 768px) {
   main {
     padding: 1rem;
     margin-left: 17.5rem; /* nav width */
+  }
 
-    .posts-container {
-      max-width: 43.5rem;
-      margin: 0 auto;
-    }
+  .posts-container {
+    max-width: 43.5rem;
+    margin: 0 auto;
   }
 }
 
 /* ======================================================
-   DESKTOP
+    DESKTOP
 ====================================================== */
 
 @media (min-width: 1025px) {
   main {
     margin-right: 20rem; /* sidebar width */
+  }
 
-    .posts-container {
-      max-width: 38.75rem;
-    }
+  .posts-container {
+    max-width: 48rem;
   }
 }

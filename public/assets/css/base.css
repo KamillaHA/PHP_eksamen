@@ -1,105 +1,106 @@
 /* ======================================================
-   BASE / RESET
+BASE / RESET
 ====================================================== */
 
 /* ======================================================
-   RESET & BOX MODEL
+RESET & BOX MODEL
 ====================================================== */
 
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 /* ======================================================
-   TYPOGRAPHY
+TYPOGRAPHY
 ====================================================== */
 
 body {
-  font-family: var(--font-family-base);
-  font-size: 1rem;
-  line-height: 1.4;
+    font-family: var(--font-family-base);
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-top: -1.25rem;
 }
 
 /* ======================================================
-   BODY / MAIN
+BODY / MAIN
 ====================================================== */
 
 body {
-  min-height: 100vh;
-  background: var(--color-bg);
+    min-height: 100vh;
+    background: var(--color-bg);
 }
 
 main {
-  min-height: 100vh;
-  background: var(--color-bg);
+    min-height: 100vh;
+    background: var(--color-bg);
 }
 
 /* ======================================================
-   TEXT ELEMENTS
+TEXT ELEMENTS
 ====================================================== */
 
 h1,
 h2,
 h3,
 h4 {
-  font-weight: 700;
-  line-height: 1.2;
-  display: flex;
-  align-items: center;
+    font-weight: 700;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
 }
 
 h1 {
-  color: var(--color-text);
+    color: var(--color-text);
 }
 
 p {
-  line-height: 1.5;
+    line-height: 1.5;
 }
 
 /* ======================================================
-   LINKS
+LINKS
 ====================================================== */
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 }
 
 a:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 /* ======================================================
-   FORM ELEMENTS
+FORM ELEMENTS
 ====================================================== */
 
 input,
 textarea,
 button,
 select {
-  font: inherit;
+    font: inherit;
 }
 
 textarea {
-  resize: none;
-  width: 100%;
+    resize: none;
+    width: 100%;
 }
 
 /* ======================================================
-   MEDIA
+MEDIA
 ====================================================== */
 
 img,
 svg,
 video {
-  display: block;
-  max-width: 100%;
+    display: block;
+    max-width: 100%;
 }

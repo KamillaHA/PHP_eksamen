@@ -1,5 +1,5 @@
 /* ======================================================
-   AVATARS – BASE
+  AVATARS – BASE
 ====================================================== */
 
 .avatar-circle {
@@ -8,33 +8,29 @@
   color: var(--color-text);
   width: 2rem;
   height: 2rem;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-weight: bold;
   text-transform: uppercase;
   flex-shrink: 0;
 }
 
 /* ======================================================
-   AVATAR VARIANTS / CONTEXTS
+  AVATAR VARIANTS / CONTEXTS
 ====================================================== */
 
 /* Feed / comments / follow / profile tag */
-.post-profile-section,
-.follow-item,
-#profile_tag {
-  .avatar-circle {
+.post-profile-section .avatar-circle,
+.follow-item .avatar-circle,
+#profile_tag .avatar-circle {
     width: 2.25rem;
     height: 2.25rem;
     font-size: 1.1rem;
-  }
 }
 
 /* ======================================================
-   BURGER AVATAR
+  BURGER AVATAR
 ====================================================== */
 
 .avatar-burger {
@@ -45,31 +41,29 @@
   border: none;
   padding: 0;
   cursor: pointer;
-
-  .avatar-circle {
-    width: 100%;
-    height: 100%;
-    box-shadow: 0 0 0 0.125rem var(--color-bg);
-  }
+}
+.avatar-burger .avatar-circle {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 0 0.125rem var(--color-bg);
 }
 
 /* ======================================================
-   PROFILE PAGE AVATAR
+  PROFILE PAGE AVATAR
 ====================================================== */
 
 .profile-avatar {
   width: 6.25rem;
   height: 6.25rem;
   font-size: 2.6rem;
-
+  z-index: 20;
   position: absolute;
   top: -3.125rem;
-
   border: 0.25rem solid var(--color-bg);
 }
 
 /* ======================================================
-   TABLET / DESKTOP
+  TABLET / DESKTOP
 ====================================================== */
 
 @media (min-width: 768px) {

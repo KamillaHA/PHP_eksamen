@@ -1,9 +1,9 @@
 /* ======================================================
-   POPUPS / MODALS
+    POPUPS / MODALS
 ====================================================== */
 
 /* ======================================================
-   GENERIC DIALOG
+    GENERIC DIALOG
 ====================================================== */
 
 .x-dialog {
@@ -31,7 +31,7 @@
 
 .x-dialog__content {
   position: relative;
-  background: white;
+  background: var(--color-text);
   margin: 4rem 1rem;
   padding: 0;
   max-width: 37.5rem;
@@ -47,7 +47,7 @@
 }
 
 /* ======================================================
-   MODAL LAYOUT
+    MODAL LAYOUT
 ====================================================== */
 
 .modal-header {
@@ -74,7 +74,7 @@
 }
 
 /* ======================================================
-   POST FORM (MODAL)
+    POST FORM (MODAL)
 ====================================================== */
 
 .user-info {
@@ -138,7 +138,7 @@
 }
 
 /* ======================================================
-   COMMENT DROPDOWN
+    COMMENT DROPDOWN
 ====================================================== */
 
 .comment-menu {
@@ -163,7 +163,7 @@
 
 .comment-menu-btn:hover {
   background-color: var(--color-primary-hover);
-  color: rgb(29, 155, 240);
+  color: var(--color-primary-hover);
 }
 
 .comment-dropdown {
@@ -218,7 +218,7 @@
 }
 
 /* ======================================================
-   POST DROPDOWN
+    POST DROPDOWN
 ====================================================== */
 
 .post-menu {
@@ -266,20 +266,19 @@
 }
 
 /* ======================================================
-   LOGIN / SIGNUP POPUPS  ✅ FIXED
+    LOGIN / SIGNUP POPUPS  ✅ FIXED
 ====================================================== */
 
-.login-popup,
-.signup-popup {
-
-  .x-dialog__overlay {
+  .login-popup .x-dialog__overlay,
+.signup-popup .x-dialog__overlay {
     position: fixed;
     inset: 0;
     background-color: var(--color-bg-hover);
     backdrop-filter: blur(0.25rem);
   }
 
-  .x-dialog__content {
+  .login-popup .x-dialog__content,
+.signup-popup .x-dialog__content {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -305,14 +304,16 @@
     transform: translate(-50%, -50%) scale(1);
   }
 
-  .modal-header {
+  .login-popup .modal-header,
+.signup-popup .modal-header {
     padding: 1rem;
     border-bottom: thin solid var(--color-text);
     display: flex;
     align-items: center;
   }
 
-  .modal-content {
+  .login-popup .modal-content,
+.signup-popup .modal-content {
     padding: 2rem;
   }
 
@@ -331,14 +332,12 @@
     border-color: var(--color-primary);
     box-shadow: 0 0 0 0.125rem var(--color-primary-hover);
   }
-}
+
 
 /* Mobile fullscreen */
 @media (max-width: 480px) {
-  .login-popup,
-  .signup-popup {
-
-    .x-dialog__content {
+    .login-popup .x-dialog__content, 
+    .signup-popup .x-dialog__content {
       inset: 0;
       top: 0;
       left: 0;
@@ -360,10 +359,11 @@
       transform: none;
     }
 
-    .modal-content {
+    .login-popup .modal-content,
+.signup-popup .modal-content {
       padding: 1.25rem;
     }
-  }
+
   .x-dialog__content {
     transform: none;
   }
@@ -371,7 +371,7 @@
 }
 
 /* ======================================================
-   DANGER MODAL
+    DANGER MODAL
 ====================================================== */
 
 .danger-modal .modal-header h3 {

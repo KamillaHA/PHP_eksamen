@@ -1,9 +1,9 @@
 /* ======================================================
-   UTILITIES
+    UTILITIES
 ====================================================== */
 
 /* ======================================================
-   TOAST / NOTIFICATIONS
+    TOAST / NOTIFICATIONS
 ====================================================== */
 
 .toast {
@@ -11,7 +11,6 @@
   top: 1.25rem;
   right: 1.25rem;
   z-index: 1000;
-
   background: var(--color-sucess);
   color:var(--color-text);
   padding: 0.75rem 1.25rem;
@@ -20,44 +19,40 @@
 }
 
 /* ======================================================
-   SCROLL TO TOP
+    SCROLL TO TOP
 ====================================================== */
 
 .scroll-top {
   position: fixed;
   bottom: 1.25rem;
   right: 1.25rem;
-
   width: 3.125rem;
   height: 3.125rem;
   border-radius: var(--border-radius-lg);
-
   background: var(--color-bg);
   color:var(--color-text);
   text-decoration: none;
-
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s;
-
   text-align: center;
   line-height: 2.625rem;
   font-size: 1.5rem;
   font-weight: bold;
+}
 
-  .scroll-top.show {
-    opacity: 1;
-    visibility: visible;
-  }
+.scroll-top.show {
+  opacity: 1;
+  visibility: visible;
+}
 
-  .scroll-top:hover {
-    background: var(--color-bg-disabled);
-  }
+.scroll-top:hover {
+  background: var(--color-bg-disabled);
 }
 
 /* ======================================================
-   VISIBILITY HELPERS
+    VISIBILITY HELPERS
 ====================================================== */
 
 .hidden {
