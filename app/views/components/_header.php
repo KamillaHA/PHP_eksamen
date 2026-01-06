@@ -56,11 +56,8 @@ if (isset($_SESSION['user_id']) || in_array($current_page, $auth_pages)) {
                 <li><a href="#"><i class="fa-solid fa-ellipsis"></i><span>More</span></a></li>
                 <li><a href="/logout"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
             </ul>
-    <button type="button" class="create-post-btn" id="createPostBtn" data-open="createPostModal">Post</button>
-
-<body class="<?= $body_class ?? '' ?>">
-
-<?php if (isset($_SESSION['user'])): ?>
+            <button type="button" class="create-post-btn" id="createPostBtn" data-open="createPostModal">Post</button>
+        </nav>
 
     <!-- MOBILE TOP BAR -->
     <header class="mobile-topbar">
