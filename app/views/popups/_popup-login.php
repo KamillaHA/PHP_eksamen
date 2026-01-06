@@ -19,7 +19,7 @@ if (isset($_SESSION["user"])) {
                 </svg>
             </div>
             
-            <h2>Log ind på X</h2>
+            <h2>Log in to X</h2>
             
             <form class="login-form" action="/login" method="POST" mix-post mix-after="main">
                 <?php if(isset($_GET['message'])): ?>
@@ -34,13 +34,13 @@ if (isset($_SESSION["user"])) {
                 <button type="submit" class="login-submit-btn" 
                         mix-await="Logger ind..." 
                         mix-default="Log ind">
-                    Log ind
+                    Log in
                 </button>
             </form>
             
             <div class="login-footer">
-                <p>Har du ikke en konto? 
-                    <a href="/signup">Tilmeld dig</a>
+                <p>Don´t have an account? 
+                    <a href="/signup" style="color: #1DA1F2; text-decoration: none; font-weight: bold;">Join us</a>
                 </p>
             </div>
         </div>

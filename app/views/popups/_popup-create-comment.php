@@ -82,38 +82,3 @@ $user = $_SESSION["user"];
     </div>
 </div>
 
-<style>
-/* Tilføj styling til comment popup */
-.commenting-on {
-    padding: 12px 16px;
-    border-bottom: 1px solid #e5e7eb;
-    margin-bottom: 12px;
-    background-color: #f8fafc;
-    border-radius: 8px;
-}
-
-.reply-label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #64748b;
-    font-size: 14px;
-    margin-bottom: 8px;
-}
-
-.original-post {
-    font-size: 15px;
-    line-height: 1.4;
-    color: #374151;
-}
-
-.original-post .post-author {
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 4px;
-}
-
-.original-post .post-content {
-    color: #4b5563;
-}
-</style>
