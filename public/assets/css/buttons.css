@@ -32,6 +32,11 @@ PRIMARY / GENERIC BUTTONS
     border: thin solid var(--color-text);
 }
 
+.comment-submit-btn:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-text);
+}
+
 /* ======================================================
 FOLLOW / UNFOLLOW (SIDEBAR / WHO TO FOLLOW)
 ====================================================== */
@@ -128,6 +133,7 @@ AUTH BUTTONS (LOGIN / SIGNUP)
     border-radius: var(--border-radius-sm);
     font-size: 1rem;
     font-weight: bold;
+    margin-bottom: 1rem;
     cursor: pointer;
     transition: background-color 0.2s;
 }
