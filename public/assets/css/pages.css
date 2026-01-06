@@ -219,7 +219,7 @@ margin-top: 1rem;
   margin-left: 1rem;
 }
 .single-view-header .back-to-feed-btn:hover {
-  background-color: var(--color-primary-hover);
+  background-color: var(--color-primary-visible-hover);
   color: var(--color-primary);
 }
 
