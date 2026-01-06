@@ -166,6 +166,11 @@
   color: var(--color-primary-hover);
 }
 
+.comment-count {
+  font-family: var(--font-family-base);
+  font-size: small;
+}
+
 .comment-dropdown {
   position: absolute;
   top: 100%;

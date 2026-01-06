@@ -71,21 +71,6 @@ PROFILE / SETTINGS BUTTONS
     color: var(--color-bg);
 }
 
-.update-btn {
-    background: var(--color-primary);
-    color: var(--color-text);
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--border-radius-sm);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.update-btn:hover {
-    background: var(--color-primary-hover);
-}
-
 .update-profile-btn {
     background-color: var(--color-primary);
     color: white;
@@ -190,7 +175,7 @@ MODAL / POST / COMMENT FORM BUTTONS
 
 .post-submit-btn {
     background-color: var(--color-primary);
-    color: white;
+    color: var(--color-text);
     border: none;
     padding: 0.5rem 1.25rem;
     border-radius: var(--border-radius-sm);
@@ -232,7 +217,7 @@ DANGER / DELETE BUTTONS
 
 .confirm-delete-btn,
 .cancel-delete-profile {
-    color: white;
+    color: var(--color-text);
     border: none;
     padding: 0.6rem 1.4rem;
     border-radius:var(--border-radius-lg);
@@ -255,35 +240,4 @@ DANGER / DELETE BUTTONS
 
 .cancel-delete-profile:hover {
     background: var(--color-primary-hover);
-}
-
-.cancel-btn {
-    background: transparent;
-    border: thin solid var(--color-border);
-    color: var(--color-bg);
-    padding: 0.6rem 1.2rem;
-    border-radius:var(--border-radius-lg);
-    cursor: pointer;
-}
-
-/* ======================================================
-BACK / LOGOUT LINKS
-====================================================== */
-
-.btn-back,
-.btn-logout {
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--border-radius-sm);
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.btn-back {
-    background: var(--color-text);
-    color: var(--color-bg-disabled);
-}
-
-.btn-logout {
-    background: var(--color-delete);
-    color: white;
 }

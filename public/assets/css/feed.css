@@ -53,11 +53,6 @@
       font-size: 0.9rem;
     }
 
-    .post-time {
-      color: var(--color-bg-disabled);
-      font-size: 0.9rem;
-    }
-
     .post-content {
       color: var(--color-text);
       font-size: 1rem;
