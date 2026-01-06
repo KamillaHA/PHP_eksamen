@@ -5,13 +5,10 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# 2) Logout-route (før php-rewrite, så den altid vinder)
-RewriteRule ^logout/?$ app/views/logout.php [L]
-
-# 3) Hvis der findes en tilsvarende .php-fil, så brug den (pæne URL'er)
+# 2) Hvis der findes en tilsvarende .php-fil, så brug den (pæne URL'er)
 #    - Undgår at ramme "index" osv. med punktum
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule ^([^.]+?)/?$ $1.php [NC,L]
 
-# 4) ALT andet går til index.php (router)
+# 3) ALT andet går til index.php (router)
 RewriteRule ^ index.php [L]

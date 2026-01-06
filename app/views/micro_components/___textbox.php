@@ -1,1 +1,0 @@
-<!-- <textarea type="text" maxlength="300" name="post_message" placeholder="Your post message here"></textarea> -->

@@ -1,10 +1,4 @@
 <?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
@@ -32,6 +26,11 @@ switch ($uri) {
     case '/login':
         require_once __DIR__ . '/app/controllers/AuthController.php';
         AuthController::login();
+        break;
+
+    case '/logout':
+        require_once __DIR__ . '/app/controllers/AuthController.php';
+        AuthController::logout();
         break;
 
     case '/profile':

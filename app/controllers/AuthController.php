@@ -31,11 +31,11 @@ class AuthController
 
             UserModel::create($user);
 
-            echo '<mixhtml mix-redirect="/?login=1"></mixhtml>';
+            header("Location: /?login=1");
             exit;
 
         } catch (Exception $e) {
-            echo '<mixhtml mix-redirect="/?message=' . urlencode($e->getMessage()) . '"></mixhtml>';
+            header("Location: /?message=" . urlencode($e->getMessage()));
             exit;
         }
     }
@@ -60,7 +60,7 @@ class AuthController
             unset($user["user_password"]);
             $_SESSION["user"] = $user;
 
-            echo '<mixhtml mix-redirect="/home"></mixhtml>';
+            header("Location: /home");
             exit;
 
         } catch (Exception $e) {
@@ -69,7 +69,7 @@ class AuthController
             
             // Send en generisk fejlbesked til brugeren
             $genericMessage = "Forkert email eller password";
-            echo '<mixhtml mix-redirect="/login?message=' . urlencode($genericMessage) . '"></mixhtml>';
+            header("Location: /login?message=" . urlencode($genericMessage));
             exit;
         }
     }
@@ -77,10 +77,24 @@ class AuthController
     public static function logout(): void
     {
         session_start();
-
         require_once __DIR__ . "/../../private/x.php";
         if (function_exists('_noCache')) {
             _noCache();
+        }
+
+        $_SESSION = [];
+
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
         }
 
         session_destroy();
