@@ -400,3 +400,12 @@
   justify-content: flex-end;
   gap: 1rem;
 }
+
+.error-message {
+  color: var(--color-bg);
+  background-color: var(--color-delete);
+  border-radius: var(--border-radius-xs);
+  padding: 0.875rem;
+  margin-bottom: 1rem;
+}
+
