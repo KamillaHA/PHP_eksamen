@@ -1,42 +1,65 @@
 <?php
 
+// Tjekker om brugeren er logget ind
+// Hvis der ikke findes en bruger i sessionen,
+// vises edit post-modal’en ikke
 if (!isset($_SESSION["user"])) {
     return;
 }
+// Gemmer den loggede bruger i en variabel
+// så vi nemt kan bruge den i HTML’en
 $user = $_SESSION["user"];
 ?>
 
-<!-- Edit Post Popup Modal -->
+<!-- Modal til redigering af opslag -->
 <div id="editPostModal" class="dialog">
+
+    <!-- Overlay der mørklægger baggrunden -->
     <div class="dialog-overlay"></div>
+
+    <!-- Selve modal-indholdet -->
     <div class="dialog-content">
+
+        <!-- Header med luk-knap -->
         <div class="modal-header">
+
+            <!-- Lukker modal’en via JavaScript -->
             <button class="modal-close dialog-close">&times;</button>
         </div>
+
+        <!-- Modalens indhold -->
         <div class="modal-content">
 
+            <!-- Formular til opdatering af opslag -->
+            <!-- enctype="multipart/form-data" kræves for billed-upload -->
             <form class="edit-post-form" action="/post/update" method="POST" enctype="multipart/form-data">
-                <!-- Hidden input til post ID -->
+
+                <!-- Skjult input med opslagets ID -->
                 <input type="hidden" name="post_pk" id="edit_post_pk">
-            <input 
-                type="file" 
-                name="post_image_path"
-                id="editPostImageInput"
-                accept="image/*"
-                hidden
-            >
+            
+                <!-- Skjult fil-input til opdatering af billede -->
+                <!-- Accepterer kun billedfiler -->
+                <input type="file" name="post_image_path" id="editPostImageInput" accept="image/*" hidden>
                 
                 <!-- Bruger info -->
                 <div class="user-info">
+
+                    <!-- Avatar med første bogstav fra brugernavnet -->
                     <div class="avatar-circle">
-                        <?php echo strtoupper(substr($user['user_username'], 0, 1)); ?>
+                        <?php 
+                        // Viser første bogstav i brugernavnet med stort
+                        echo strtoupper(substr($user['user_username'], 0, 1)); ?>
                     </div>
+
+                    <!-- Brugerens navn og brugernavn -->
                     <div>
                         <div class="name"><?php echo $user["user_full_name"]; ?></div>
                         <div class="handle"><?php echo "@".$user["user_username"]; ?></div>
                     </div>
                 </div>
-                
+
+                <!-- Tekstfelt til redigering af opslag -->
+                <!-- maxlength og mix-check bruges til klient-side validering -->
                 <textarea 
                     name="post_message" 
                     id="editPostTextarea"
@@ -46,12 +69,19 @@ $user = $_SESSION["user"];
                     mix-check="^.{1,300}$"
                 ></textarea>
                 
+                <!-- Handlinger og submit-knap -->
                 <div class="post-form-actions">
+
+                    <!-- Ikon til at vælge nyt billede -->
+                    <!-- Klik åbner det skjulte file input -->
                     <div class="post-form-icons">
                         <button type="button" class="post-form-icon" title="Media" onclick="document.getElementById('editPostImageInput').click()">
                             <i class="fa-solid fa-image"></i>
                         </button>
                     </div>
+
+                    <!-- Submit-knap til at opdatere opslag -->
+                    <!-- mix-await og mix-default håndterer loading-tekst -->
                     <button 
                         type="submit" 
                         class="post-submit-btn" 

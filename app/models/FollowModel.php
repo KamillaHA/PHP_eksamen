@@ -2,10 +2,13 @@
 
 class FollowModel
 {
+    // Tæller hvor mange brugere der følger en given bruger
     public static function countFollowers(string $userPk): int
     {
+        // Indlæser databaseforbindelsen
         require __DIR__ . '/../../private/db.php';
 
+        // Tæller kun følgere der ikke er soft deleted
         $stmt = $_db->prepare("
             SELECT COUNT(*)
             FROM follows
@@ -18,6 +21,7 @@ class FollowModel
         return (int) $stmt->fetchColumn();
     }
 
+    // Tæller hvor mange brugere en given bruger følger
     public static function countFollowing(string $userPk): int
     {
         require __DIR__ . '/../../private/db.php';
@@ -34,11 +38,12 @@ class FollowModel
         return (int) $stmt->fetchColumn();
     }
 
-    // forslag til "Who to follow"
+    // Finder forslag til "Who to follow"
     public static function suggestions(string $currentUserPk): array
     {
         require __DIR__ . '/../../private/db.php';
 
+        // Henter aktive brugere, undtagen den loggede ind bruger
         $stmt = $_db->prepare("
             SELECT user_pk, user_username, user_full_name
             FROM users
@@ -55,7 +60,7 @@ class FollowModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 🔹 tjek om man allerede følger
+    // Tjekker om en bruger allerede følger en anden bruger
     public static function isFollowing(string $currentUserPk, string $suggestedUserPk): bool
     {
         require __DIR__ . '/../../private/db.php';
@@ -76,7 +81,7 @@ class FollowModel
         return (bool) $stmt->fetchColumn();
     }
 
-    // 🔹 OPRET FOLLOW
+    // Opretter en follow-relation
     public static function create(string $followerPk, string $followingPk): void
     {
         require __DIR__ . '/../../private/db.php';
@@ -92,7 +97,7 @@ class FollowModel
         ]);
     }
 
-    // 🔹 SLET FOLLOW
+    // Sletter en follow-relation (unfollow)
     public static function delete(string $followerPk, string $followingPk): void
     {
         require __DIR__ . '/../../private/db.php';
@@ -100,7 +105,7 @@ class FollowModel
         $stmt = $_db->prepare("
             DELETE FROM follows
             WHERE follower_fk = :follower
-              AND following_fk = :following
+            AND following_fk = :following
         ");
 
         $stmt->execute([

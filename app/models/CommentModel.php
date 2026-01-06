@@ -2,13 +2,13 @@
 
 class CommentModel
 {
-    /* =========================
-    CREATE
-    ========================= */
+    // Opretter en ny kommentar i databasen
     public static function create(array $data): void
     {
+        // Indlæser databaseforbindelsen
         require __DIR__ . "/../../private/db.php";
 
+        // Prepared statement beskytter mod SQL injection
         $sql = "
             INSERT INTO comments
             (comment_pk, comment_text, post_fk, user_fk)
@@ -18,13 +18,13 @@ class CommentModel
         $_db->prepare($sql)->execute($data);
     }
 
-    /* =========================
-    READ – comments for post
-    ========================= */
+    // Henter alle kommentarer til et specifikt post
     public static function findByPost(string $postPk): array
     {
         require __DIR__ . "/../../private/db.php";
 
+        // Join med users for at få brugernavn
+        // Soft deleted brugere og kommentarer filtreres fra
         $sql = "
                 SELECT
                     comments.comment_pk,
@@ -47,9 +47,7 @@ class CommentModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    /* =========================
-    COUNT comments on post
-    ========================= */
+    // Tæller antal aktive kommentarer på et post
     public static function countByPost(string $postPk): int
     {
         require __DIR__ . "/../../private/db.php";
@@ -63,12 +61,11 @@ class CommentModel
 
         $stmt->execute([":post" => $postPk]);
 
+        // fetchColumn returnerer string → castes til int
         return (int) $stmt->fetchColumn();
     }
 
-    /* =========================
-    UPDATE (edit comment)
-    ========================= */
+    // Opdaterer teksten på en eksisterende kommentar
     public static function update(string $commentPk, string $text): void
     {
         require __DIR__ . "/../../private/db.php";
@@ -84,9 +81,7 @@ class CommentModel
         ]);
     }
 
-    /* =========================
-    SOFT DELETE
-    ========================= */
+    // Soft delete af en kommentar (bevarer data i databasen)
     public static function softDelete(string $commentPk): void
     {
         require __DIR__ . "/../../private/db.php";
@@ -100,9 +95,7 @@ class CommentModel
         ]);
     }
 
-    /* =========================
-    SOFT DELETE COMMENTS BY DELETED USER
-    ========================= */
+    // Soft delete alle kommentarer fra en bestemt bruger
     public static function softDeleteByUser(string $userPk): void
     {
         require __DIR__ . '/../../private/db.php';
@@ -117,9 +110,7 @@ class CommentModel
         ]);
     }
 
-    /* =========================
-    READ – post for comment
-    ========================= */
+    // Finder hvilket post en kommentar hører til
     public static function getPostPkByComment(string $commentPk): string
     {
         require __DIR__ . "/../../private/db.php";
@@ -135,6 +126,7 @@ class CommentModel
     
         $postPk = $stmt->fetchColumn();
     
+        // Hvis kommentaren ikke findes, kastes en exception
         if (!$postPk) {
             throw new Exception("Post not found for comment");
         }

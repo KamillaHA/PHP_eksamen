@@ -1,9 +1,11 @@
+<!-- Like-knap (bruges til toggle like/unlike) -->
 <button
     type="button"
     class="action like <?= $userLiked ? 'is-liked' : '' ?>"
     data-post-id="<?= $postPk ?>"
     aria-pressed="<?= $userLiked ? 'true' : 'false' ?>"
 >
+    <!-- Hjerte-ikon -->
     <svg
         class="heart-icon"
         viewBox="0 0 24 24"
@@ -14,5 +16,6 @@
         />
     </svg>
 
+    <!-- Antal likes -->
     <span class="like-count"><?= $likeCount ?></span>
 </button>

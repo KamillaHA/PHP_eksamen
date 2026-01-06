@@ -13,7 +13,6 @@ window.addEventListener("scroll", () => {
 });
 
 
-
 /* ======================================================
     BURGER MENU
 ====================================================== */
@@ -72,8 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (e.key === "Escape") closeNav();
     });
 });
-
-
 
 
 /* ======================================================
@@ -146,8 +143,6 @@ document.addEventListener("click", event => {
     document.querySelectorAll(".post-dropdown.open")
         .forEach(d => d.classList.remove("open"));
 });
-
-
 
 
 /* ======================================================
