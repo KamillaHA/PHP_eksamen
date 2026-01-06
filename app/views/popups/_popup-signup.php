@@ -1,8 +1,14 @@
 <?php
+
+// Tjekker om der allerede er en aktiv PHP-session
+// PHP må kun starte en session én gang pr. request
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Hvis brugeren allerede er logget ind (ligger i $_SESSION)
+// stopper vi eksekveringen her, så koden ikke kører unødvendigt igen
+// Bruges typisk i fx login/signup-guards
 if (isset($_SESSION["user"])) {
     return;
 }
@@ -83,8 +89,6 @@ if (isset($_SESSION["user"])) {
 document.querySelectorAll('.switch-to-login-btn').forEach(btn => {
     btn.addEventListener('click', function(e) {
         e.preventDefault();
-        
-        // window.clearAuthErrors();
 
         // Luk signup popup
         const signupModal = document.getElementById('signupModal');
@@ -100,14 +104,12 @@ document.querySelectorAll('.switch-to-login-btn').forEach(btn => {
     });
 });
 
-// Switch fra login til signup 
+// Switch fra login til signup (tilføj også i popup-login.php)
 document.addEventListener('DOMContentLoaded', function() {
     const switchToSignupBtn = document.querySelector('.login-footer a[href="/signup"]');
     if (switchToSignupBtn) {
         switchToSignupBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            // window.clearAuthErrors();
 
             // Luk login popup
             const loginModal = document.getElementById('loginModal');

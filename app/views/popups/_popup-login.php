@@ -1,4 +1,7 @@
 <?php
+
+// Sørger for at PHP-sessionen er startet
+// session_start() må kun kaldes, hvis der ikke allerede findes en session
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

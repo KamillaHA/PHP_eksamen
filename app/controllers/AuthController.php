@@ -14,11 +14,13 @@ class AuthController
         require_once __DIR__ . "/../../private/x.php";
 
         try {
+            // 1) Valider alle inputfelter fra signup-formen
             _validateFullName();
             _validateUsername();
             _validateEmail();
             _validatePassword();
 
+            // 2) Opret bruger i databasen
             UserModel::create([
                 ':pk'       => bin2hex(random_bytes(25)),
                 ':fullname' => $_POST['user_full_name'],
@@ -27,12 +29,15 @@ class AuthController
                 ':password' => password_hash($_POST['user_password'], PASSWORD_DEFAULT),
             ]);
 
-            // 5) Redirect efter succes (PRG-pattern: Post/Redirect/Get)
-            // login=1 kan bruges til at vise en "Du er oprettet" besked på forsiden
+            // 3) Redirect efter succes
+            // PRG-pattern (Post / Redirect / Get)
+            // login=1 kan bruges til at vise "Du er oprettet"-besked
             header("Location: /?login=1");
             exit;
 
         } catch (Exception $e) {
+            // Hvis validering eller oprettelse fejler:
+            // redirect tilbage med fejlbesked
             header("Location: /?popup=signup&message=" . urlencode($e->getMessage()));
             exit;
         }
@@ -55,11 +60,15 @@ class AuthController
             // 2) Find bruger via email
             $user = UserModel::findByEmail($email);
 
+            // 3) Tjek om brugeren findes og om password matcher
             if (!$user || !password_verify($password, $user['user_password'])) {
                 throw new Exception("Wrong email or password");
             }
 
+            // 4) Fjern password fra arrayet (må aldrig ligge i session)
             unset($user['user_password']);
+
+            // 5) Gem brugeren i session (brugeren er nu logget ind)
             $_SESSION['user'] = $user;
 
             // 6) Redirect til beskyttet side /home efter login
@@ -67,6 +76,8 @@ class AuthController
             exit;
 
         } catch (Exception $e) {
+            
+            // Af sikkerhedshensyn vises samme fejl uanset hvad der gik galt
             header("Location: /?popup=login&message=" . urlencode("Wrong email or password"));
             exit;
         }

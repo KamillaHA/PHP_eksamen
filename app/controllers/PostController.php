@@ -316,6 +316,7 @@ class PostController
         $stmt->execute([$postPk]);
         $post = $stmt->fetch(PDO::FETCH_ASSOC);
         
+        // Hvis vi fandt posten, redirect til dens pæne URL, ellers fallback
         if ($post) {
             header("Location: /" . $post['user_username'] . "/status/" . $postPk);
         } else {
