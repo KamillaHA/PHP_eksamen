@@ -2,115 +2,108 @@
 
 // Loader CommentModel, som håndterer database-logik for kommentarer
 require_once __DIR__ . "/../models/CommentModel.php";
+require_once __DIR__ . "/../models/PostModel.php";
+require_once __DIR__ . "/../../private/x.php";
 
 class CommentController
 {
     public static function create(): void
     {
-        // Sørger for at sessionen er startet (undgår fejl hvis den allerede kører)
+        // Sørger for at sessionen er startet
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Tjek om brugeren er logget ind
-        // Hvis ikke: returner 401 (Unauthorized) og stop eksekvering
+        // Kun loggede brugere må kommentere
         if (!isset($_SESSION['user'])) {
             http_response_code(401);
-            echo 'You have to be logged in to create a comment';
             exit;
         }
+        
+    // NYT EFTER AFLEVERING: vis errormessage (__post.php)
+    try {
 
-        // Indlæser fælles validerings- og hjælpefunktioner
+        // Indlæser fælles valideringsfunktioner
         require_once __DIR__ . "/../../private/x.php";
 
-        // Validerer post_pk fra POST (sikrer korrekt format og forhindrer manipulation)
+        // Valider input
         $postPk = _validatePk("post_pk");
-        
-        // Opretter kommentaren i databasen
-        // Data sendes som placeholders for at sikre prepared statements (SQL injection-beskyttelse)
+        $text   = validateCommentText();
+
+        // Opret kommentaren (MODEL)
         CommentModel::create([
-
-            // Unik primær nøgle til kommentaren
             ":pk"   => bin2hex(random_bytes(25)),
-
-            // Kommentarens tekst (valideret og trimmet)
-            ":text" => validateCommentText(),
-
-            // Reference til posten kommentaren hører til
+            ":text" => $text,
             ":post" => $postPk,
-
-            // Reference til den bruger der har oprettet kommentaren
             ":user" => $_SESSION["user"]["user_pk"]
         ]);
 
-        // Efter oprettelse skal vi redirecte tilbage til den post kommentaren tilhører
-        // For at bygge korrekt URL henter vi postens ejer (brugernavn)
-        require __DIR__ . '/../../private/db.php';
-        $stmt = $_db->prepare("
-            SELECT users.user_username 
-            FROM posts 
-            JOIN users ON posts.post_user_fk = users.user_pk 
-            WHERE posts.post_pk = ?
-        ");
-        $stmt->execute([$postPk]);
-        $post = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Hvis posten findes, redirect til postens side
-        if ($post) {
-            header("Location: /" . $post['user_username'] . "/status/" . $postPk);
-        } else {
-            // Fallback hvis noget går galt
-            header("Location: /home");
-        }
+        // Find postens ejer (MODEL)
+        $username = PostModel::getOwnerUsername($postPk);
+
+        // Redirect
+        header("Location: " . ($username ? "/$username/status/$postPk" : "/home"));
         exit;
-    }
 
-    public static function update(): void
-    {
-        // Sørger for aktiv session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // NYT EFTER AFLEVERING: Vis error message (__post.php)
+        } catch (Exception $e) {
+            // Gem fejlbesked i session (flash)
+            $_SESSION['error'] = $e->getMessage();
 
-        // Brugeren skal være logget ind for at redigere en kommentar
-        if (!isset($_SESSION['user'])) {
-            http_response_code(401);
-            echo 'You have to be logged in to update a comment';
+            // Bevar kontekst (bliv på samme post)
+            $postPk = $_POST['post_pk'] ?? null;
+
+            if ($postPk) {
+                header("Location: /home?post=" . $postPk);
+            } else {
+                header("Location: /home");
+            }
             exit;
         }
+    }
 
-        // Indlæser hjælpefunktioner
-        require_once __DIR__ . "/../../private/x.php";
+public static function update(): void
+{
+            // Sørger for aktiv session
 
-        // Validerer kommentarens PK og den nye tekst
-        $commentPk = _validatePk("comment_pk");
-        $text      = validateCommentText();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
-        // Finder hvilken post kommentaren hører til (bruges til redirect)
-        $postPk = CommentModel::getPostPkByComment($commentPk);
+            // Brugeren skal være logget ind for at redigere en kommentar
 
-        // Opdaterer kommentaren i databasen
-        CommentModel::update($commentPk, $text);
-
-        // Henter igen postens ejer for korrekt redirect
-        require __DIR__ . '/../../private/db.php';
-        $stmt = $_db->prepare("
-            SELECT users.user_username 
-            FROM posts 
-            JOIN users ON posts.post_user_fk = users.user_pk 
-            WHERE posts.post_pk = ?
-        ");
-        $stmt->execute([$postPk]);
-        $post = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Redirect tilbage til posten
-        if ($post) {
-            header("Location: /" . $post['user_username'] . "/status/" . $postPk);
-        } else {
-            header("Location: /home");
-        }
+    if (!isset($_SESSION['user'])) {
+        http_response_code(401);
+        echo 'You have to be logged in to update a comment';
         exit;
     }
+
+    require_once __DIR__ . "/../../private/x.php";
+
+    // Valider comment_pk
+    $commentPk = _validatePk("comment_pk");
+
+    // Valider tekst
+    $text = validateCommentText();
+
+    // Find post_pk
+    $postPk = CommentModel::getPostPkByComment($commentPk);
+
+    // Opdater kommentar
+    CommentModel::update($commentPk, $text);
+
+    // Find username (KAN returnere null)
+    $username = PostModel::getOwnerUsername($postPk);
+
+    // Redirect
+    if ($username) {
+        header("Location: /{$username}/status/{$postPk}");
+    } else {
+        header("Location: /home");
+    }
+    exit;
+}
+
 
     public static function delete(): void
     {
@@ -126,34 +119,27 @@ class CommentController
             exit;
         }
 
-        // Indlæser hjælpefunktioner
         require_once __DIR__ . "/../../private/x.php";
 
-        // Validerer både kommentarens og postens PK
-        $commentPk = _validatePk("comment_pk");
-        $postPk    = _validatePk("post_pk");
+    // Valider comment_pk
+    $commentPk = _validatePk("comment_pk");
 
-        // Soft delete: kommentaren markeres som slettet i databasen
-        // (bevares typisk af hensyn til historik, relationer eller moderation)
-        CommentModel::softDelete($commentPk);
+    // Find post_pk (bruges til redirect)
+    $postPk = CommentModel::getPostPkByComment($commentPk);
 
-        // Henter postens ejer for redirect
-        require __DIR__ . '/../../private/db.php';
-        $stmt = $_db->prepare("
-            SELECT users.user_username 
-            FROM posts 
-            JOIN users ON posts.post_user_fk = users.user_pk 
-            WHERE posts.post_pk = ?
-        ");
-        $stmt->execute([$postPk]);
-        $post = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Redirect tilbage til posten eller fallback til home
-        if ($post) {
-            header("Location: /" . $post['user_username'] . "/status/" . $postPk);
-        } else {
-            header("Location: /home");
-        }
-        exit;
+    // Soft delete kommentaren
+    CommentModel::softDelete($commentPk);
+
+    // Find postens ejer
+    $username = PostModel::getOwnerUsername($postPk);
+
+    // Redirect (if / else – tydeligt og sikkert)
+    if ($username) {
+        header("Location: /" . $username . "/status/" . $postPk);
+    } else {
+        header("Location: /home");
+    }
+
+    exit;
     }
 }

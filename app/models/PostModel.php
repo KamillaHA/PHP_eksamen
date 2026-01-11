@@ -42,6 +42,42 @@ class PostModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+            // Henter brugernavnet på ejeren af et post (bruges til redirects)
+    public static function getOwnerUsername(string $postPk): string
+    {
+        require __DIR__ . '/../../private/db.php';
+
+        $stmt = $_db->prepare("
+            SELECT users.user_username
+            FROM posts
+            JOIN users ON posts.post_user_fk = users.user_pk
+            WHERE posts.post_pk = ?
+        ");
+        $stmt->execute([$postPk]);
+
+        return $stmt->fetchColumn();
+    }
+
+    // Henter ét enkelt post (bruges til single-post view)
+    public static function findSingle(string $postPk): array
+    {
+        require __DIR__ . '/../../private/db.php';
+
+        $stmt = $_db->prepare("
+            SELECT posts.*, users.user_username, users.user_full_name
+            FROM posts
+            JOIN users ON posts.post_user_fk = users.user_pk
+            WHERE posts.post_pk = :post_pk
+            AND posts.deleted_at IS NULL
+        ");
+        $stmt->execute([':post_pk' => $postPk]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
+
     // Opretter et nyt post
     public static function create(array $data): void
     {

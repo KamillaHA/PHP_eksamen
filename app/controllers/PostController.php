@@ -24,26 +24,14 @@ class PostController
         // Gem den loggede brugers PK
         $current_user_id = $_SESSION['user']['user_pk'];
 
-        // Hvis der er et post parameter, redirect til ny URL struktur
         if (isset($_GET['post']) && !empty($_GET['post'])) {
-            require __DIR__ . '/../../private/db.php';
+        $username = PostModel::getOwnerUsername($_GET['post']);
 
-            // Find postens ejer for at bygge korrekt URL
-            $stmt = $_db->prepare("
-                SELECT users.user_username 
-                FROM posts 
-                JOIN users ON posts.post_user_fk = users.user_pk 
-                WHERE posts.post_pk = ?
-            ");
-            $stmt->execute([$_GET['post']]);
-            $post = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            // Redirect til /username/status/postId
-            if ($post) {
-                header("Location: /" . $post['user_username'] . "/status/" . $_GET['post']);
-                exit;
-            }
+        if ($username) {
+            header("Location: /$username/status/" . $_GET['post']);
+            exit;
         }
+    }
 
         // Hent alle posts til feedet (grunddata)
         $posts = PostModel::getAll();
@@ -98,19 +86,15 @@ class PostController
         $_SESSION['back_to_feed'] = $_SERVER['HTTP_REFERER'] ?? '/home';
 
         // Tjek om posten eksisterer og ikke er slettet
-        require __DIR__ . '/../../private/db.php';
-        
-        $stmt = $_db->prepare("
-            SELECT posts.*, users.user_username, users.user_full_name
-            FROM posts
-            JOIN users ON posts.post_user_fk = users.user_pk
-            WHERE posts.post_pk = :post_pk
-            AND posts.deleted_at IS NULL
-        ");
-        
-        $stmt->execute([':post_pk' => $postId]);
-        $post = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+        $post = PostModel::findSingle($postId);
+
+        // Hvis posten ikke findes → 404
+        if (!$post) {
+            http_response_code(404);
+            echo 'Post not found';
+            exit;
+        }
+
         // Hvis posten ikke findes → 404
         if (!$post) {
             http_response_code(404);
@@ -306,19 +290,10 @@ class PostController
         PostModel::update($postPk, $message, $imagePath);
 
         // Redirect til korrekt single post URL
-        require __DIR__ . '/../../private/db.php';
-        $stmt = $_db->prepare("
-            SELECT users.user_username 
-            FROM posts 
-            JOIN users ON posts.post_user_fk = users.user_pk 
-            WHERE posts.post_pk = ?
-        ");
-        $stmt->execute([$postPk]);
-        $post = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        // Hvis vi fandt posten, redirect til dens pæne URL, ellers fallback
-        if ($post) {
-            header("Location: /" . $post['user_username'] . "/status/" . $postPk);
+        $username = PostModel::getOwnerUsername($postPk);
+
+        if ($username) {
+            header("Location: /$username/status/$postPk");
         } else {
             header("Location: " . ($_SERVER['HTTP_REFERER'] ?? '/home'));
         }

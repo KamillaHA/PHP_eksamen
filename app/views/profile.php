@@ -2,7 +2,7 @@
 
 // Inkluderer header-komponenten
 // require_once sikrer, at headeren kun indlæses én gang
-require_once __DIR__."/components/_header.php";
+require __DIR__."/components/_header.php";
 
 // Inkluderer sidebar-komponenten
 // require stopper eksekveringen hvis filen ikke findes
