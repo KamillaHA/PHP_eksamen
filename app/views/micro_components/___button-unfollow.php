@@ -11,7 +11,7 @@
         <input type="hidden" name="following_fk" value="<?= $user['user_pk'] ?>">
 
         <!-- CSRF-token til beskyttelse mod Cross-Site Request Forgery -->
-        <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+        <?php csrf_input(); ?>
 
         <!-- Unfollow-knap -->
         <button type="submit" class="unfollow-btn">Unfollow</button>

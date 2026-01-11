@@ -29,5 +29,10 @@
 <!-- MixHTML til delvise DOM-opdateringer -->
 <script src="/public/assets/js/mixhtml.js"></script>
 
+
+<script>
+    const csrfToken = "<?= $_SESSION['csrf_token'] ?>";
+</script>
+
 </body>
 </html>

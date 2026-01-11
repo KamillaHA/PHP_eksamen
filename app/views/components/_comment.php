@@ -78,7 +78,7 @@ function renderComment($comment, $current_user_id = null) {
                         >
                             <input type="hidden" name="comment_pk" value="<?= $comment['comment_pk'] ?>">
                             <input type="hidden" name="post_pk" value="<?= $comment['post_pk'] ?>">
-                            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+                            <?php csrf_input(); ?>
                             <button type="submit" class="dropdown-item delete-btn">
                                 Delete
                             </button>

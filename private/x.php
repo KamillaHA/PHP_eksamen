@@ -32,6 +32,10 @@ function csrf_verify(): bool {
     return hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token']);
 }
 
+function csrf_input(): void {
+    echo '<input type="hidden" name="csrf_token" value="' . csrf_token() . '">';
+}
+
 define("commentMinLength", 1);
 define("commentMaxLength", 255);
 

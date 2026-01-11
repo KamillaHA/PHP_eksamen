@@ -111,7 +111,7 @@ require_once __DIR__ . '/_comment.php';
                             <form action="/post/delete" method="POST">
                             <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
                             <input type="hidden" name="redirect_to" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>">
-                            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+                            <?php csrf_input(); ?>
                             <button type="submit" class="dropdown-item delete-btn">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 8px;">
                                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>

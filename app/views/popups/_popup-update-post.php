@@ -42,7 +42,7 @@ $user = $_SESSION["user"];
                 <input type="file" name="post_image_path" id="editPostImageInput" accept="image/*" hidden>
 
                 <!-- CSRF-token til beskyttelse mod Cross-Site Request Forgery -->
-                <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+                <?php csrf_input(); ?>
                 
                 <!-- Bruger info -->
                 <div class="user-info">

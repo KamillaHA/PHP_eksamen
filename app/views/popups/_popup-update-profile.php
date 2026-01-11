@@ -52,7 +52,7 @@ $user = $_SESSION["user"];
                     >
 
                     <!-- CSRF-token til beskyttelse mod Cross-Site Request Forgery -->
-                    <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+                    <?php csrf_input(); ?>
                 </div>
                 
                 <!-- Brugernavn-felt -->

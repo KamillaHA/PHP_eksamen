@@ -38,7 +38,7 @@ $user = $_SESSION["user"];
                 <input type="hidden" name="post_pk" id="comment_post_pk">
 
                 <!-- CSRF-token til beskyttelse mod Cross-Site Request Forgery -->
-                <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+                <?php csrf_input(); ?>
                 
                 <!-- Visning af det opslag, der svares på (preview) -->
                 <div class="commenting-on">

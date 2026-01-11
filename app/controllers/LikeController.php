@@ -8,9 +8,9 @@ class LikeController
     public static function like(): void
     {
         // Sørger for at sessionen er startet
-        // if (session_status() === PHP_SESSION_NONE) {
-        //     session_start();
-        // }
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
         // Brugeren skal være logget ind for at kunne like
         if (!isset($_SESSION['user'])) {
@@ -23,10 +23,10 @@ class LikeController
         require_once __DIR__ . "/../../private/x.php";
 
         // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
-        if (!csrf_verify()) {
-            http_response_code(403);
-            exit('CSRF token mismatch');
-        }
+        // if (!csrf_verify()) {
+        //     http_response_code(403);
+        //     exit('CSRF token mismatch');
+        // }
 
         // Den loggede ind brugers primære nøgle
         $userPk = $_SESSION["user"]["user_pk"];
@@ -50,16 +50,16 @@ class LikeController
     public static function unlike(): void
     {
         // Sørger for at sessionen er startet
-        // if (session_status() === PHP_SESSION_NONE) {
-        //     session_start();
-        // }
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
         // Brugeren skal være logget ind for at kunne unlike
-        if (!isset($_SESSION['user'])) {
-            http_response_code(401);
-            echo 'You have to be logged in to unlike a post';
-            exit;
-        }
+        // if (!isset($_SESSION['user'])) {
+        //     http_response_code(401);
+        //     echo 'You have to be logged in to unlike a post';
+        //     exit;
+        // }
 
         // Indlæser hjælpefunktioner
         require_once __DIR__ . "/../../private/x.php";

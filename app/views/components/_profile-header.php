@@ -20,15 +20,13 @@ $following = $following ?? 0;
 
   <!-- Upload af nyt cover-billede -->
     <form action="/profile/cover" method="POST" enctype="multipart/form-data" class="cover-upload-form">
-
-      <!-- Skjult file-input som trigges af knap -->
-      <input type="file" name="cover_image" accept="image/*" onchange="this.form.submit()" hidden>
-
       <!-- 
         CSRF-token til beskyttelse mod Cross-Site Request Forgery.
         Token genereres i private/x.php og valideres i UserController::updateCover().
       -->
-      <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+      <?php csrf_input(); ?>
+      <!-- Skjult file-input som trigges af knap -->
+      <input type="file" name="cover_image" accept="image/*" onchange="this.form.submit()" hidden>
 
       <!-- Knap der åbner file-input -->
       <button type="button" class="cover-upload-btn" onclick="this.previousElementSibling.click()"></button>
