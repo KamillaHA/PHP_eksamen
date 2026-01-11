@@ -98,6 +98,7 @@ body.page-landing h2, body.page-landing p {
 .profile-header {
   border-bottom: var(--border-xs) solid var(--color-border);
   margin-bottom: 1.5rem;
+  margin-top: 2rem;
 }
 .profile-header .profile-actions {
 display: flex;

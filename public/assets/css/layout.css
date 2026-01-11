@@ -14,7 +14,7 @@ main {
 .posts-container {
   max-width: 100%;
   color: var(--color-text);
-  margin-top: 4rem;
+  margin-top: 0;
 }
 
 .no-posts {
