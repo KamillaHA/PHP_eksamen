@@ -8,9 +8,9 @@ class FollowController
     public static function follow(): void
     {
         // Sørger for at sessionen er startet
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Brugeren skal være logget ind for at kunne følge andre
         if (!isset($_SESSION['user'])) {
@@ -21,6 +21,12 @@ class FollowController
 
         // Indlæser fælles validerings- og hjælpefunktioner
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            http_response_code(403);
+            exit('CSRF token mismatch');
+        }
 
         // Den bruger der klikker på "Følg"-knappen (den loggede ind bruger)
         $followerPk = $_SESSION["user"]["user_pk"];
@@ -61,9 +67,9 @@ class FollowController
     public static function unfollow(): void
     {
         // Sørger for at sessionen er startet
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Brugeren skal være logget ind for at kunne unfollowe
         if (!isset($_SESSION['user'])) {
@@ -74,6 +80,12 @@ class FollowController
 
         // Indlæser fælles hjælpefunktioner
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            http_response_code(403);
+            exit('CSRF token mismatch');
+        }
 
         // Den bruger der klikker (den loggede ind bruger)
         $followerPk = $_SESSION["user"]["user_pk"];

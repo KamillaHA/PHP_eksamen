@@ -8,9 +8,9 @@ class CommentController
     public static function create(): void
     {
         // Sørger for at sessionen er startet (undgår fejl hvis den allerede kører)
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Tjek om brugeren er logget ind
         // Hvis ikke: returner 401 (Unauthorized) og stop eksekvering
@@ -22,6 +22,11 @@ class CommentController
 
         // Indlæser fælles validerings- og hjælpefunktioner
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
 
         // Validerer post_pk fra POST (sikrer korrekt format og forhindrer manipulation)
         $postPk = _validatePk("post_pk");
@@ -68,9 +73,9 @@ class CommentController
     public static function update(): void
     {
         // Sørger for aktiv session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Brugeren skal være logget ind for at redigere en kommentar
         if (!isset($_SESSION['user'])) {
@@ -81,6 +86,11 @@ class CommentController
 
         // Indlæser hjælpefunktioner
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
 
         // Validerer kommentarens PK og den nye tekst
         $commentPk = _validatePk("comment_pk");
@@ -115,9 +125,9 @@ class CommentController
     public static function delete(): void
     {
         // Sørger for aktiv session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Brugeren skal være logget ind for at slette en kommentar
         if (!isset($_SESSION['user'])) {
@@ -128,6 +138,11 @@ class CommentController
 
         // Indlæser hjælpefunktioner
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
 
         // Validerer både kommentarens og postens PK
         $commentPk = _validatePk("comment_pk");

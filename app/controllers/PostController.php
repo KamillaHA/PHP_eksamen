@@ -11,9 +11,9 @@ class PostController
     public static function index(): void
     {
         // Sørger for at sessionen er startet
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Kun loggede brugere må se feedet
         if (!isset($_SESSION['user'])) {
@@ -82,9 +82,9 @@ class PostController
     public static function singleByUrl(string $username, string $postId): void
     {
         // Sørger for aktiv session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Kun loggede brugere må se posts
         if (!isset($_SESSION['user'])) {
@@ -155,9 +155,9 @@ class PostController
     public static function create(): void
     {
         // Sørger for aktiv session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Kun loggede brugere må oprette posts
         if (!isset($_SESSION['user'])) {
@@ -168,6 +168,12 @@ class PostController
 
         // Indlæser valideringsfunktioner
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        // Token genereres i formularen og matcher sessionens hemmelige værdi.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
 
         // Default: ingen billede
         $imagePath = null;
@@ -238,9 +244,9 @@ class PostController
     public static function update(): void
     {
         // Sørger for aktiv session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Kun loggede brugere må redigere posts
         if (!isset($_SESSION['user'])) {
@@ -250,6 +256,11 @@ class PostController
         }
 
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
 
         // Valider input
         $postPk  = _validatePk("post_pk");
@@ -328,9 +339,9 @@ class PostController
     public static function delete(): void
     {
         // Sørger for aktiv session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Kun loggede brugere må slette posts
         if (!isset($_SESSION['user'])) {
@@ -340,6 +351,11 @@ class PostController
         }
 
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
 
         // Valider postens PK
         $postPk = _validatePk("post_pk");

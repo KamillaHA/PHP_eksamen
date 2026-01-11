@@ -16,6 +16,22 @@ function _noCache() {
     header('Clear-Site-Data: "cache", "cookies", "storage", "executionContexts"');
 }
 
+// Genererer og gemmer et CSRF-token i sessionen
+function csrf_token(): string {
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+// Validerer om det indsendte token matcher sessionens
+function csrf_verify(): bool {
+    if (!isset($_POST['csrf_token'])) {
+        return false;
+    }
+    return hash_equals($_SESSION['csrf_token'] ?? '', $_POST['csrf_token']);
+}
+
 define("commentMinLength", 1);
 define("commentMaxLength", 255);
 

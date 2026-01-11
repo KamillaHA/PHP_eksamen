@@ -57,6 +57,9 @@ if (isset($_SESSION["user"])) {
 
                 <!-- Inputfelt til adgangskode -->
                 <input name="user_password" type="password" placeholder="Password" required>
+
+                <!-- CSRF-token til beskyttelse mod Cross-Site Request Forgery -->
+                <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                 
                 <!-- Submit-knap til login -->
                 <!-- mix-await og mix-default håndterer loading-tekst -->

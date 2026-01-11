@@ -57,6 +57,9 @@ if (isset($_SESSION["user"])) {
                 <input type="text" name="user_username" placeholder="Username" required>
                 <input type="email" name="user_email" placeholder="Email" required>
                 <input type="password" name="user_password" placeholder="Password" required>
+
+                <!-- CSRF-token til beskyttelse mod Cross-Site Request Forgery -->
+                <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                 
                 <!-- Information om vilkår -->
                 <div class="terms-notice" style="font-size: 13px; color: #536471; margin: 15px 0;">

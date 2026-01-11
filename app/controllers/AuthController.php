@@ -8,10 +8,16 @@ class AuthController
     public static function signup(): void
     {
         // Starter en session så vi kan bruge $_SESSION (også selvom signup her ikke gemmer noget i sessionen)
-        session_start();
+        // session_start();
         
         // Indlæser fælles hjælpefunktioner (fx _validateEmail(), _noCache(), _() osv.)
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        // Token genereres i formularen og matcher sessionens hemmelige værdi.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
 
         try {
             // 1) Valider alle inputfelter fra signup-formen
@@ -46,10 +52,15 @@ class AuthController
     public static function login(): void
     {
         // Starter session, fordi vi skal gemme user i $_SESSION
-        session_start();
+        // session_start();
 
         // Indlæser validerings- og hjælpefunktioner
         require_once __DIR__ . "/../../private/x.php";
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
 
         try {
 
@@ -71,7 +82,10 @@ class AuthController
             // 5) Gem brugeren i session (brugeren er nu logget ind)
             $_SESSION['user'] = $user;
 
-            // 6) Redirect til beskyttet side /home efter login
+            // 6) Forhindrer session fixation
+            session_regenerate_id(true);
+
+            // 7) Redirect til beskyttet side /home efter login
             header("Location: /home");
             exit;
 
@@ -87,7 +101,7 @@ class AuthController
     public static function logout(): void
     {
         // Starter session så vi kan rydde den korrekt
-        session_start();
+        // session_start();
 
         // Indlæser hjælpefunktioner
         require_once __DIR__ . "/../../private/x.php";

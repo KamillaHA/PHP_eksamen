@@ -41,6 +41,10 @@ $user = $_SESSION["user"];
                 accept="image/*"
                 hidden
             >
+
+            <!-- CSRF-token til beskyttelse mod Cross-Site Request Forgery -->
+            <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
+            
                 <!-- Brugerinformation -->
                 <div class="user-info">
 

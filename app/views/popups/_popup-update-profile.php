@@ -50,6 +50,9 @@ $user = $_SESSION["user"];
                         mix-check="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                         mix-feedback="Please enter a valid email"
                     >
+
+                    <!-- CSRF-token til beskyttelse mod Cross-Site Request Forgery -->
+                    <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                 </div>
                 
                 <!-- Brugernavn-felt -->

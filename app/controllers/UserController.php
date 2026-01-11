@@ -12,9 +12,9 @@ class UserController
     public static function get(): void
     {
         // Sørger for at sessionen er startet
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Kun loggede brugere må se deres profil
         if (!isset($_SESSION['user'])) {
@@ -70,9 +70,9 @@ class UserController
     public static function update(): void
     {
         // Sørger for at sessionen er startet
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Kun loggede brugere må opdatere deres profil
         if (!isset($_SESSION['user'])) {
@@ -82,6 +82,11 @@ class UserController
 
         // Indlæser valideringsfunktioner
         require_once __DIR__ . '/../../private/x.php';
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
 
         // Hent brugerens PK
         $userPk = $_SESSION['user']['user_pk'];
@@ -105,14 +110,22 @@ class UserController
     public static function updateCover(): void
     {
         // Sørger for aktiv session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Kun loggede brugere må ændre cover-billede
         if (!isset($_SESSION['user'])) {
             header("Location: /");
             exit;
+        }
+
+        // Indlæser valideringsfunktioner
+        require_once __DIR__ . '/../../private/x.php';
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
         }
 
          // Hvis der ikke er uploadet en fil, gør ingenting
@@ -185,15 +198,24 @@ class UserController
     public static function delete(): void
     {
         // Sørger for aktiv session
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        // if (session_status() === PHP_SESSION_NONE) {
+        //     session_start();
+        // }
 
         // Kun loggede brugere må slette deres konto
         if (!isset($_SESSION['user'])) {
             header("Location: /login");
             exit;
         }
+
+        // Indlæser valideringsfunktioner
+        require_once __DIR__ . '/../../private/x.php';
+
+        // Validerer CSRF-token for at beskytte mod Cross-Site Request Forgery.
+        if (!csrf_verify()) {
+            throw new Exception("Invalid request", 403);
+        }
+
         $userPk = $_SESSION['user']['user_pk'];
 
         // Soft delete brugeren (bevarer historik)

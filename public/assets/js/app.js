@@ -106,6 +106,7 @@ document.addEventListener("click", async (event) => {
         // Send POST request i baggrunden
         const fd = new FormData();
         fd.append("post_fk", postId);
+        fd.append("csrf_token", csrfToken);
 
         await fetch(endpoint, { method: "POST", body: fd });
     } catch {

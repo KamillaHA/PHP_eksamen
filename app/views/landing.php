@@ -1,7 +1,7 @@
 <?php
 // landing.php
 // Dette er forsiden for ikke-loggede brugere
-// session_start håndteres centralt i index.php
+
 ?>
 
 <!-- Landing page wrapper -->
