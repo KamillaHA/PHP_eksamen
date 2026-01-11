@@ -213,6 +213,17 @@ require_once __DIR__ . '/_comment.php';
                             
                             <!-- Add comment form -->
                             <div class="add-comment-form">
+                                
+                                
+                            <!-- NYT EFTER AFLEVERING (CommentController): Show error message -->
+                            <?php if (isset($_SESSION['error'])): ?>
+                                <div class="error-message">
+                                    <?= htmlspecialchars($_SESSION['error'], ENT_QUOTES) ?>
+                                </div>
+                                <?php unset($_SESSION['error']); ?>
+                            <?php endif; ?>
+
+
                                 <form action="/comment" method="POST">
                                     <input type="hidden" name="post_pk" value="<?php echo $post['post_pk']; ?>">
                                     <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
